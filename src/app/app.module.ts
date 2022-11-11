@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DicesComponent } from './components/dices/dices.component';
 
 const config: SocketIoConfig = {
   url: environment.socketUrl,
@@ -14,7 +15,8 @@ const config: SocketIoConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DicesComponent,
   ],
   imports: [
     BrowserModule,
