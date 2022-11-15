@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { offset } from '@popperjs/core';
 import { Die } from 'src/app/models/die';
 import { DiceService } from 'src/app/services/dice.service';
 
@@ -101,18 +100,14 @@ export class DicesComponent implements OnInit {
     this.currentHits += 1;
     this.dicesAvailable = false;
     this.diceService.setDice(this.finalDices);
-    console.log("tillgängliga:", this.availableDices);
-    console.log("sparade", this.savedDices);
-    console.log("final", this.finalDices)
-
   }
 
   private newTurn(): void {
-    this.dieOne = {die: 1, side: 1, selected: false}
-    this.dieTwo = {die: 2, side: 1, selected: false}
-    this.dieThree = {die: 3, side: 1, selected: false}
-    this.dieFour = {die: 4, side: 1, selected: false}
-    this.dieFive = {die: 5, side: 1, selected: false}
+    this.dieOne = new Die(1, 1, false);
+    this.dieTwo = new Die(2, 1, false);
+    this.dieThree = new Die(3, 1, false);
+    this.dieFour = new Die(4, 1, false);
+    this.dieFive = new Die(5, 1, false);
     this.savedDices = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
     this.availableDices = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
     this.finalDices = [...this.availableDices];
