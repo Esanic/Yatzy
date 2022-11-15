@@ -16,7 +16,7 @@ export class ScoreBoardComponent implements OnInit {
   public fours = new ScoreRow('Fours', 0, true)
   public fives = new ScoreRow('Fives', 0, true)
   public sixes = new ScoreRow('Sixes', 0, true)
-  public bonus = new ScoreRow('Bonus', 0, false)
+  public bonus = new ScoreRow('Bonus', 0, false, false)
   public onePair = new ScoreRow('One Pair', 0, true)
   public twoPair = new ScoreRow('Two Pair', 0, true)
   public threeOfAKind = new ScoreRow('Three of a kind', 0, true)
@@ -27,28 +27,11 @@ export class ScoreBoardComponent implements OnInit {
   public yatzy = new ScoreRow('Yatzy', 0, true)
   public total = new ScoreRow('Total', 0, false)
 
+  private bonusSum: number = 0;
+
   public scoreBoard = [this.aces, this.twos, this.threes, this.fours, this.fives, this.sixes, this.bonus, this.onePair, this.twoPair, this.threeOfAKind, this.fourOfAKind, this.smallStraight, this.largeStraight, this.chance, this.yatzy, this.total]
   
   public dice: Die[] = [];
-
-  // public scoreBoard: ScoreBoard = {
-  //   aces: {name: 'Aces', score: 0, selectable: true},
-  //   twos: {name: 'Twos', score: 0, selectable: true},
-  //   threes: {name: 'Threes', score: 0, selectable: true},
-  //   fours: {name: 'Fours', score: 0, selectable: true},
-  //   fives: {name: 'Fives', score: 0, selectable: true},
-  //   sixes: {name: 'Sixes', score: 0, selectable: true},
-  //   bonus: {name: 'Bonus', score: 0, selectable: false}, 
-  //   onePair: {name: 'One pair', score: 0, selectable: true},
-  //   twoPair: {name: 'Two pair', score: 0, selectable: true},
-  //   threeOfAKind: {name: 'Three of a kind', score: 0, selectable: true},
-  //   fourOfAKind: {name: 'Four of a kind', score: 0, selectable: true},
-  //   smallStraight: {name: 'Small straight', score: 0, selectable: true},
-  //   largeStraight: {name: 'Large straight', score: 0, selectable: true},
-  //   chance: {name: 'Chance', score: 0, selectable: true},
-  //   yatzy: {name: 'Yatzy', score: 0, selectable: true},
-  //   total: 0
-  // };
 
   constructor(private diceService: DiceService) { }
 
@@ -59,12 +42,90 @@ export class ScoreBoardComponent implements OnInit {
   }
 
   public setScore(name: string): void {
-    if(name == 'Aces'){
-      for(let die of this.dice){
-        this.aces.score += die.side;
-        this.aces.selectable = false;
-      }
+    switch(name){
+      case this.aces.name:
+        for(let die of this.dice){
+          if(die.side == 1){
+            this.aces.score += die.side;
+          }
+          
+        }
+          this.bonusSum += this.aces.score;
+          this.total.score += this.aces.score;
+          this.aces.selectable = false;
+          break;
+        
+        case this.twos.name:
+          for(let die of this.dice){
+            if(die.side == 2){
+              this.twos.score += die.side;
+            }
+          }
+          this.bonusSum += this.twos.score;
+          this.total.score += this.twos.score;
+          this.twos.selectable = false;
+          break;
+
+        case this.threes.name:
+          for(let die of this.dice){
+            if(die.side == 3){
+              this.threes.score += die.side;
+            }
+          }
+          this.bonusSum += this.threes.score;
+          this.total.score += this.threes.score;
+          this.threes.selectable = false;
+          break;
+
+        case this.fours.name:
+          for(let die of this.dice){
+            if(die.side == 4){
+              this.fours.score += die.side;
+            }
+          }
+          this.bonusSum += this.fours.score;
+          this.total.score += this.fours.score;
+          this.fours.selectable = false;
+          break;
+
+        case this.fives.name:
+          for(let die of this.dice){
+            if(die.side == 5){
+              this.fives.score += die.side;
+            }
+          }
+          this.bonusSum += this.fives.score;
+          this.total.score += this.fives.score;
+          this.fives.selectable = false;
+          break;
+          
+        case this.sixes.name:
+          for(let die of this.dice){
+            if(die.side == 6){
+              this.sixes.score += die.side;
+            }
+          }
+          this.bonusSum += this.sixes.score;
+          this.total.score += this.sixes.score;
+          this.sixes.selectable = false;
+          break;
     }
+    
+    if(this.aces.score > 0 && 
+      this.twos.score > 0 && 
+      this.threes.score > 0 && 
+      this.fours.score > 0 && 
+      this.fives.score > 0 && 
+      this.sixes.score > 0 && 
+      this.bonusSum >= 63 && 
+      this.bonus.bonusApplied == false) {
+        this.bonus.score = 35;
+        this.bonus.bonusApplied = true;
+        this.total.score += this.bonus.score;
+    }
+
+
+
     this.diceService.setReset(true);
   }
 

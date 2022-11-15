@@ -16,7 +16,7 @@
             <th scope="row">{{scoreRow.name}}</th>
             <td class="d-flex justify-content-between">
                 {{scoreRow.score}}
-                <button *ngIf="scoreRow.selectable == true" type="button" class="btn btn-primary" (click)="this.setScore(scoreRow.name)">Lägg</button>
+                <button *ngIf="scoreRow.selectable == true" type="button" class="btn btn-primary bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
             </td>
         </tr>
     </tbody>

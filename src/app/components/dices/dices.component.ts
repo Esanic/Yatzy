@@ -101,6 +101,9 @@ export class DicesComponent implements OnInit {
     this.currentHits += 1;
     this.dicesAvailable = false;
     this.diceService.setDice(this.finalDices);
+    console.log("tillgängliga:", this.availableDices);
+    console.log("sparade", this.savedDices);
+    console.log("final", this.finalDices)
 
   }
 
@@ -112,6 +115,7 @@ export class DicesComponent implements OnInit {
     this.dieFive = {die: 5, side: 1, selected: false}
     this.savedDices = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
     this.availableDices = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
+    this.finalDices = [...this.availableDices];
     this.currentHits = 0;
     this.dicesAvailable = true;
     this.currentScore = 0;

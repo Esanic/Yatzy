@@ -1,12 +1,13 @@
 .btn-custom {
---bs-btn-color: rgb(240, 140, 0); 
+--bs-btn-color: white;
 --bs-btn-border-color: rgb(240, 140, 0);
+--bs-btn-bg: rgb(240,140,0);
 --bs-btn-hover-color: white;
---bs-btn-hover-border-color: rgb(240, 140, 0);
---bs-btn-hover-bg: rgb(240, 140, 0);
+--bs-btn-hover-border-color: rgb(240, 120, 0);
+--bs-btn-hover-bg: rgb(240, 120, 0);
 --bs-btn-active-color: white;
---bs-btn-active-bg: rgb(240, 125, 0);
---bs-btn-active-border-color: rgb(240, 125, 0);
+--bs-btn-active-bg: rgb(240, 100, 0);
+--bs-btn-active-border-color: rgb(240, 100, 0);
 }
 
 .transparent-dice {
