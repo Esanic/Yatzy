@@ -1,0 +1,23 @@
+<!-- <div class="card">
+ <ul class="list-group list-group-flush" *ngFor="let scoreRow of scoreBoard">
+    <li class="list-group-item">{{scoreRow.name}} - {{scoreRow.score}}</li>
+ </ul>
+</div> -->
+
+<table class="table table-bordered table-sm w-75">
+    <thead>
+        <tr>
+            <th scope="col">Scoreboard</th>
+            <th scope="col">Namn 1</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider w-100">
+        <tr *ngFor="let scoreRow of scoreBoard">
+            <th scope="row">{{scoreRow.name}}</th>
+            <td class="d-flex justify-content-between">
+                {{scoreRow.score}}
+                <button *ngIf="scoreRow.selectable == true" type="button" class="btn btn-primary" (click)="this.setScore(scoreRow.name)">Lägg</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

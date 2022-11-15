@@ -28,3 +28,8 @@
     background-color: transparent;
     border-color: transparent;
 }
+
+.btn:disabled, .btn.disabled, fieldset:disabled .btn {
+    border-color: transparent;
+    opacity: 40%;
+}

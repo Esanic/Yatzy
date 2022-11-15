@@ -1,30 +1,41 @@
 import { Component, OnInit } from '@angular/core';
+import { offset } from '@popperjs/core';
 import { Die } from 'src/app/models/die';
+import { DiceService } from 'src/app/services/dice.service';
+
 
 @Component({
   selector: 'app-dices',
   templateUrl: './dices.component.html',
   styleUrls: ['./dices.component.css']
 })
+
 export class DicesComponent implements OnInit {
-  public dieOne: Die = {die: 1, side: 1, selected: false};
-  public dieTwo: Die = {die: 2, side: 2, selected: false};
-  public dieThree: Die = {die: 3, side: 3, selected: false};
-  public dieFour: Die = {die: 4, side: 4, selected: false};
-  public dieFive: Die = {die: 5, side: 5, selected: false};
-  public diePlaceholder: Die = {die: 0, side: 0, selected: false};
-  
+  public dieOne = new Die(1, 1, false);
+  public dieTwo = new Die(2, 2, false);
+  public dieThree = new Die(3, 3, false);
+  public dieFour = new Die(4, 4, false);
+  public dieFive = new Die(5, 5, false);
+  public diePlaceholder = new Die(0, 0, false);
+
   public availableDices: Die[] = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
   public savedDices: Die[] = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
+  private finalDices: Die[] = [...this.availableDices]
 
   public currentScore: number = 0;
-  public currentHits = 0;
+  public currentHits: number = 0;
 
   public dicesAvailable: boolean = true;
 
-  constructor() { }
+  constructor(private diceService: DiceService) { }
 
   ngOnInit(): void {
+    this.diceService.getReset().subscribe(bool => {
+      if(bool == true) {
+        this.newTurn();
+        this.diceService.setReset(false);
+      }
+    })
   }
 
   public pickDie(die: number, side: number): void {
@@ -89,6 +100,22 @@ export class DicesComponent implements OnInit {
     }
     this.currentHits += 1;
     this.dicesAvailable = false;
+    this.diceService.setDice(this.finalDices);
+
+  }
+
+  private newTurn(): void {
+    this.dieOne = {die: 1, side: 1, selected: false}
+    this.dieTwo = {die: 2, side: 1, selected: false}
+    this.dieThree = {die: 3, side: 1, selected: false}
+    this.dieFour = {die: 4, side: 1, selected: false}
+    this.dieFive = {die: 5, side: 1, selected: false}
+    this.savedDices = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
+    this.availableDices = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
+    this.currentHits = 0;
+    this.dicesAvailable = true;
+    this.currentScore = 0;
+
   }
 
 }
