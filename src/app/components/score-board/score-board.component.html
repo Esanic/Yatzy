@@ -1,23 +1,24 @@
-<!-- <div class="card">
- <ul class="list-group list-group-flush" *ngFor="let scoreRow of scoreBoard">
-    <li class="list-group-item">{{scoreRow.name}} - {{scoreRow.score}}</li>
- </ul>
-</div> -->
-
-<table class="table table-bordered table-sm w-75">
-    <thead>
-        <tr>
-            <th scope="col">Scoreboard</th>
-            <th scope="col">Namn 1</th>
-        </tr>
-    </thead>
-    <tbody class="table-group-divider w-100">
-        <tr *ngFor="let scoreRow of scoreBoard">
-            <th scope="row">{{scoreRow.name}}</th>
-            <td class="d-flex justify-content-between">
+<div class="d-flex flex-row">
+    <div class="scoreboard-scorerows d-flex flex-column">
+        <div class="scoreboard-title scoreboard-header">Scoreboard</div>
+        <div class="scoreboard-header" *ngFor="let scoreHeading of scoreBoardHeaders">
+            {{scoreHeading}}
+        </div>
+    </div>
+    <div class="scoreboard-participant d-flex flex-column" *ngFor="let participant of participants">
+        <div class="scoreboard-title scoreboard-participant-header">{{participant.name}}</div>
+        <div *ngIf="participant.currentPlayer == true">
+            <div class="scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of participant.score.scoreBoard">
                 {{scoreRow.score}}
-                <button *ngIf="scoreRow.selectable == true" type="button" class="btn btn-primary bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                <button *ngIf="scoreRow.selectable == true" type="button" class="btn scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+            </div>
+        </div>
+        <div *ngIf="participant.currentPlayer == false">
+            <div class="scoreboard-not-current-player scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of participant.score.scoreBoard">
+                {{scoreRow.score}}
+                <button *ngIf="scoreRow.selectable == true" type="button" class="btn scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
