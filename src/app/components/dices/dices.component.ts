@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Die } from 'src/app/models/die';
 import { DiceService } from 'src/app/services/dice.service';
+import { ParticipantService } from 'src/app/services/participant.service';
 
 
 @Component({
@@ -26,7 +27,10 @@ export class DicesComponent implements OnInit {
 
   public dicesAvailable: boolean = true;
 
-  constructor(private diceService: DiceService) { }
+  public disableAdd: boolean = false;
+  public disablePlayButton: boolean = true;
+
+  constructor(private diceService: DiceService, private participantService: ParticipantService) { }
 
   ngOnInit(): void {
     this.diceService.getReset().subscribe(bool => {
@@ -34,6 +38,14 @@ export class DicesComponent implements OnInit {
         this.newTurn();
         this.diceService.setReset(false);
       }
+    })
+
+    this.participantService.getDisableAddPlayers().subscribe(bool => {
+      this.disableAdd = bool;
+    })
+
+    this.participantService.getParticipant().subscribe(name => {
+      this.disablePlayButton = false;
     })
   }
 
@@ -92,12 +104,14 @@ export class DicesComponent implements OnInit {
   }
 
   public hitDices(): void {
+    this.disableAdd == false ? this.participantService.setDisableAddPlayers(true) : this.disableAdd = true;
     for(let i = 0; i < this.availableDices.length; i++){
       if(this.availableDices[i].side != 0){
         this.availableDices[i].side = Math.floor(Math.random() * 6)+1;
       }
     }
     this.currentHits += 1;
+    this.currentHits >= 3 ? this.disablePlayButton = true : this.disablePlayButton = false;
     this.dicesAvailable = false;
     this.diceService.setDice(this.finalDices);
   }
@@ -114,6 +128,7 @@ export class DicesComponent implements OnInit {
     this.currentHits = 0;
     this.dicesAvailable = true;
     this.currentScore = 0;
+    this.disablePlayButton = false;
 
   }
 

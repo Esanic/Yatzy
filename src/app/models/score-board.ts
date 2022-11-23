@@ -1,4 +1,5 @@
 import { DiceService } from "../services/dice.service"
+import { ScoreService } from "../services/score.service"
 import { Die } from "./die"
 import { ScoreRow } from "./score-row"
 
@@ -27,7 +28,7 @@ export class ScoreBoard {
 
     dice: Die[] = [];
 
-    constructor(private diceService: DiceService){
+    constructor(private diceService: DiceService, private scoreService: ScoreService){
         
     }
 
@@ -155,7 +156,7 @@ export class ScoreBoard {
         this.bonus.bonusApplied = true;
         this.total.score += this.bonus.score;
       }
-      
+
       this.diceService.setReset(true);
     }
 
@@ -190,7 +191,16 @@ export class ScoreBoard {
       this.addTotalScoreAndMakeUnselectable(scoreRow);
     }
     
+    public checkEndOfGame(): void {
+      let check = this.scoreBoard.every(score => score.selectable == false);
+      console.log(check);
+      if(check === true){
+        this.scoreService.setEndOfGame(true);
+      }
+    }
 }
+    
+
 
 
 

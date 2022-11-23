@@ -10,9 +10,7 @@
     </div>
 </div>
 
-<button type="button" *ngIf="this.currentHits < 3" class="btn btn-custom bi bi-play-fill" (click)="hitDices()"></button>
-<!-- <button type="button"  class="btn btn-custom bi bi-play-fill" (click)="hitDices()"></button> -->
-<button type="button" *ngIf="this.currentHits >= 3" disabled="true" class="btn btn-custom bi-play-fill" (click)="hitDices()"></button>
+<button type="button" class="btn btn-custom bi bi-play-fill" [disabled]="this.disablePlayButton" (click)="hitDices()"></button>
 
 <div class="d-flex">
     <div *ngFor="let die of this.savedDices; index as i">
