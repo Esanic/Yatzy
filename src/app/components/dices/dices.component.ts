@@ -105,11 +105,7 @@ export class DicesComponent implements OnInit {
 
   public hitDices(): void {
     this.disableAdd == false ? this.participantService.setDisableAddPlayers(true) : this.disableAdd = true;
-    for(let i = 0; i < this.availableDices.length; i++){
-      if(this.availableDices[i].side != 0){
-        this.availableDices[i].side = Math.floor(Math.random() * 6)+1;
-      }
-    }
+    this.availableDices.map(die => die.side != 0 ? die.side = Math.floor(Math.random() * 6) + 1 : null)
     this.currentHits += 1;
     this.currentHits >= 3 ? this.disablePlayButton = true : this.disablePlayButton = false;
     this.dicesAvailable = false;

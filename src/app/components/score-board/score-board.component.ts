@@ -25,8 +25,6 @@ export class ScoreBoardComponent implements OnInit {
 
   private counter: number = 0;
 
-  private isGameEnded: boolean = false;
-
   @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
 
   constructor(private diceService: DiceService, private scoreService: ScoreService, private participantService: ParticipantService, private modalService: NgbModal, private vref: ViewContainerRef) { }

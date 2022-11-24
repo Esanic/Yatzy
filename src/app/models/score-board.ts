@@ -61,15 +61,8 @@ export class ScoreBoard {
           break;
   
         case this.onePair.name:
-          let onePairArr = this.mappingOccurencies(2);
           let onePairSide = 0;
-          
-          for(let obj of onePairArr){
-            if(obj[0] > onePairSide){
-              onePairSide = obj[0];
-            }
-          }
-  
+          this.mappingOccurencies(2).map(obj => obj[0] > onePairSide ? onePairSide = obj[0] : null);
           this.onePair.score = onePairSide * 2;
           this.addTotalScoreAndMakeUnselectable(this.onePair)
           break;
@@ -122,15 +115,7 @@ export class ScoreBoard {
   
         case this.house.name:
           let houseArr = this.mappingOccurencies(2);
-          if(houseArr.length >= 2){
-            for(let obj of houseArr){
-              if(obj[1] == 3)
-              {
-                this.house.score = (houseArr[0][0]*houseArr[0][1]) + (houseArr[1][0]*houseArr[1][1])
-                break;
-              }
-            }
-          }
+          houseArr.length >= 2 ? houseArr.map(obj => obj[1] == 3 ? this.house.score =(houseArr[0][0]*houseArr[0][1]) + (houseArr[1][0]*houseArr[1][1]) : null) : null;
           this.addTotalScoreAndMakeUnselectable(this.house);
           break;
   
@@ -151,13 +136,14 @@ export class ScoreBoard {
       }
       
       if(this.aces.score > 0 && this.twos.score > 0 && this.threes.score > 0 && this.fours.score > 0 && this.fives.score > 0 && this.sixes.score > 0 && this.bonusSum >= 63 && this.bonus.bonusApplied == false) {
-        this.bonus = {name: 'Bonus', score: 35, selectable: false, bonusApplied: true}
+        Object.assign(this.bonus, {score: 35, bonusApplied: true})
         this.total.score += this.bonus.score;
       }
       this.diceService.setReset(true);
     }
 
     private addTotalScoreAndMakeUnselectable(scoreRow: ScoreRow): void{
+      
         this.total.score += scoreRow.score;
         scoreRow.selectable = false;
     }
