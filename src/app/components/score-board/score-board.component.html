@@ -22,3 +22,18 @@
     </div>
 </div>
 
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Result</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <p *ngFor="let participant of this.participants; index as i">{{i+1}}. {{participant.name}} - {{participant.score.total.score}}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-ligt" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+

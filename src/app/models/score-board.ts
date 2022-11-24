@@ -89,13 +89,23 @@ export class ScoreBoard {
         
         case this.threeOfAKind.name:
           let threeOfAKindArr = this.mappingOccurencies(3);
-          this.threeOfAKind.score = threeOfAKindArr[0][0] * 3;
+          if(threeOfAKindArr[0] != undefined){
+            this.threeOfAKind.score = threeOfAKindArr[0][0] * 3;
+          }
+          else{
+            this.threeOfAKind.score = 0;
+          }
           this.addTotalScoreAndMakeUnselectable(this.threeOfAKind);
           break;
   
         case this.fourOfAKind.name:
           let fourOfAKindArr = this.mappingOccurencies(4);
-          this.fourOfAKind.score = fourOfAKindArr[0][0] * 4;
+          if(fourOfAKindArr[0] != undefined){
+            this.fourOfAKind.score = fourOfAKindArr[0][0] * 4;
+          }
+          else{
+            this.fourOfAKind.score = 0;
+          }
           this.addTotalScoreAndMakeUnselectable(this.fourOfAKind);
           break;
   
@@ -193,7 +203,6 @@ export class ScoreBoard {
     
     public checkEndOfGame(): void {
       let check = this.scoreBoard.every(score => score.selectable == false);
-      console.log(check);
       if(check === true){
         this.scoreService.setEndOfGame(true);
       }

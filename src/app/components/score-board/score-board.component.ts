@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Die } from 'src/app/models/die';
 import { Participant } from 'src/app/models/participant';
 import { ScoreBoard } from 'src/app/models/score-board';
@@ -24,7 +25,11 @@ export class ScoreBoardComponent implements OnInit {
 
   private counter: number = 0;
 
-  constructor(private diceService: DiceService, private scoreService: ScoreService, private participantService: ParticipantService) { }
+  private isGameEnded: boolean = false;
+
+  @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
+
+  constructor(private diceService: DiceService, private scoreService: ScoreService, private participantService: ParticipantService, private modalService: NgbModal, private vref: ViewContainerRef) { }
 
   ngOnInit(): void {
     this.diceService.getDice().subscribe(dice => {
@@ -35,7 +40,16 @@ export class ScoreBoardComponent implements OnInit {
       this.lastParticipant = this.participants.slice(-1)[0];
       this.setCurrentPlayer();
     })
+
+    this.scoreService.getEndOfGame().subscribe(bool => {
+      this.participants.sort((a:Participant, b:Participant) => b.score.total.score - a.score.total.score)
+      console.log(this.participants);
+      if(bool){
+        this.modalService.open(this.content, {centered: true})
+      }
+    })
   }
+
 
   public setScore(name: string): void{
     this.currentParticipant.score.setScore(name, this.dice);
@@ -57,11 +71,6 @@ export class ScoreBoardComponent implements OnInit {
     this.currentParticipant.currentPlayer = true;
   }
 
-  public checkEndOfGame(): void {
-    this.scoreService.getEndOfGame().subscribe(bool => {
-      if(bool == true){
-        
-      }
-    })
-  }
+
 }
+ 
