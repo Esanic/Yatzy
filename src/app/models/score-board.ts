@@ -76,13 +76,8 @@ export class ScoreBoard {
         
         case this.twoPair.name:
           let twoPairArr = this.mappingOccurencies(2);       
-          let pairOneSides = 0;
-          let pairTwoSides = 0;
-  
           if(twoPairArr.length >= 2){
-            pairOneSides = twoPairArr[0][0];
-            pairTwoSides = twoPairArr[1][0];
-            this.twoPair.score = (pairOneSides * 2)+(pairTwoSides *2);
+            this.twoPair.score = (twoPairArr[0][0] * 2)+(twoPairArr[1][0] *2);
           }
           this.addTotalScoreAndMakeUnselectable(this.twoPair);
           break;
@@ -110,10 +105,7 @@ export class ScoreBoard {
           break;
   
         case this.smallStraight.name:
-          let sSArr = [];
-          for(let die of this.dice){
-            sSArr.push(die.side);
-          }
+          let sSArr = this.dice.map(die => die.side)
           if(sSArr.includes(1) && sSArr.includes(2) && sSArr.includes(3) && sSArr.includes(4) && sSArr.includes(5)){
             this.smallStraight.score = 15;
           }
@@ -121,10 +113,7 @@ export class ScoreBoard {
           break;
         
         case this.largeStraight.name:
-          let lSArr = [];
-          for(let die of this.dice){
-            lSArr.push(die.side);
-          }
+          let lSArr = this.dice.map(die => die.side)
           if(lSArr.includes(2) && lSArr.includes(3) && lSArr.includes(4) && lSArr.includes(5) && lSArr.includes(6)){
             this.largeStraight.score = 20;
           }
@@ -162,11 +151,9 @@ export class ScoreBoard {
       }
       
       if(this.aces.score > 0 && this.twos.score > 0 && this.threes.score > 0 && this.fours.score > 0 && this.fives.score > 0 && this.sixes.score > 0 && this.bonusSum >= 63 && this.bonus.bonusApplied == false) {
-        this.bonus.score = 35;
-        this.bonus.bonusApplied = true;
+        this.bonus = {name: 'Bonus', score: 35, selectable: false, bonusApplied: true}
         this.total.score += this.bonus.score;
       }
-
       this.diceService.setReset(true);
     }
 
@@ -176,10 +163,7 @@ export class ScoreBoard {
     }
     
     private mappingOccurencies(occurencies: number): any[] {
-      let arr = [];
-      for(let die of this.dice){
-        arr.push(die.side);
-      }
+      let arr = this.dice.map(die => die.side);
       const map = arr.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
       
       let pairArr = []
