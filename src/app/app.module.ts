@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DicesComponent } from './components/dices/dices.component';
 import { ScoreBoardComponent } from './components/score-board/score-board.component';
-import { AddPlayersComponent } from './components/add-players/add-players.component';
+import { AddPlayersComponent } from './components/modals/add-players/add-players.component';
 
 const config: SocketIoConfig = {
   url: environment.socketUrl,
