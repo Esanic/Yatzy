@@ -12,10 +12,10 @@ import { ParticipantService } from 'src/app/services/participant.service';
 
 export class DicesComponent implements OnInit {
   public dieOne = new Die(1, 1, false);
-  public dieTwo = new Die(2, 2, false);
-  public dieThree = new Die(3, 3, false);
-  public dieFour = new Die(4, 4, false);
-  public dieFive = new Die(5, 5, false);
+  public dieTwo = new Die(2, 1, false);
+  public dieThree = new Die(3, 1, false);
+  public dieFour = new Die(4, 1, false);
+  public dieFive = new Die(5, 1, false);
   public diePlaceholder = new Die(0, 0, false);
 
   public availableDices: Die[] = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];

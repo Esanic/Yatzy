@@ -27,7 +27,7 @@ export class ScoreBoardComponent implements OnInit {
 
   @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
 
-  constructor(private diceService: DiceService, private scoreService: ScoreService, private participantService: ParticipantService, private modalService: NgbModal, private vref: ViewContainerRef) { }
+  constructor(private diceService: DiceService, private scoreService: ScoreService, private participantService: ParticipantService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.diceService.getDice().subscribe(dice => {
@@ -41,10 +41,7 @@ export class ScoreBoardComponent implements OnInit {
 
     this.scoreService.getEndOfGame().subscribe(bool => {
       this.participants.sort((a:Participant, b:Participant) => b.score.total.score - a.score.total.score)
-      console.log(this.participants);
-      if(bool){
-        this.modalService.open(this.content, {centered: true})
-      }
+      bool ? this.modalService.open(this.content, {centered: true, animation: true, keyboard: true}) : null;
     })
   }
 
@@ -67,6 +64,14 @@ export class ScoreBoardComponent implements OnInit {
     this.currentParticipant.currentPlayer = false;
     this.currentParticipant = this.participants[this.counter]
     this.currentParticipant.currentPlayer = true;
+  }
+
+  public closeModalAndReset(): void {
+    this.modalService.dismissAll()
+    this.diceService.setReset(true);
+    this.participantService.setDisableAddPlayers(false);
+    this.participants = [];
+    
   }
 
 

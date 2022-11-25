@@ -22,18 +22,30 @@
     </div>
 </div>
 
-
-
 <ng-template #content let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title">Result</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    <div *ngIf="this.participants.length >=2">
+        <div class="modal-header">
+            <h4 class="modal-title">Result</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeModalAndReset()"></button>
+        </div>
+        <div class="modal-body">
+            <p class="text-center" *ngFor="let participant of this.participants; index as i">{{i+1}}. {{participant.name}} - {{participant.score.total.score}}</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ligt" (click)="closeModalAndReset()">Close</button>
+        </div>
     </div>
-    <div class="modal-body">
-        <p *ngFor="let participant of this.participants; index as i">{{i+1}}. {{participant.name}} - {{participant.score.total.score}}</p>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-ligt" (click)="modal.close('Close click')">Close</button>
+    <div *ngIf="this.participants.length == 1">
+        <div class="modal-header">
+            <h4 class="modal-title">Result</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeModalAndReset()"></button>
+        </div>
+        <div class="modal-body">
+            <p class="text-center">You got {{this.participants[0].score.total.score}} points!!! </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ligt" (click)="closeModalAndReset()">Close</button>
+        </div>
     </div>
 </ng-template>
 
