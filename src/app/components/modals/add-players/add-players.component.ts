@@ -16,6 +16,7 @@ export class AddPlayersComponent implements OnInit {
   @ViewChild('addPlayer', {read: TemplateRef}) addPlayer!: TemplateRef<any>;
 
   public disableButton: boolean = false;
+  public participantCounter: number = 0;
 
   constructor(private formBuilder: FormBuilder, private participantService: ParticipantService, private modalService: NgbModal) { }
 
@@ -29,6 +30,7 @@ export class AddPlayersComponent implements OnInit {
     let name = this.names.value.name?.toString();
     name != undefined ? this.participantService.setParticipant(name) : null
     this.names.setValue({name: ""});
+    this.participantCounter == 3 ? this.disableButton = true : this.participantCounter++
   }
 
   public addPlayerButton(): void {

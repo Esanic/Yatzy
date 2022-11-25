@@ -1,25 +1,29 @@
-<div class="d-flex">
-    <div *ngFor="let die of this.availableDices; index as i">
-        <i *ngIf="die.side == 0" class="btn bi bi-dice-1 transparent-dice"></i>
-        <button type="button" *ngIf="die.side == 1" [disabled]="this.dicesAvailable" class="btn bi bi-dice-1" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 2" [disabled]="this.dicesAvailable" class="btn bi bi-dice-2" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 3" [disabled]="this.dicesAvailable" class="btn bi bi-dice-3" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 4" [disabled]="this.dicesAvailable" class="btn bi bi-dice-4" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 5" [disabled]="this.dicesAvailable" class="btn bi bi-dice-5" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 6" [disabled]="this.dicesAvailable" class="btn bi bi-dice-6" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
+<div class="d-flex flex-row">
+    <div class="d-flex flex-column">
+        <div class="d-flex">
+            <div *ngFor="let die of this.availableDices; index as i">
+                <i *ngIf="die.side == 0" class="btn bi bi-dice-1 transparent-dice"></i>
+                <button type="button" *ngIf="die.side == 1" [disabled]="this.dicesAvailable" class="btn bi bi-dice-1" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 2" [disabled]="this.dicesAvailable" class="btn bi bi-dice-2" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 3" [disabled]="this.dicesAvailable" class="btn bi bi-dice-3" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 4" [disabled]="this.dicesAvailable" class="btn bi bi-dice-4" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 5" [disabled]="this.dicesAvailable" class="btn bi bi-dice-5" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 6" [disabled]="this.dicesAvailable" class="btn bi bi-dice-6" style="font-size:5rem;" (click)="pickDie(i, die.side)"></button>
+            </div>
+        </div>
+        <hr>
+        
+        <div class="d-flex">
+            <div *ngFor="let die of this.savedDices; index as i">
+                <i *ngIf="die.side == 0" class="btn bi bi-dice-1 transparent-dice"></i>
+                <button type="button" *ngIf="die.side == 1" class="btn bi bi-dice-1" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 2" class="btn bi bi-dice-2" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 3" class="btn bi bi-dice-3" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 4" class="btn bi bi-dice-4" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 5" class="btn bi bi-dice-5" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
+                <button type="button" *ngIf="die.side == 6" class="btn bi bi-dice-6" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
+            </div>
+        </div>
     </div>
-</div>
-
-<button type="button" class="btn btn-custom bi bi-play-fill" [disabled]="this.disablePlayButton" (click)="hitDices()"></button>
-
-<div class="d-flex">
-    <div *ngFor="let die of this.savedDices; index as i">
-        <i *ngIf="die.side == 0" class="btn bi bi-dice-1 transparent-dice"></i>
-        <button type="button" *ngIf="die.side == 1" class="btn bi bi-dice-1" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 2" class="btn bi bi-dice-2" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 3" class="btn bi bi-dice-3" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 4" class="btn bi bi-dice-4" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 5" class="btn bi bi-dice-5" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
-        <button type="button" *ngIf="die.side == 6" class="btn bi bi-dice-6" style="font-size:5rem;" (click)="removeDie(i, die.side)"></button>
-    </div>
+    <button type="button" class="btn btn-custom bi bi-play-fill ms-5" [disabled]="this.disablePlayButton" (click)="hitDices()"></button>
 </div>

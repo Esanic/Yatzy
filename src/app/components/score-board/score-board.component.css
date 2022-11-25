@@ -3,14 +3,21 @@
     border-top: none;
     font-weight:600;
     padding:0.3vh 0.5vw;
+    font-size: 0.9rem;
+}
+.scoreboard-header:first-of-type{
+    border-top: 1px solid lightgray
 }
 
 .scoreboard-participant-header {
     border: 1px solid lightgray;
     border-left: none;
-    border-top:none;
     font-weight:600;
     padding:0.3vh 0.5vw;
+    font-size: 0.9rem;
+}
+.scoreboard-header:last-of-type{
+    font-weight:700;
 }
 
 .scoreboard-title {
@@ -18,11 +25,11 @@
 }
 
 .scoreboard-scorerows {
-    min-width:8vw;
+    min-width:7vw;
 }
 
 .scoreboard-participant {
-    min-width:8vw;
+    min-width:7vw;
 }
 
 .scoreboard-not-current-player {
@@ -37,6 +44,10 @@
     border-top: none;
     border-left: none;
     padding:0.3vh 0.5vw;
+    font-size: 0.9rem;
+}
+.scoreboard-points:last-of-type{
+    font-weight:700;
 }
 
 .scoreboard-btn {
