@@ -15,7 +15,7 @@ import { ScoreService } from 'src/app/services/score.service';
   styleUrls: ['./score-board.component.css']
 })
 export class ScoreBoardComponent implements OnInit {
-  public scoreBoardHeaders = ['Aces','Twos','Threes','Fours','Fives','Sixes','Bonus','One pair', 'Two pair', 'Three of a kind', 'Four of a kind', 'Small straight', 'Large straight', 'House', 'Chance', 'Yatzy', 'Total']
+  public scoreBoardHeaders = ['Aces','Twos','Threes','Fours','Fives','Sixes', 'Subtotal', 'Bonus', 'One pair', 'Two pair', 'Three of a kind', 'Four of a kind', 'Small straight', 'Large straight', 'House', 'Chance', 'Yatzy', 'Total']
 
   public participants: Participant[] = [];
   private lastParticipant: Participant = this.participants.slice(-1)[0];
@@ -23,16 +23,22 @@ export class ScoreBoardComponent implements OnInit {
 
   private dice: Die[] = [];
 
+  public possibleScores: number[] = []
+
   private counter: number = 0;
+  public diceHit: boolean = false;
 
   @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
 
   constructor(private diceService: DiceService, private scoreService: ScoreService, private participantService: ParticipantService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.diceService.getDice().subscribe(dice => {
+    this.diceService.getDice().subscribe(async dice => {
       this.dice = dice;
+      this.possibleScores = this.currentParticipant.score.possibleScore(this.scoreBoardHeaders, this.dice);
+      this.diceHit = true;
     })
+    
     this.participantService.getParticipant().subscribe(participant => {
       this.participants.push(new Participant(participant, false, new ScoreBoard(this.diceService, this.scoreService)));
       this.lastParticipant = this.participants.slice(-1)[0];
@@ -56,7 +62,7 @@ export class ScoreBoardComponent implements OnInit {
     if(this.counter >= this.participants.length){
       this.counter = 0;
     }
-    
+    this.possibleScores = [];
     this.setCurrentPlayer();
   }
 
@@ -64,6 +70,7 @@ export class ScoreBoardComponent implements OnInit {
     this.currentParticipant.currentPlayer = false;
     this.currentParticipant = this.participants[this.counter]
     this.currentParticipant.currentPlayer = true;
+    this.diceHit = false;
   }
 
   public closeModalAndReset(): void {
@@ -71,7 +78,10 @@ export class ScoreBoardComponent implements OnInit {
     this.diceService.setReset(true);
     this.participantService.setDisableAddPlayers(false);
     this.participants = [];
-    
+  }
+
+  private test(): void {
+    this.currentParticipant.score
   }
 
 
