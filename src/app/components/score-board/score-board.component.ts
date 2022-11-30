@@ -7,6 +7,7 @@ import { ScoreRow } from 'src/app/models/score-row';
 import { DiceService } from 'src/app/services/dice.service';
 import { ParticipantService } from 'src/app/services/participant.service';
 import { ScoreService } from 'src/app/services/score.service';
+import { SocketService } from 'src/app/services/socket.service';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class ScoreBoardComponent implements OnInit {
 
   @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
 
-  constructor(private diceService: DiceService, private scoreService: ScoreService, private participantService: ParticipantService, private modalService: NgbModal) { }
+  constructor(private socketService: SocketService, private diceService: DiceService, private scoreService: ScoreService, private participantService: ParticipantService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.diceService.getDice().subscribe(async dice => {

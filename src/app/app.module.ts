@@ -25,9 +25,11 @@ const config: SocketIoConfig = {
   ],
   imports: [
     BrowserModule,
+    SocketIoModule.forRoot(config),
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

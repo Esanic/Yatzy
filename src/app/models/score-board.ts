@@ -82,19 +82,19 @@ export class ScoreBoard {
   
         case this.fourOfAKind.name:
           let fourOfAKindArr = this.mappingOccurencies(4);
-          fourOfAKindArr[0] != undefined ? this.threeOfAKind.score = fourOfAKindArr[0][0] * 4 : this.fourOfAKind.score = 0;
+          fourOfAKindArr[0] != undefined ? this.fourOfAKind.score = fourOfAKindArr[0][0] * 4 : this.fourOfAKind.score = 0;
           this.addTotalScoreAndMakeUnselectable(this.fourOfAKind);
           break;
   
         case this.smallStraight.name:
-          let sSArr = this.dice.map(die => die.side)
-          sSArr.includes(1) && sSArr.includes(2) && sSArr.includes(3) && sSArr.includes(4) && sSArr.includes(5) ? this.smallStraight.score = 15 : null;
+          let smallStraightArr = this.dice.map(die => die.side)
+          smallStraightArr.includes(1) && smallStraightArr.includes(2) && smallStraightArr.includes(3) && smallStraightArr.includes(4) && smallStraightArr.includes(5) ? this.smallStraight.score = 15 : null;
           this.addTotalScoreAndMakeUnselectable(this.smallStraight);
           break;
         
         case this.largeStraight.name:
-          let lSArr = this.dice.map(die => die.side)
-          lSArr.includes(2) && lSArr.includes(3) && lSArr.includes(4) && lSArr.includes(5) && lSArr.includes(6) ? this.largeStraight.score = 20 : null;
+          let largeStraightArr = this.dice.map(die => die.side)
+          largeStraightArr.includes(2) && largeStraightArr.includes(3) && largeStraightArr.includes(4) && largeStraightArr.includes(5) && largeStraightArr.includes(6) ? this.largeStraight.score = 20 : null;
           this.addTotalScoreAndMakeUnselectable(this.largeStraight);
           break;
   
@@ -186,13 +186,13 @@ export class ScoreBoard {
             break;
     
           case this.smallStraight.name:
-            let sSArr = this.dice.map(die => die.side)
-            sSArr.includes(1) && sSArr.includes(2) && sSArr.includes(3) && sSArr.includes(4) && sSArr.includes(5) ? possibleScores.push(15) : possibleScores.push(0);
+            let smallStraightArr = this.dice.map(die => die.side)
+            smallStraightArr.includes(1) && smallStraightArr.includes(2) && smallStraightArr.includes(3) && smallStraightArr.includes(4) && smallStraightArr.includes(5) ? possibleScores.push(15) : possibleScores.push(0);
             break;
           
           case this.largeStraight.name:
-            let lSArr = this.dice.map(die => die.side)
-            lSArr.includes(2) && lSArr.includes(3) && lSArr.includes(4) && lSArr.includes(5) && lSArr.includes(6) ? possibleScores.push(20) : possibleScores.push(0);
+            let largeStraightArr = this.dice.map(die => die.side)
+            largeStraightArr.includes(2) && largeStraightArr.includes(3) && largeStraightArr.includes(4) && largeStraightArr.includes(5) && largeStraightArr.includes(6) ? possibleScores.push(20) : possibleScores.push(0);
             break;
     
           case this.house.name:
