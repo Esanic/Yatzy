@@ -8,6 +8,12 @@
 --bs-btn-active-color: white;
 --bs-btn-active-bg: rgb(240, 100, 0);
 --bs-btn-active-border-color: rgb(240, 100, 0);
+font-size:2rem;
+border-radius: 0.75rem;
+display:inline-block;
+width: 8vh;
+height: 8vh;
+margin: auto
 }
 
 .transparent-dice {

@@ -1,0 +1,19 @@
+<button *ngIf="this.disableButton === false" type="button" class="btn btn-primary" style="position:absolute" (click)="this.addPlayerButton()">Add Player</button>
+
+<ng-template #addPlayer let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Add Player</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="names">
+      <label for="name" class="form-label">Name: </label>
+      <input type="text" ngbAutoFocus id="name" class="form-control" (keyup.enter)="setName()" formControlName="name">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="setName()">Add</button>
+    <button type="button" class="btn btn-ligt" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+  
