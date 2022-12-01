@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io'
+import { Participant } from '../models/participant';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,15 @@ import { Socket } from 'ngx-socket-io'
 export class SocketService {
 
   constructor(private socket: Socket) {
-    //create emitter and listeners
+  }
+
+  participants(player: string) {
+    this.socket.emit('participants', player);
+  }
+
+  onParticipants() {
+    return this.socket.fromEvent('participants');
   }
 }
+
 

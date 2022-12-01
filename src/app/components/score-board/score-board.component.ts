@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Die } from 'src/app/models/die';
 import { Participant } from 'src/app/models/participant';
 import { ScoreBoard } from 'src/app/models/score-board';
-import { ScoreRow } from 'src/app/models/score-row';
 import { DiceService } from 'src/app/services/dice.service';
 import { ParticipantService } from 'src/app/services/participant.service';
 import { ScoreService } from 'src/app/services/score.service';
@@ -40,7 +39,8 @@ export class ScoreBoardComponent implements OnInit {
       this.diceHit = true;
     })
     
-    this.participantService.getParticipant().subscribe(participant => {
+    this.socketService.onParticipants().subscribe((participant: any) => {
+      console.log("hej")
       this.participants.push(new Participant(participant, false, new ScoreBoard(this.diceService, this.scoreService)));
       this.lastParticipant = this.participants.slice(-1)[0];
       this.setCurrentPlayer();
@@ -79,10 +79,6 @@ export class ScoreBoardComponent implements OnInit {
     this.diceService.setReset(true);
     this.participantService.setDisableAddPlayers(false);
     this.participants = [];
-  }
-
-  private test(): void {
-    this.currentParticipant.score
   }
 
 
