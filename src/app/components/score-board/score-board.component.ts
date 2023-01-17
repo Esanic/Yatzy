@@ -1,10 +1,11 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Die } from 'src/app/models/die';
-import { Participant } from 'src/app/models/participant';
+import { Player } from 'src/app/models/player';
 import { ScoreBoard } from 'src/app/models/score-board';
 import { DiceService } from 'src/app/services/dice.service';
-import { ParticipantService } from 'src/app/services/participant.service';
+import { PlayerService } from 'src/app/services/player.service';
 import { ScoreService } from 'src/app/services/score.service';
 import { SocketService } from 'src/app/services/socket.service';
 
@@ -17,9 +18,10 @@ import { SocketService } from 'src/app/services/socket.service';
 export class ScoreBoardComponent implements OnInit {
   public scoreBoardHeaders = ['Aces','Twos','Threes','Fours','Fives','Sixes', 'Subtotal', 'Bonus', 'One pair', 'Two pair', 'Three of a kind', 'Four of a kind', 'Small straight', 'Large straight', 'House', 'Chance', 'Yatzy', 'Total']
 
-  public participants: Participant[] = [];
-  private lastParticipant: Participant = this.participants.slice(-1)[0];
-  private currentParticipant: Participant = new Participant('', false, new ScoreBoard(this.diceService, this.scoreService));
+  public players: Player[] = [];
+  public clientPlayer: string = "";
+  private lastPlayer: Player = this.players.slice(-1)[0];
+  private currentPlayer: Player = new Player('', false, new ScoreBoard(this.diceService, this.scoreService));
 
   private dice: Die[] = [];
 
@@ -30,37 +32,40 @@ export class ScoreBoardComponent implements OnInit {
 
   @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
 
-  constructor(private socketService: SocketService, private diceService: DiceService, private scoreService: ScoreService, private participantService: ParticipantService, private modalService: NgbModal) { }
+  constructor(private socketService: SocketService, private diceService: DiceService, private scoreService: ScoreService, private PlayerService: PlayerService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.diceService.getDice().subscribe(async dice => {
+    this.clientPlayer = this.PlayerService.getClientPlayer();
+
+    this.diceService.getDice().subscribe(dice => {
       this.dice = dice;
-      this.possibleScores = this.currentParticipant.score.possibleScore(this.scoreBoardHeaders, this.dice);
+      this.possibleScores = this.currentPlayer.score.possibleScore(this.scoreBoardHeaders, this.dice);
       this.diceHit = true;
-    })
-    
-    this.socketService.onParticipants().subscribe((participant: any) => {
-      console.log("hej")
-      this.participants.push(new Participant(participant, false, new ScoreBoard(this.diceService, this.scoreService)));
-      this.lastParticipant = this.participants.slice(-1)[0];
+    });
+
+    this.socketService.getPlayers().subscribe((players: any) => {
+      players.forEach((player: any) => {
+        this.players.push(new Player(player.name, false, new ScoreBoard(this.diceService, this.scoreService)));
+      });
+      this.lastPlayer = this.players.slice(-1)[0];
       this.setCurrentPlayer();
-    })
+    });
 
     this.scoreService.getEndOfGame().subscribe(bool => {
-      this.participants.sort((a:Participant, b:Participant) => b.score.total.score - a.score.total.score)
+      this.players.sort((a:Player, b:Player) => b.score.total.score - a.score.total.score)
       bool ? this.modalService.open(this.content, {centered: true, animation: true, keyboard: true}) : null;
     })
   }
 
 
   public setScore(name: string): void{
-    this.currentParticipant.score.setScore(name, this.dice);
-    this.lastParticipant.score.checkEndOfGame();
+    this.currentPlayer.score.setScore(name, this.dice);
+    this.lastPlayer.score.checkEndOfGame();
     
-    if(this.counter < this.participants.length){
+    if(this.counter < this.players.length){
       this.counter++;
     }
-    if(this.counter >= this.participants.length){
+    if(this.counter >= this.players.length){
       this.counter = 0;
     }
     this.possibleScores = [];
@@ -68,17 +73,18 @@ export class ScoreBoardComponent implements OnInit {
   }
 
   private setCurrentPlayer(): void {
-    this.currentParticipant.currentPlayer = false;
-    this.currentParticipant = this.participants[this.counter]
-    this.currentParticipant.currentPlayer = true;
+    this.currentPlayer.currentPlayer = false;
+    this.currentPlayer = this.players[this.counter]
+    this.PlayerService.setCurrentPlayer(this.currentPlayer.name);
+    this.currentPlayer.currentPlayer = true;
     this.diceHit = false;
   }
 
   public closeModalAndReset(): void {
     this.modalService.dismissAll()
     this.diceService.setReset(true);
-    this.participantService.setDisableAddPlayers(false);
-    this.participants = [];
+    this.PlayerService.setDisableAddPlayers(false);
+    this.players = [];
   }
 
 

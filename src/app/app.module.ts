@@ -8,6 +8,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DicesComponent } from './components/dices/dices.component';
 import { ScoreBoardComponent } from './components/score-board/score-board.component';
 import { AddPlayersComponent } from './components/add-players/add-players.component';
+import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { RouterModule, Routes } from '@angular/router';
+import { GameComponent } from './pages/game/game.component';
 
 const config: SocketIoConfig = {
   url: environment.socketUrl,
@@ -16,15 +19,23 @@ const config: SocketIoConfig = {
   }
 }
 
+const routes: Routes = [
+  {path: '', component: LandingPageComponent},
+  {path: 'game', component: GameComponent}
+]
+
 @NgModule({
   declarations: [
     AppComponent,
     DicesComponent,
     ScoreBoardComponent,
     AddPlayersComponent,
+    LandingPageComponent,
+    GameComponent,
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot(routes),
     SocketIoModule.forRoot(config),
     NgbModule,
     FormsModule,

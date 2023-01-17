@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Die } from 'src/app/models/die';
 import { DiceService } from 'src/app/services/dice.service';
-import { ParticipantService } from 'src/app/services/participant.service';
+import { PlayerService } from 'src/app/services/player.service';
+import { SocketService } from 'src/app/services/socket.service';
 
 
 @Component({
@@ -11,6 +12,9 @@ import { ParticipantService } from 'src/app/services/participant.service';
 })
 
 export class DicesComponent implements OnInit {
+  public clientPlayer: string = "";
+  public currentPlayer: string = "";
+
   public dieOne = new Die(1, 1, false);
   public dieTwo = new Die(2, 1, false);
   public dieThree = new Die(3, 1, false);
@@ -30,9 +34,11 @@ export class DicesComponent implements OnInit {
   public disableAdd: boolean = false;
   public disablePlayButton: boolean = true;
 
-  constructor(private diceService: DiceService, private participantService: ParticipantService) { }
+  constructor(private diceService: DiceService, private playerService: PlayerService, private socketService: SocketService) { }
 
   ngOnInit(): void {
+    this.clientPlayer = this.playerService.getClientPlayer();
+
     this.diceService.getReset().subscribe(bool => {
       if(bool == true) {
         this.newTurn();
@@ -40,12 +46,21 @@ export class DicesComponent implements OnInit {
       }
     })
 
-    this.participantService.getDisableAddPlayers().subscribe(bool => {
+    this.playerService.getDisableAddPlayers().subscribe(bool => {
       this.disableAdd = bool;
     })
 
-    this.participantService.getParticipant().subscribe(name => {
-      this.disablePlayButton = false;
+    this.playerService.getCurrentPlayer().subscribe(name => {
+      this.currentPlayer = name;
+      this.currentPlayer == this.clientPlayer ? this.disablePlayButton = false : this.disablePlayButton = true;
+      // this.disablePlayButton = false;
+    })
+
+    this.socketService.getDiceHit().subscribe(dice => {
+      console.log(dice);
+      if(!(this.clientPlayer == this.currentPlayer)){
+        this.availableDices = dice;
+      }
     })
   }
 
@@ -104,8 +119,10 @@ export class DicesComponent implements OnInit {
   }
 
   public hitDices(): void {
-    this.disableAdd == false ? this.participantService.setDisableAddPlayers(true) : this.disableAdd = true;
+    this.disableAdd == false ? this.playerService.setDisableAddPlayers(true) : this.disableAdd = true;
     this.availableDices.map(die => die.side != 0 ? die.side = Math.floor(Math.random() * 6) + 1 : null)
+    console.log(this.availableDices);
+    this.socketService.diceHit(this.availableDices);
     this.currentHits += 1;
     this.currentHits >= 3 ? this.disablePlayButton = true : this.disablePlayButton = false;
     this.dicesAvailable = false;

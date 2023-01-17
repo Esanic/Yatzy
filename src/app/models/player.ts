@@ -1,7 +1,6 @@
 import { ScoreBoard } from "./score-board";
 
-
-export class Participant {
+export class Player {
     name: string;
     currentPlayer: boolean;
     score: ScoreBoard;
