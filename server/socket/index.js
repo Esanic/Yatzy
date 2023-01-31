@@ -8,7 +8,8 @@ module.exports = (io) => {
     // let room = 'game-'+counter
 
     io.on('connection', socket => {
-        console.log('new connection'); 
+        console.log('new connection', socket.id); 
+        socket.emit('userID', socket.id)
 
 		socket.on('disconnect', () => {
             let index = participants.findIndex(x => x.sid == socket.id);
@@ -42,11 +43,20 @@ module.exports = (io) => {
             console.log(participants);
             console.log(io.sockets.adapter.rooms.get(room))
         })
+        
         //Dice Hit
         socket.on('diceHit', (dice, room) => {
-            console.log(dice);
-            console.log(room);
             io.to(room).emit('getDice', dice);
+        })
+
+        //Dice Movement
+        socket.on('diceMove', (objWithDiceArrays, room) => {
+            io.to(room).emit('getDiceMovement', objWithDiceArrays);
+        })
+
+        //Next player
+        socket.on('nextPlayer',(scoreRowName, dice, room) => {
+            socket.broadcast.to(room).emit('getNextPlayer', {scoreRowName, dice})
         })
 	})
 

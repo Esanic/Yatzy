@@ -4,39 +4,43 @@
     font-weight:600;
     padding:0.3vh 0.5vw;
     font-size: 0.85rem;
+    min-width:7rem;
 }
 .scoreboard-header:first-of-type{
     border-top: 1px solid lightgray
 }
 
-.scoreboard-participant-header {
+.scoreboard-player-header {
     border: 1px solid lightgray;
     border-left: none;
     font-weight:600;
     padding:0.3vh 0.5vw;
     font-size: 0.85rem;
 }
-.scoreboard-header:last-of-type{
+.scoreboard-header:last-child {
     font-weight:700;
 }
 
 .scoreboard-title {
     border-bottom: 2px solid black;
+    border-right: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+    height:1.5rem;
+    padding-left: 0.5vw;
 }
 
 .scoreboard-scorerows {
-    min-width:7vw;
+    min-width:7rem;
 }
 
-.scoreboard-participant {
-    min-width:7vw;
+.scoreboard-player {
+    min-width:7rem;
 }
 
 .scoreboard-not-current-player {
     color: gray;
     opacity: 50%;
     pointer-events: none;
-
 }
 
 .scoreboard-points{
@@ -46,7 +50,7 @@
     padding:0.3vh 0.5vw;
     font-size: 0.85rem;
 }
-.scoreboard-points:last-of-type{
+.scoreboard-points:last-child{
     font-weight:700;
 }
 

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
@@ -6,23 +7,43 @@ import { SocketService } from 'src/app/services/socket.service';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
   public fullGame: boolean = false;
+
+  private subFullGame$: Subscription = new Subscription;
+  private subGetRoom$: Subscription = new Subscription;
 
   constructor(private socketService: SocketService) { }
 
+
+   /**
+    * Retrieves if the socket-room is full or not and retrieves the socket-room name.
+    * @date 2023-01-31 - 13:20:08
+    * @author Christopher Reineborn
+    *
+    * @returns {*}
+    */
+
   ngOnInit(): void {
-    this.socketService.getRoomFull().subscribe(status => {
+    this.subFullGame$ = this.socketService.getRoomFull().subscribe(status => {
       if(status){
         this.fullGame = true;
-        console.log(this.fullGame);
       }
     })
 
-    this.socketService.getRoomName().subscribe(room => {
+    this.subGetRoom$ = this.socketService.getRoomName().subscribe(room => {
       this.socketService.setRoomName(room);
     })
-    
+  }
+ 
+  /**
+   * Unsubscribes from observables.
+   * @date 2023-01-31 - 13:42:37
+   * @author Christopher Reineborn
+   */
+  ngOnDestroy(): void {
+    this.subFullGame$.unsubscribe();
+    this.subGetRoom$.unsubscribe();
   }
 
 }
