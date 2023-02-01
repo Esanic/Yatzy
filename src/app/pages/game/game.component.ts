@@ -14,6 +14,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private subFullGame$: Subscription = new Subscription;
   private subGetRoom$: Subscription = new Subscription;
   private subAmtOfPlayers$: Subscription = new Subscription;
+  private subDisconnectedInQueue$: Subscription = new Subscription;
 
   constructor(private socketService: SocketService) { }
 
@@ -40,6 +41,10 @@ export class GameComponent implements OnInit, OnDestroy {
     this.subGetRoom$ = this.socketService.getRoomName().subscribe(room => {
       this.socketService.setRoomName(room);
     })
+
+    this.subDisconnectedInQueue$ = this.socketService.getDisconnectedPlayerInQueue().subscribe(amtOfPlayers => {
+      this.amtOfPlayers = Number(amtOfPlayers);
+    })
   }
  
   /**
@@ -51,6 +56,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.subFullGame$.unsubscribe();
     this.subGetRoom$.unsubscribe();
     this.subAmtOfPlayers$.unsubscribe();
+    this.subDisconnectedInQueue$.unsubscribe();
   }
 
 }

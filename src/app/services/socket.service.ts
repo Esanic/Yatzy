@@ -156,6 +156,10 @@ export class SocketService {
   getDisconnectedPlayer(){
     return this.socket.fromEvent<string>('disconnected');
   }
+  
+  getDisconnectedPlayerInQueue(){
+    return this.socket.fromEvent<number>('disconnectedInQueue')
+  }
 }
 
 
