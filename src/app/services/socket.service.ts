@@ -148,15 +148,6 @@ export class SocketService {
   getUserID(){
     return this.socket.fromEvent<string>('userID');
   }
-
-
-
-
-
-
-  
-
-
 }
 
 

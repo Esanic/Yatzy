@@ -17,6 +17,7 @@ import { SocketService } from 'src/app/services/socket.service';
 })
 export class AddPlayersComponent implements OnInit {
   public sid: string = "";
+  public onlineCheck: boolean = false;
   public nameForm = this.formBuilder.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9åäöÅÄÖ]{3,20}')]]
   })
@@ -40,6 +41,7 @@ export class AddPlayersComponent implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     this.sid = await firstValueFrom(this.socketService.getUserID());
+    this.sid ? this.onlineCheck = true : false;
   }
 
  /**
@@ -52,7 +54,7 @@ export class AddPlayersComponent implements OnInit {
   * @returns {*}
   */
   public setName(): void {
-    if(this.nameForm.valid){
+    if(this.nameForm.valid && this.onlineCheck){
       const name = this.nameForm.controls['name'].value!;
       const clientPlayer = new Player(name, this.sid, false, new ScoreBoard(this.diceService, this.scoreService));
       if(name){

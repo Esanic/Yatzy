@@ -4,9 +4,19 @@
   </div>
   <div class="body">
     <form [formGroup]="nameForm" (ngSubmit)="setName()" class="col-3 mx-auto">
-      <label for="name" class="form-label">Name: </label>
+      <!-- <label for="name" class="form-label">Name: </label> -->
       <input type="text" ngbAutoFocus id="name" class="form-control" (keyup.enter)="setName()" formControlName="name">
-      <button type="submit" class="btn btn-primary mt-3" [disabled]="!(nameForm.valid)">Start game</button>
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!(nameForm.valid) && this.onlineCheck">Join game</button>
     </form>
+    <div class="mx-auto my-3">
+      <div *ngIf="this.onlineCheck === true" class="w-25 mx-auto">
+        <i class="bi bi-check-circle-fill" style="color: green"></i>
+        Server online
+      </div>
+      <div *ngIf="this.onlineCheck === false" class="w-25 mx-auto">
+        <i class="bi bi-x-circle-fill" style="color: red"></i>
+        Server offline
+      </div>
+    </div>
   </div>
 </div>
