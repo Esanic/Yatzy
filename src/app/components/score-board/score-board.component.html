@@ -9,28 +9,28 @@
     <div class="col-2 d-flex flex-column" *ngFor="let Player of players">
         <div class="scoreboard-title scoreboard-player-header text-truncate">{{Player.name}}</div>
         
-        <div *ngIf="Player.currentPlayer == true && Player.name == this.clientPlayer.name">
+        <div *ngIf="Player.currentPlayer === true && Player.socketId === this.clientPlayer.socketId">
             <div class="scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
                 {{scoreRow.score}}
-                <span *ngIf="scoreRow.selectable == true && this.diceHit == true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
-                <button *ngIf="scoreRow.selectable == true" type="button" class="btn scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+                <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
+                <button *ngIf="scoreRow.selectable === true" type="button" class="btn scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
             </div>
         </div>
 
-        <div *ngIf="Player.currentPlayer == false && Player.name == this.clientPlayer.name">
+        <div *ngIf="Player.currentPlayer === false && Player.socketId === this.clientPlayer.socketId">
             <div class="scoreboard-not-current-player scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of Player.score.scoreBoard">
                 {{scoreRow.score}}
-                <button *ngIf="scoreRow.selectable == true" type="button" class="btn scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+                <button *ngIf="scoreRow.selectable === true" type="button" class="btn scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
             </div>
         </div>
 
-        <div *ngIf="Player.currentPlayer == true && Player.name != this.clientPlayer.name">
+        <div *ngIf="Player.currentPlayer === true && Player.socketId !== this.clientPlayer.socketId">
             <div class="scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
                 {{scoreRow.score}}
-                <span *ngIf="scoreRow.selectable == true && this.diceHit == true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
+                <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
             </div>
         </div>
-        <div *ngIf="Player.currentPlayer == false && Player.name != this.clientPlayer.name">
+        <div *ngIf="Player.currentPlayer === false && Player.socketId !== this.clientPlayer.socketId">
             <div class="scoreboard-not-current-player scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of Player.score.scoreBoard">
                 {{scoreRow.score}}
             </div>
@@ -52,7 +52,7 @@
             <button type="button" class="btn btn-ligt" (click)="closeModalAndReset()">Close</button>
         </div>
     </div>
-    <!-- <div *ngIf="this.players.length == 1">
+    <!-- <div *ngIf="this.players.length === 1">
         <div class="modal-header">
             <h4 class="modal-title">Result</h4>
             <button type="button" class="btn-close" aria-label="Close" (click)="closeModalAndReset()"></button>
