@@ -8,6 +8,7 @@ import { Die } from '../models/die';
 export class DiceService {
   public dice = new Subject<Die[]>();
   public reset = new Subject<boolean>();
+  public newTurn = new Subject<boolean>();
 
   constructor() { }
 
@@ -25,5 +26,13 @@ export class DiceService {
 
   public getReset(): Observable<boolean> {
     return this.reset.asObservable();
+  }
+
+  public setNewTurn(reset: boolean): void {
+    this.newTurn.next(reset);
+  }
+
+  public getNewTurn(): Observable<boolean> {
+    return this.newTurn.asObservable();
   }
 }

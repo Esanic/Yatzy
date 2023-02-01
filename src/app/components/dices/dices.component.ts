@@ -32,11 +32,12 @@ export class DicesComponent implements OnInit, OnDestroy {
   public diceAvailable: boolean = true;
   public disablePlayButton: boolean = true;
 
-  private subDiceReset$: Subscription = new Subscription;
+  private subNewTurn$: Subscription = new Subscription;
+  private subResetDice$: Subscription = new Subscription;
   private subCurrentPlayer$: Subscription = new Subscription;
   private subDiceHit$: Subscription = new Subscription;
   private subDiceMovement$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.subDiceReset$, this.subCurrentPlayer$, this.subDiceHit$, this.subDiceMovement$];
+  private subscriptions: Subscription[] = [this.subNewTurn$, this.subResetDice$, this.subCurrentPlayer$, this.subDiceHit$, this.subDiceMovement$];
 
   constructor(
     private diceService: DiceService, 
@@ -53,9 +54,16 @@ export class DicesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.clientPlayer = this.playerService.getClientPlayer();
 
-    this.subDiceReset$ = this.diceService.getReset().subscribe(bool => {
+    this.subNewTurn$ = this.diceService.getNewTurn().subscribe(bool => {
       if(bool) {
         this.newTurn();
+        this.diceService.setNewTurn(false);
+      }
+    })
+
+    this.subResetDice$ = this.diceService.getReset().subscribe(bool =>{
+      if(bool){
+        this.resetDices();
         this.diceService.setReset(false);
       }
     })
@@ -221,6 +229,18 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.currentHits = 0;
     this.diceAvailable = true;
     this.disablePlayButton = false;
+  }
+
+  private resetDices(): void {
+    this.dieOne = new Die(1, 1, false);
+    this.dieTwo = new Die(2, 1, false);
+    this.dieThree = new Die(3, 1, false);
+    this.dieFour = new Die(4, 1, false);
+    this.dieFive = new Die(5, 1, false);
+    this.savedDice = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
+    this.availableDice = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
+    this.finalDice = [...this.availableDice];
+    this.currentHits = 0;
   }
 
 }

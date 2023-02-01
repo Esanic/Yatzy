@@ -9,9 +9,11 @@ import { SocketService } from 'src/app/services/socket.service';
 })
 export class GameComponent implements OnInit, OnDestroy {
   public fullGame: boolean = false;
+  public amtOfPlayers: number = 1;
 
   private subFullGame$: Subscription = new Subscription;
   private subGetRoom$: Subscription = new Subscription;
+  private subAmtOfPlayers$: Subscription = new Subscription;
 
   constructor(private socketService: SocketService) { }
 
@@ -31,6 +33,10 @@ export class GameComponent implements OnInit, OnDestroy {
       }
     })
 
+    this.subAmtOfPlayers$ = this.socketService.getAmtOfPlayersInRoom().subscribe(amtOfPlayers => {
+      this.amtOfPlayers = Number(amtOfPlayers);
+    })
+
     this.subGetRoom$ = this.socketService.getRoomName().subscribe(room => {
       this.socketService.setRoomName(room);
     })
@@ -44,6 +50,7 @@ export class GameComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subFullGame$.unsubscribe();
     this.subGetRoom$.unsubscribe();
+    this.subAmtOfPlayers$.unsubscribe();
   }
 
 }

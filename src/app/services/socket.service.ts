@@ -102,6 +102,10 @@ export class SocketService {
     return this.socket.fromEvent('players');
   }
 
+  getAmtOfPlayersInRoom(){
+    return this.socket.fromEvent('amtOfPlayers')
+  }
+
   
   /**
    * Distributes the array of dice that was hit from the backend.
@@ -147,6 +151,10 @@ export class SocketService {
    */
   getUserID(){
     return this.socket.fromEvent<string>('userID');
+  }
+
+  getDisconnectedPlayer(){
+    return this.socket.fromEvent<string>('disconnected');
   }
 }
 

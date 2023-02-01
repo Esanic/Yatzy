@@ -36,7 +36,8 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   private subGetPlayers$: Subscription = new Subscription;
   private subGetNextPlayer$: Subscription = new Subscription;
   private subGetEndOfGame$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.subGetDice$, this.subGetPlayers$, this.subGetNextPlayer$, this.subGetEndOfGame$]
+  private subDisconnectedPlayer$: Subscription = new Subscription;
+  private subscriptions: Subscription[] = [this.subGetDice$, this.subGetPlayers$, this.subGetNextPlayer$, this.subGetEndOfGame$, this.subDisconnectedPlayer$]
 
   @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
 
@@ -80,6 +81,21 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.subGetEndOfGame$ = this.scoreService.getEndOfGame().subscribe(bool => {
       this.players.sort((a:Player, b:Player) => b.score.total.score - a.score.total.score)
       bool ? this.modalService.open(this.content, {centered: true, animation: true, keyboard: true}) : null;
+    })
+
+    this.subDisconnectedPlayer$ = this.socketService.getDisconnectedPlayer().subscribe(socketID => {
+      let disconnectedPlayer = this.players.findIndex(player => player.socketId === socketID);
+      
+      if(disconnectedPlayer !== -1){
+        if(this.currentPlayerCounter === disconnectedPlayer){
+          this.diceService.setReset(true);
+        }
+        else if(this.currentPlayerCounter > disconnectedPlayer){
+          this.currentPlayerCounter--;
+        }
+        this.players.splice(disconnectedPlayer, 1); 
+        this.setCurrentPlayer();
+      }
     })
   }
 
@@ -149,7 +165,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    */
   public closeModalAndReset(): void {
     this.modalService.dismissAll()
-    this.diceService.setReset(true);
+    this.diceService.setNewTurn(true);
     this.players = [];
     this._router.navigate([''], {skipLocationChange: true});
 

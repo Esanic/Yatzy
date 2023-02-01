@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    background-image: url(./assets/images/dicebackground.png);
+}
+
+.bg-250 {
+    background-color: rgb(250,250,250)
+}

@@ -1,5 +1,6 @@
 .not-full-game{
-    background-color: gray;
-    opacity:50%;
+    background-color: lightgray;
+    opacity: 0.2;
     pointer-events:none;
+
 }

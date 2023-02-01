@@ -131,7 +131,7 @@ export class ScoreBoard {
         Object.assign(this.bonus, {score: 35, bonusApplied: true})
         this.total.score += this.bonus.score;
       }
-      this.diceService.setReset(true);
+      this.diceService.setNewTurn(true);
     }
 
     
