@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
+import { PlayerService } from 'src/app/services/player.service';
 import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
@@ -10,13 +11,16 @@ import { SocketService } from 'src/app/services/socket.service';
 export class GameComponent implements OnInit, OnDestroy {
   public fullGame: boolean = false;
   public amtOfPlayers: number = 1;
+  public maxPlayers: number = 0;
 
   private subFullGame$: Subscription = new Subscription;
   private subGetRoom$: Subscription = new Subscription;
   private subAmtOfPlayers$: Subscription = new Subscription;
   private subDisconnectedInQueue$: Subscription = new Subscription;
+  private subMaxPlayers$: Subscription = new Subscription;
+  private subscriptions: Subscription[] = [this.subAmtOfPlayers$, this.subDisconnectedInQueue$, this.subFullGame$, this.subGetRoom$, this.subMaxPlayers$]
 
-  constructor(private socketService: SocketService) { }
+  constructor(private socketService: SocketService, private playerService: PlayerService) { }
 
 
    /**
@@ -28,6 +32,10 @@ export class GameComponent implements OnInit, OnDestroy {
     */
 
   ngOnInit(): void {
+    this.subMaxPlayers$ = this.playerService.getChosenMaxPlayers().subscribe(players => {
+      this.maxPlayers = players;
+    })
+
     this.subFullGame$ = this.socketService.getRoomFull().subscribe(status => {
       if(status){
         this.fullGame = true;
@@ -42,9 +50,21 @@ export class GameComponent implements OnInit, OnDestroy {
       this.socketService.setRoomName(room);
     })
 
-    this.subDisconnectedInQueue$ = this.socketService.getDisconnectedPlayerInQueue().subscribe(amtOfPlayers => {
-      this.amtOfPlayers = Number(amtOfPlayers);
-    })
+    if(this.maxPlayers === 2){
+      this.subDisconnectedInQueue$ = this.socketService.getDisconnectedPlayerInTwoQueue().subscribe(amtOfPlayers => {
+        this.amtOfPlayers = amtOfPlayers;
+      })
+    }
+    if(this.maxPlayers === 3){
+      this.subDisconnectedInQueue$ = this.socketService.getDisconnectedPlayerInThreeQueue().subscribe(amtOfPlayers => {
+        this.amtOfPlayers = amtOfPlayers;
+      })
+    }
+    if(this.maxPlayers === 4){
+      this.subDisconnectedInQueue$ = this.socketService.getDisconnectedPlayerInFourQueue().subscribe(amtOfPlayers => {
+        this.amtOfPlayers = amtOfPlayers;
+      })
+    }
   }
  
   /**
@@ -53,10 +73,9 @@ export class GameComponent implements OnInit, OnDestroy {
    * @author Christopher Reineborn
    */
   ngOnDestroy(): void {
-    this.subFullGame$.unsubscribe();
-    this.subGetRoom$.unsubscribe();
-    this.subAmtOfPlayers$.unsubscribe();
-    this.subDisconnectedInQueue$.unsubscribe();
+    this.subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    })
   }
 
 }

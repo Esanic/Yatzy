@@ -1,11 +1,32 @@
 <div class="mx-auto bg-250 col-sm-4 col-6 rounded-bottom">
   <div class="header">
-    <h4 class="modal-title mx-auto text-center">Enter your name</h4>
+    <h4 class="modal-title mx-auto text-center">Fill out to start playing!</h4>
   </div>
   <div class="body">
     <form [formGroup]="nameForm" (ngSubmit)="setName()" class=" col-9 mx-auto">
-      <!-- <label for="name" class="form-label">Name: </label> -->
-      <input type="text" ngbAutoFocus id="name" class="form-control" (keyup.enter)="setName()" formControlName="name">
+      <label for="name" class="form-label">Name: </label>
+      <input type="text" ngbAutoFocus id="name" class="form-control" formControlName="name">
+      
+      <label for="maxPlayers" class="form-label">Max players: </label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="2" id="twoPlayer" name="maxPlayers" formControlName="maxPlayers">
+        <label class="form-check-label" for="twoPlayer">
+          2 Players
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="3" id="twoPlayer" name="maxPlayers" formControlName="maxPlayers">
+        <label class="form-check-label" for="twoPlayer">
+          3 Players
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" value="4" id="twoPlayer" name="maxPlayers" formControlName="maxPlayers">
+        <label class="form-check-label" for="twoPlayer">
+          4 Players
+        </label>
+      </div>
+
       <button type="submit" class="btn btn-primary mt-3" [disabled]="!(nameForm.valid) && this.onlineCheck">Join game</button>
     </form>
     <div class="mx-auto my-3">

@@ -20,8 +20,8 @@ export class SocketService {
    *
    * @param {string} player - name of the player
    */
-  joinRoom(player: string) {
-    this.socket.emit('joinRoom', player);
+  joinRoom(player: string, maxPlayers: number) {
+    this.socket.emit('joinRoom', player, maxPlayers);
   }
 
   
@@ -157,8 +157,14 @@ export class SocketService {
     return this.socket.fromEvent<string>('disconnected');
   }
   
-  getDisconnectedPlayerInQueue(){
-    return this.socket.fromEvent<number>('disconnectedInQueue')
+  getDisconnectedPlayerInTwoQueue(){
+    return this.socket.fromEvent<number>('disconnectedInQueueTwo')
+  }
+  getDisconnectedPlayerInThreeQueue(){
+    return this.socket.fromEvent<number>('disconnectedInQueueThree')
+  }
+  getDisconnectedPlayerInFourQueue(){
+    return this.socket.fromEvent<number>('disconnectedInQueueFour')
   }
 }
 

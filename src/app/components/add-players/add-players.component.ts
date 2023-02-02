@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, max } from 'rxjs';
 import { Player } from 'src/app/models/player';
 import { ScoreBoard } from 'src/app/models/score-board';
 import { DiceService } from 'src/app/services/dice.service';
@@ -19,7 +19,8 @@ export class AddPlayersComponent implements OnInit {
   public sid: string = "";
   public onlineCheck: boolean = false;
   public nameForm = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9åäöÅÄÖ]{3,20}')]]
+    name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9åäöÅÄÖ]{3,20}')]],
+    maxPlayers: ['', [Validators.required]]
   })
 
   constructor(
@@ -32,7 +33,7 @@ export class AddPlayersComponent implements OnInit {
   ) {}
 
   /**
-   * Retrieves the clients socket ID from the backend with the help of a promise
+   * Retrieves the clients socket ID from the backend with the help of a promise.
    * @date 2023-01-31 - 11:36:24
    * @author Christopher Reineborn
    *
@@ -57,12 +58,17 @@ export class AddPlayersComponent implements OnInit {
     if(this.nameForm.valid && this.onlineCheck){
       const name = this.nameForm.controls['name'].value!;
       const clientPlayer = new Player(name, this.sid, false, new ScoreBoard(this.diceService, this.scoreService));
+      const maxPlayers = Number(this.nameForm.controls['maxPlayers'].value)
+      this.playerService.setChosenMaxPlayers(maxPlayers);      
+      console.log(maxPlayers);
+
       if(name){
         this.playerService.setClientPlayer(clientPlayer);
-        this.socketService.joinRoom(name);
+
+        this.socketService.joinRoom(name, maxPlayers);
         this._router.navigate(['game'], {skipLocationChange: true});
       }
-      this.nameForm.setValue({name: ""});
+      this.nameForm.patchValue({name: ""});
     }
   }
   

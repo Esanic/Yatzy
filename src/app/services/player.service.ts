@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Player } from '../models/player';
 import { ScoreBoard } from '../models/score-board';
 
@@ -9,6 +9,7 @@ import { ScoreBoard } from '../models/score-board';
 export class PlayerService {
   private clientPlayer: Partial<Player> = {};
   private currentPlayer = new Subject<Player>();
+  private chosenMaxPlayers = new BehaviorSubject<number>(0);
 
   constructor() { }
 
@@ -26,5 +27,13 @@ export class PlayerService {
 
   public getCurrentPlayer(): Observable<Player> {
     return this.currentPlayer.asObservable();
+  }
+
+  public setChosenMaxPlayers(maxPlayers: any): void {
+    this.chosenMaxPlayers.next(maxPlayers);
+  }
+
+  public getChosenMaxPlayers(): Observable<any> {
+    return this.chosenMaxPlayers.asObservable();
   }
 }
