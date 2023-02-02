@@ -1,8 +1,8 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { firstValueFrom, max } from 'rxjs';
+import { firstValueFrom, max, Subscription, take } from 'rxjs';
 import { Player } from 'src/app/models/player';
 import { ScoreBoard } from 'src/app/models/score-board';
 import { DiceService } from 'src/app/services/dice.service';
@@ -15,13 +15,16 @@ import { SocketService } from 'src/app/services/socket.service';
   templateUrl: './add-players.component.html',
   styleUrls: ['./add-players.component.css']
 })
-export class AddPlayersComponent implements OnInit {
+export class AddPlayersComponent implements OnInit, OnDestroy {
   public sid: string = "";
   public onlineCheck: boolean = false;
   public nameForm = this.formBuilder.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9åäöÅÄÖ]{3,20}')]],
     maxPlayers: ['', [Validators.required]]
   })
+
+  private subOnlineCheck$: Subscription = new Subscription;
+  private subUserId$: Subscription = new Subscription;
 
   constructor(
     private _router: Router, 
@@ -33,16 +36,25 @@ export class AddPlayersComponent implements OnInit {
   ) {}
 
   /**
-   * Retrieves the clients socket ID from the backend with the help of a promise.
-   * @date 2023-01-31 - 11:36:24
+   * Retrieves the clients socket ID from the backend.
+   * Fetches wether backend is online or not
+   * @date 2023-02-02 - 12:41:07
    * @author Christopher Reineborn
-   *
-   * @async
-   * @returns {Promise<void>}
    */
-  async ngOnInit(): Promise<void> {
-    this.sid = await firstValueFrom(this.socketService.getUserID());
-    this.sid ? this.onlineCheck = true : false;
+  ngOnInit(): void {
+    this.socketService.triggerOnlineCheck(true);
+    this.subOnlineCheck$ = this.socketService.getOnlineCheck().subscribe(online => {
+      this.onlineCheck = online;
+    })
+
+    this.subUserId$ = this.socketService.getUserID().subscribe(userID => {
+      this.sid = userID;
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.subOnlineCheck$.unsubscribe();
+    this.subUserId$.unsubscribe();
   }
 
  /**
@@ -59,16 +71,23 @@ export class AddPlayersComponent implements OnInit {
       const name = this.nameForm.controls['name'].value!;
       const clientPlayer = new Player(name, this.sid, false, new ScoreBoard(this.diceService, this.scoreService));
       const maxPlayers = Number(this.nameForm.controls['maxPlayers'].value)
-      this.playerService.setChosenMaxPlayers(maxPlayers);      
-      console.log(maxPlayers);
-
-      if(name){
-        this.playerService.setClientPlayer(clientPlayer);
-
+      this.playerService.setChosenMaxPlayers(maxPlayers);
+      if(maxPlayers > 1){
         this.socketService.joinRoom(name, maxPlayers);
-        this._router.navigate(['game'], {skipLocationChange: true});
       }
-      this.nameForm.patchValue({name: ""});
+      if(maxPlayers === 1){
+
+      }
+      this.nameForm.patchValue({
+        name: "",
+        maxPlayers: ""
+      });
+
+      
+
+      this.playerService.setClientPlayer(clientPlayer);
+      this._router.navigate(['game'], {skipLocationChange: true});
+
     }
   }
   

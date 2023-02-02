@@ -13,6 +13,9 @@ export class SocketService {
 
   //Emits
 
+  triggerOnlineCheck(x: any){
+    this.socket.emit('checkOnline', x);
+  }
   /**
    * Emits the name the user typed in.
    * @date 2023-01-31 - 14:58:21
@@ -91,6 +94,7 @@ export class SocketService {
     return this.socket.fromEvent<boolean>('fullGame');
   }
 
+  
   /**
    * Distributes the array of players in the game room from the backend.
    * @date 2023-01-31 - 15:11:04
@@ -156,7 +160,7 @@ export class SocketService {
   getDisconnectedPlayer(){
     return this.socket.fromEvent<string>('disconnected');
   }
-  
+
   getDisconnectedPlayerInTwoQueue(){
     return this.socket.fromEvent<number>('disconnectedInQueueTwo')
   }
@@ -165,6 +169,10 @@ export class SocketService {
   }
   getDisconnectedPlayerInFourQueue(){
     return this.socket.fromEvent<number>('disconnectedInQueueFour')
+  }
+
+  getOnlineCheck(){
+    return this.socket.fromEvent<boolean>('online');
   }
 }
 

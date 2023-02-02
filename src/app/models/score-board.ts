@@ -271,7 +271,8 @@ export class ScoreBoard {
      * @returns {any[]} - array of values grouped with occurencies of said value.
      */
     private mapOccurencies(desiredOccurencies: number): any[] {
-      let arr = this.dice.map(die => die.side);
+      let i = 0;
+      let arr = this.dice.map(die => die.side != 0 ? die.side : i++);
       const map = arr.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
       
       let pairArr = []

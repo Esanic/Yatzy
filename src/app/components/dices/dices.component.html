@@ -2,7 +2,8 @@
     <div class="d-flex flex-column col-10">
         <div class="d-flex w-auto justify-content-between">
             <div *ngFor="let die of this.availableDice; index as i">
-                <i *ngIf="die.side === 0" class="btn-dice display-2 bi bi-dice-1 transparent-dice"></i>
+                <button type="button" *ngIf="die.side === 0" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 display-2" (click)="pickDie(i)"></button>
+                <i *ngIf="die.side === -1" class="btn-dice display-2 bi bi-dice-1 transparent-dice"></i>
                 <button type="button" *ngIf="die.side === 1" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 display-2" (click)="pickDie(i)"></button>
                 <button type="button" *ngIf="die.side === 2" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-2 display-2" (click)="pickDie(i)"></button>
                 <button type="button" *ngIf="die.side === 3" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-3 display-2" (click)="pickDie(i)"></button>
@@ -16,7 +17,7 @@
         
         <div class="d-flex w-auto justify-content-between">
             <div *ngFor="let die of this.savedDice; index as i">
-                <i *ngIf="die.side === 0" class="btn-dice display-2 bi bi-dice-1 transparent-dice"></i>
+                <i *ngIf="die.side === -1" class="btn-dice display-2 bi bi-dice-1 transparent-dice"></i>
                 <button type="button" *ngIf="die.side === 1" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 display-2" (click)="removeDie(i)"></button>
                 <button type="button" *ngIf="die.side === 2" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-2 display-2" (click)="removeDie(i)"></button>
                 <button type="button" *ngIf="die.side === 3" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-3 display-2" (click)="removeDie(i)"></button>

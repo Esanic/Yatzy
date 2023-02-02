@@ -2,7 +2,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+import { Subscription, pipe, take } from 'rxjs';
 import { Die } from 'src/app/models/die';
 import { Player } from 'src/app/models/player';
 import { ScoreBoard } from 'src/app/models/score-board';
@@ -66,13 +66,22 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
       this.diceHit = true;
     });
 
-    this.subGetPlayers$ = this.socketService.getPlayers().subscribe((players: any) => {
-      players.map((player: any) => {
-        this.players.push(new Player(player.name, player.sid, false, new ScoreBoard(this.diceService, this.scoreService)));
-      });
-      this.lastPlayer = this.players.slice(-1)[0];
-      this.setCurrentPlayer();
-    });
+    this.playerService.getChosenMaxPlayers().subscribe(maxPlayers => {
+      if(maxPlayers === 1){
+        this.players.push(this.playerService.getClientPlayer());
+        this.lastPlayer = this.players.slice(-1)[0];
+        this.setCurrentPlayer();
+      }
+      if(maxPlayers > 1){
+        this.subGetPlayers$ = this.socketService.getPlayers().subscribe((players: any) => {
+          players.map((player: any) => {
+            this.players.push(new Player(player.name, player.sid, false, new ScoreBoard(this.diceService, this.scoreService)));
+          });
+          this.lastPlayer = this.players.slice(-1)[0];
+          this.setCurrentPlayer();
+        });
+      }
+    })
 
     this.subGetNextPlayer$ = this.socketService.getNextPlayer().subscribe((obj: any) => {
       this.setScore(obj.scoreRowName, obj.dice);
@@ -166,6 +175,8 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   public closeModalAndReset(): void {
     this.modalService.dismissAll()
     this.diceService.setNewTurn(true);
+    this.playerService.setChosenMaxPlayers(0);
+    this.playerService.setClientPlayer(new Player("", "", false, new ScoreBoard(this.diceService, this.scoreService)))
     this.players = [];
     this._router.navigate([''], {skipLocationChange: true});
 

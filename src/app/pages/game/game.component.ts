@@ -34,6 +34,10 @@ export class GameComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subMaxPlayers$ = this.playerService.getChosenMaxPlayers().subscribe(players => {
       this.maxPlayers = players;
+
+      if(this.maxPlayers === 1){
+        this.fullGame = true;
+      }
     })
 
     this.subFullGame$ = this.socketService.getRoomFull().subscribe(status => {

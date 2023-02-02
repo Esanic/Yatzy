@@ -22,7 +22,7 @@ export class DicesComponent implements OnInit, OnDestroy {
   public dieThree = new Die(3, 1, false);
   public dieFour = new Die(4, 1, false);
   public dieFive = new Die(5, 1, false);
-  public diePlaceholder = new Die(0, 0, false);
+  public diePlaceholder = new Die(0, -1, false);
 
   public availableDice: Die[] = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
   public savedDice: Die[] = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
@@ -200,7 +200,7 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @public
    */
   public hitDices(): void {
-    this.availableDice.map(die => die.side != 0 ? die.side = Math.floor(Math.random() * 6) + 1 : null)
+    this.availableDice.map(die => die.side != -1 ? die.side = Math.floor(Math.random() * 6) + 1 : null)
     this.currentHits += 1;
     this.currentHits >= 3 ? this.disablePlayButton = true : this.disablePlayButton = false;
     this.diceAvailable = false;
@@ -218,25 +218,26 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @private
    */
   private newTurn(): void {
-    this.dieOne = new Die(1, 1, false);
-    this.dieTwo = new Die(2, 1, false);
-    this.dieThree = new Die(3, 1, false);
-    this.dieFour = new Die(4, 1, false);
-    this.dieFive = new Die(5, 1, false);
+    this.dieOne = new Die(1, 0, false);
+    this.dieTwo = new Die(2, 0, false);
+    this.dieThree = new Die(3, 0, false);
+    this.dieFour = new Die(4, 0, false);
+    this.dieFive = new Die(5, 0, false);
     this.savedDice = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
     this.availableDice = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
     this.finalDice = [...this.availableDice];
+    this.diceService.setDice(this.finalDice);
     this.currentHits = 0;
     this.diceAvailable = true;
     this.disablePlayButton = false;
   }
 
   private resetDices(): void {
-    this.dieOne = new Die(1, 1, false);
-    this.dieTwo = new Die(2, 1, false);
-    this.dieThree = new Die(3, 1, false);
-    this.dieFour = new Die(4, 1, false);
-    this.dieFive = new Die(5, 1, false);
+    this.dieOne = new Die(1, 0, false);
+    this.dieTwo = new Die(2, 0, false);
+    this.dieThree = new Die(3, 0, false);
+    this.dieFour = new Die(4, 0, false);
+    this.dieFive = new Die(5, 0, false);
     this.savedDice = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
     this.availableDice = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
     this.finalDice = [...this.availableDice];
