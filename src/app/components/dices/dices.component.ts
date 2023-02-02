@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { Die } from 'src/app/models/die';
 import { Player } from 'src/app/models/player';
 import { DiceService } from 'src/app/services/dice.service';
@@ -16,6 +16,7 @@ import { SocketService } from 'src/app/services/socket.service';
 export class DicesComponent implements OnInit, OnDestroy {
   public clientPlayer: Partial<Player> = {};
   public currentPlayer: Partial<Player> = {};
+  public chosenMaxPlayer: number = 0;
 
   public dieOne = new Die(1, 1, false);
   public dieTwo = new Die(2, 1, false);
@@ -51,7 +52,7 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @date 2023-01-31 - 12:00:49
    * @author Christopher Reineborn
    */
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.clientPlayer = this.playerService.getClientPlayer();
 
     this.subNewTurn$ = this.diceService.getNewTurn().subscribe(bool => {
@@ -89,6 +90,8 @@ export class DicesComponent implements OnInit, OnDestroy {
       })
       this.savedDice = [...objWithArrs.savedDice];
     })
+
+    this.chosenMaxPlayer = await firstValueFrom(this.playerService.getChosenMaxPlayers());
   }
 
   /**
@@ -226,10 +229,11 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.savedDice = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
     this.availableDice = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
     this.finalDice = [...this.availableDice];
-    this.diceService.setDice(this.finalDice);
     this.currentHits = 0;
     this.diceAvailable = true;
     this.disablePlayButton = false;
+    
+    this.chosenMaxPlayer === 1 ? this.diceService.setDice(this.finalDice) : null;
   }
 
   private resetDices(): void {

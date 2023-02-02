@@ -31,11 +31,11 @@ export class PlayerService {
     return this.currentPlayer.asObservable();
   }
 
-  public setChosenMaxPlayers(maxPlayers: any): void {
+  public setChosenMaxPlayers(maxPlayers: number): void {
     this.chosenMaxPlayers.next(maxPlayers);
   }
 
-  public getChosenMaxPlayers(): Observable<any> {
+  public getChosenMaxPlayers(): Observable<number> {
     return this.chosenMaxPlayers.asObservable();
   }
 }

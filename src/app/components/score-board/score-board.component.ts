@@ -84,6 +84,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     })
 
     this.subGetNextPlayer$ = this.socketService.getNextPlayer().subscribe((obj: any) => {
+      console.log(obj);
       this.setScore(obj.scoreRowName, obj.dice);
     })
 
