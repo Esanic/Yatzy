@@ -218,15 +218,7 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @private
    */
   private newTurn(): void {
-    this.dieOne = new Die(1, 0, false);
-    this.dieTwo = new Die(2, 0, false);
-    this.dieThree = new Die(3, 0, false);
-    this.dieFour = new Die(4, 0, false);
-    this.dieFive = new Die(5, 0, false);
-    this.savedDice = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
-    this.availableDice = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
-    this.finalDice = [...this.availableDice];
-    this.currentHits = 0;
+    this.resetDices();
     this.diceAvailable = true;
     this.disablePlayButton = false;
     
