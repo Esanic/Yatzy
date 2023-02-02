@@ -33,7 +33,7 @@
         </label>
       </div>
 
-      <button type="submit" class="btn btn-primary mt-3" [disabled]="!(nameForm.valid) && this.onlineCheck">Join game</button>
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!(nameForm.valid) || !(this.onlineCheck)">Join game</button>
     </form>
     <div class="mx-auto my-3">
       <div *ngIf="this.onlineCheck === true" class="col-12 mx-auto text-center">
