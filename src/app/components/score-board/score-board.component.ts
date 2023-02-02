@@ -149,7 +149,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.setCurrentPlayer();
   }
 
-  
   /**
    * Sets the next player by using the current player counter and assigns the new current player to the player service.
    * @date 2023-01-31 - 13:14:02
@@ -167,7 +166,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   
   
   /**
-   * Closes the final score modal, resets the player array and redirects the user to the landing page.
+   * Closes the final score modal, resets the player array, resets chosenMaxPlayers, resets clientPlayer and redirects the user to the landing page.
    * @date 2023-01-31 - 13:16:39
    * @author Christopher Reineborn
    * 

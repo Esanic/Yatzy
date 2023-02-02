@@ -8,11 +8,18 @@ import { Player } from '../models/player';
 })
 export class SocketService {
   public roomName?: string;
+  
   constructor(private socket: Socket) {
   }
 
   //Emits
-
+   /**
+    * Emitting random value in order to trigger online-check from server.
+    * @date 2023-02-02 - 15:28:15
+    * @author Christopher Reineborn
+    *
+    * @returns {*}
+    */
   triggerOnlineCheck(x: any){
     this.socket.emit('checkOnline', x);
   }
@@ -64,13 +71,13 @@ export class SocketService {
   nextPlayer(scoreRowName: string, dice: Die[]){
     this.socket.emit('nextPlayer', scoreRowName, dice, this.roomName);
   }
-
+  
   setRoomName(room: string){
     this.roomName = room;
   }
 
-  //Recieves
-  
+
+  //Recieves  
   /**
    * Distributes the room name from the backend
    * @date 2023-01-31 - 15:09:54
@@ -106,6 +113,13 @@ export class SocketService {
     return this.socket.fromEvent('players');
   }
 
+  
+  /**
+   * Distributes the number of players currently in the socket room
+   * @date 2023-02-02 - 15:30:21
+   *
+   * @returns {*}
+   */
   getAmtOfPlayersInRoom(){
     return this.socket.fromEvent('amtOfPlayers')
   }
@@ -148,29 +162,68 @@ export class SocketService {
 
   
   /**
-   * Distrbutes the users socket id from the backend
+   * Distributes the users socket id from the backend
    * @date 2023-01-31 - 15:14:34
+   * @author Christopher Reineborn
    *
    * @returns {*}
    */
   getUserID(){
     return this.socket.fromEvent<string>('userID');
   }
-
+  
+  /**
+   * Distributes disconnected player
+   * @date 2023-02-02 - 15:31:13
+   * @author Christopher Reineborn
+   *
+   * @returns {*}
+   */
   getDisconnectedPlayer(){
     return this.socket.fromEvent<string>('disconnected');
   }
-
+  
+  /**
+   * Distributes disconnected player while in two player queue.
+   * @date 2023-02-02 - 15:31:58
+   * @author Christopher Reineborn
+   *
+   * @returns {*}
+   */
   getDisconnectedPlayerInTwoQueue(){
     return this.socket.fromEvent<number>('disconnectedInQueueTwo')
   }
+  
+  /**
+   * Distributes disconnected player while in three player queue.
+   * @date 2023-02-02 - 15:32:26
+   * @author Christopher Reineborn
+   *
+   * @returns {*}
+   */
   getDisconnectedPlayerInThreeQueue(){
     return this.socket.fromEvent<number>('disconnectedInQueueThree')
   }
+  
+  /**
+   * Distributes disconnected player while in four player queue.
+   * @date 2023-02-02 - 15:32:37
+   * @author Christopher Reineborn
+   *
+   * @returns {*}
+   */
   getDisconnectedPlayerInFourQueue(){
     return this.socket.fromEvent<number>('disconnectedInQueueFour')
   }
 
+  
+  /**
+   * Distributes wether server is online or not
+   * @date 2023-02-02 - 15:32:47
+   * @author Christopher Reineborn
+   *
+   * @returns {*}
+   */
   getOnlineCheck(){
     return this.socket.fromEvent<boolean>('online');
   }

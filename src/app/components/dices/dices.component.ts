@@ -175,7 +175,6 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.availableDice.splice(die.die-1, 1, this.diePlaceholder);
     this.socketService.diceMoving(this.availableDice, this.savedDice);
   }
-
   
   /**
    * Moves the incoming die from the array of saved dice to the array of available dice.
@@ -192,9 +191,8 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.socketService.diceMoving(this.availableDice, this.savedDice);
   }
 
-  
   /**
-   * Generates new values for each of the dice in the array of available dice, if the value is anything else than 0.
+   * Generates new values for each of the dice in the array of available dice, if the value is anything else than -1.
    * Controls what the current hits counter is and enables/disables the play button upon that control.
    * Makes the dice available to be moved and sends the dice to both backend and dice service.
    * @date 2023-01-31 - 12:19:43
@@ -211,10 +209,9 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.socketService.diceHit(this.availableDice);
   }
 
-  
-  
   /**
-   * Resets all the dice, resets all the arrays, resets the hit counter, makes the dice unavailable and disables the play button.
+   * Resets all dice, resets all the arrays, resets the hit counter, makes the dice unavailable and disables the play button.
+   * If single-player, also sends the resetted dice into dice service.
    * @date 2023-01-31 - 12:30:25
    * @author Christopher Reineborn
    *
@@ -235,7 +232,14 @@ export class DicesComponent implements OnInit, OnDestroy {
     
     this.chosenMaxPlayer === 1 ? this.diceService.setDice(this.finalDice) : null;
   }
-
+  
+  /**
+   * Resets all dice, resets all arrays and resets the hit counter.
+   * @date 2023-02-02 - 15:26:17
+   * @author Christopher Reineborn
+   *
+   * @private
+   */
   private resetDices(): void {
     this.dieOne = new Die(1, 0, false);
     this.dieTwo = new Die(2, 0, false);

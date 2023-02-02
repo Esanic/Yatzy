@@ -51,7 +51,12 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
       this.sid = userID;
     })
   }
-
+  
+  /**
+   * Unsubscribes from obeservables
+   * @date 2023-02-02 - 15:35:04
+   * @author Christopher Reineborn
+   */
   ngOnDestroy(): void {
     this.subOnlineCheck$.unsubscribe();
     this.subUserId$.unsubscribe();
@@ -75,22 +80,13 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
       if(maxPlayers > 1){
         this.socketService.joinRoom(name, maxPlayers);
       }
-      if(maxPlayers === 1){
-
-      }
       this.nameForm.patchValue({
         name: "",
         maxPlayers: ""
       });
 
-      
-
       this.playerService.setClientPlayer(clientPlayer);
       this._router.navigate(['game'], {skipLocationChange: true});
-
     }
   }
-  
-
-
 }
