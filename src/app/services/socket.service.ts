@@ -33,7 +33,6 @@ export class SocketService {
   joinRoom(player: string, maxPlayers: number) {
     this.socket.emit('joinRoom', player, maxPlayers);
   }
-
   
   /**
    * Emits an array of dice that was the user hit.
@@ -77,7 +76,8 @@ export class SocketService {
   }
 
 
-  //Recieves  
+  //Recieves
+
   /**
    * Distributes the room name from the backend
    * @date 2023-01-31 - 15:09:54
@@ -216,7 +216,6 @@ export class SocketService {
     return this.socket.fromEvent<number>('disconnectedInQueueFour')
   }
 
-  
   /**
    * Distributes wether server is online or not
    * @date 2023-02-02 - 15:32:47

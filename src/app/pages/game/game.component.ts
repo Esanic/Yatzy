@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription, take } from 'rxjs';
 import { PlayerService } from 'src/app/services/player.service';
 import { SocketService } from 'src/app/services/socket.service';
@@ -20,11 +21,19 @@ export class GameComponent implements OnInit, OnDestroy {
   private subMaxPlayers$: Subscription = new Subscription;
   private subscriptions: Subscription[] = [this.subAmtOfPlayers$, this.subDisconnectedInQueue$, this.subFullGame$, this.subGetRoom$, this.subMaxPlayers$]
 
-  constructor(private socketService: SocketService, private playerService: PlayerService) { }
+  @HostListener('window:popstate', ['$event'])
+  onBrowserBackBtnClose(event: Event) {
+    console.log('back button pressed');
+    event.preventDefault(); 
+    this._router.navigate([''],  {replaceUrl:true});
+  }
 
+  constructor(private socketService: SocketService, private playerService: PlayerService, private _router: Router) { }
 
    /**
-    * Retrieves if the socket-room is full or not and retrieves the socket-room name.
+    * Retrieves if the socket-room is full or not
+    * Retrieves the socket-room name.
+    * Retrieves both current amount of players connected to current socket-room and users chosen maxplayer limit
     * @date 2023-01-31 - 13:20:08
     * @author Christopher Reineborn
     *

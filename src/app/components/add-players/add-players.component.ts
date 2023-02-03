@@ -76,14 +76,13 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
       const name = this.nameForm.controls['name'].value!;
       const clientPlayer = new Player(name, this.sid, false, new ScoreBoard(this.diceService, this.scoreService));
       const maxPlayers = Number(this.nameForm.controls['maxPlayers'].value)
+      
       this.playerService.setChosenMaxPlayers(maxPlayers);
+      
       if(maxPlayers > 1){
         this.socketService.joinRoom(name, maxPlayers);
       }
-      this.nameForm.patchValue({
-        name: "",
-        maxPlayers: ""
-      });
+      this.nameForm.reset();
 
       this.playerService.setClientPlayer(clientPlayer);
       this._router.navigate(['game'], {skipLocationChange: true});

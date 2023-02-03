@@ -300,7 +300,6 @@ export class ScoreBoard {
       this.addTotalScoreAndMakeUnselectable(scoreRow);
     }
 
-    
     /**
      * Increments the possible score with each die that has the same value as @param dieSide
      * @date 2023-01-31 - 14:42:24

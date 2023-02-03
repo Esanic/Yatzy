@@ -82,13 +82,13 @@ export class DicesComponent implements OnInit, OnDestroy {
       })
     })
 
-    this.subDiceMovement$ = this.socketService.getDiceMovement().subscribe((objWithArrs: any) => {
+    this.subDiceMovement$ = this.socketService.getDiceMovement().subscribe((diceArrays: any) => {
       this.availableDice.map((die, index) => {
-        die.die = objWithArrs.availableDice[index].die;
-        die.selected = objWithArrs.availableDice[index].selected;
-        die.side = objWithArrs.availableDice[index].side;
+        die.die = diceArrays.availableDice[index].die;
+        die.selected = diceArrays.availableDice[index].selected;
+        die.side = diceArrays.availableDice[index].side;
       })
-      this.savedDice = [...objWithArrs.savedDice];
+      this.savedDice = [...diceArrays.savedDice];
     })
 
     this.chosenMaxPlayer = await firstValueFrom(this.playerService.getChosenMaxPlayers());
@@ -106,40 +106,40 @@ export class DicesComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Decides what die to send to the next function
+   * Decides what die to send to @function moveDicesToSaved()
    * @date 2023-01-31 - 12:11:07
    * @author Christopher Reineborn
    *
    * @public
-   * @param {number} die - which die to send into the next function.
+   * @param {number} die - which die to send.
    */
   public pickDie(die: number): void {
     switch(die){
       case 0:
-        this.moveDicesToSaved(this.dieOne);
+        this.moveDiceToSaved(this.dieOne);
         break;
       case 1:
-        this.moveDicesToSaved(this.dieTwo);
+        this.moveDiceToSaved(this.dieTwo);
         break;
       case 2:
-        this.moveDicesToSaved(this.dieThree);
+        this.moveDiceToSaved(this.dieThree);
         break;
       case 3:
-        this.moveDicesToSaved(this.dieFour);
+        this.moveDiceToSaved(this.dieFour);
         break;
       case 4:
-        this.moveDicesToSaved(this.dieFive);
+        this.moveDiceToSaved(this.dieFive);
         break;
     }
   }
 
   /**
-   * Decides what die to send to the next function
+   * Decides what die to send to @function moveDicesToAvailable()
    * @date 2023-01-31 - 12:13:57
    * @author Christopher Reineborn
    *
    * @public
-   * @param {number} die - which die to send into the next function.
+   * @param {number} die - which die to send.
    */
   public removeDie(die: number): void {
     switch(die){
@@ -169,7 +169,7 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @private
    * @param {Die} die
    */
-  private moveDicesToSaved(die: Die): void {
+  private moveDiceToSaved(die: Die): void {
     die.selected = true;
     this.savedDice.splice(die.die-1, 1, die);
     this.availableDice.splice(die.die-1, 1, this.diePlaceholder);
