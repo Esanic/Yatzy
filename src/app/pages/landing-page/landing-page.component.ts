@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -7,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _router: Router) {
+    _router.events.forEach((event) => {
+      if(event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          _router.navigate([''], {skipLocationChange: true})
+        }
+      }
+    });
+   }
 
   ngOnInit(): void {
   }
