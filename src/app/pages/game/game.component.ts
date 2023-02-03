@@ -1,5 +1,6 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { Subscription, take } from 'rxjs';
 import { PlayerService } from 'src/app/services/player.service';
 import { SocketService } from 'src/app/services/socket.service';
@@ -21,14 +22,15 @@ export class GameComponent implements OnInit, OnDestroy {
   private subMaxPlayers$: Subscription = new Subscription;
   private subscriptions: Subscription[] = [this.subAmtOfPlayers$, this.subDisconnectedInQueue$, this.subFullGame$, this.subGetRoom$, this.subMaxPlayers$]
 
-  @HostListener('window:popstate', ['$event'])
-  onBrowserBackBtnClose(event: Event) {
-    console.log('back button pressed');
-    event.preventDefault(); 
-    this._router.navigate([''],  {replaceUrl:true});
-  }
-
-  constructor(private socketService: SocketService, private playerService: PlayerService, private _router: Router) { }
+  constructor(private socketService: SocketService, private playerService: PlayerService, private _router: Router) {
+    _router.events.forEach((event) => {
+      if(event instanceof NavigationStart) {
+        if (event.navigationTrigger === 'popstate') {
+          _router.navigate([''], {skipLocationChange: true})
+        }
+      }
+    });
+   }
 
    /**
     * Retrieves if the socket-room is full or not
