@@ -18,12 +18,15 @@ import { SocketService } from 'src/app/services/socket.service';
 export class AddPlayersComponent implements OnInit, OnDestroy {
   public sid: string = "";
   public onlineCheck: boolean = false;
+  public queueNumbers: any = {};
   public nameForm = this.formBuilder.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9åäöÅÄÖ]{3,20}')]],
     maxPlayers: ['', [Validators.required]]
   })
 
+
   private subOnlineCheck$: Subscription = new Subscription;
+  private subQueueNumbers$: Subscription = new Subscription;
   private subUserId$: Subscription = new Subscription;
 
   constructor(
@@ -42,6 +45,12 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
    * @author Christopher Reineborn
    */
   ngOnInit(): void {
+    this.socketService.triggerQueueNumbers(true);
+    this.subQueueNumbers$ = this.socketService.getQueueNumbers().subscribe(queueNumbers => {
+      console.log(queueNumbers);
+      this.queueNumbers = queueNumbers;
+    })
+
     this.socketService.triggerOnlineCheck(true);
     this.subOnlineCheck$ = this.socketService.getOnlineCheck().subscribe(online => {
       this.onlineCheck = online;
@@ -60,6 +69,7 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subOnlineCheck$.unsubscribe();
     this.subUserId$.unsubscribe();
+    this.subQueueNumbers$.unsubscribe();
   }
 
  /**

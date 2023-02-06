@@ -75,6 +75,10 @@ export class SocketService {
     this.roomName = room;
   }
 
+  triggerQueueNumbers(x: any){
+    this.socket.emit('triggerQueue', x);
+  }
+
 
   //Recieves
 
@@ -225,6 +229,10 @@ export class SocketService {
    */
   getOnlineCheck(){
     return this.socket.fromEvent<boolean>('online');
+  }
+
+  getQueueNumbers(){
+    return this.socket.fromEvent('queueNumbers');
   }
 }
 
