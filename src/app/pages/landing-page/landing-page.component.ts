@@ -6,7 +6,7 @@ import { NavigationStart, Router } from '@angular/router';
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent {
 
   constructor(private _router: Router) {
     _router.events.forEach((event) => {
@@ -17,8 +17,4 @@ export class LandingPageComponent implements OnInit {
       }
     });
    }
-
-  ngOnInit(): void {
-  }
-
 }
