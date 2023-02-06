@@ -31,7 +31,7 @@ export class DicesComponent implements OnInit, OnDestroy {
 
   public currentHits: number = 0;
   public diceAvailable: boolean = true;
-  public disablePlayButton: boolean = true;
+  public disablePlayButton: boolean = false;
 
   private subNewTurn$: Subscription = new Subscription;
   private subResetDice$: Subscription = new Subscription;
@@ -82,13 +82,14 @@ export class DicesComponent implements OnInit, OnDestroy {
       })
     })
 
-    this.subDiceMovement$ = this.socketService.getDiceMovement().subscribe((diceArrays: any) => {
-      this.availableDice.map((die, index) => {
-        die.die = diceArrays.availableDice[index].die;
-        die.selected = diceArrays.availableDice[index].selected;
-        die.side = diceArrays.availableDice[index].side;
-      })
-      this.savedDice = [...diceArrays.savedDice];
+    this.subDiceMovement$ = this.socketService.getDiceMovement().subscribe((dice: any) => {
+      this.availableDice = [...dice];
+      // this.availableDice.map((die, index) => {
+      //   die.die = dice[index].die;
+      //   die.selected = dice[index].selected;
+      //   die.side = dice[index].side;
+      // })
+      // this.savedDice = [...diceArrays.savedDice];
     })
 
     this.chosenMaxPlayer = await firstValueFrom(this.playerService.getChosenMaxPlayers());
@@ -113,83 +114,92 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @public
    * @param {number} die - which die to send.
    */
-  public pickDie(die: number): void {
+  public selectDie(die: number): void {
     switch(die){
       case 0:
-        this.moveDiceToSaved(this.dieOne);
+        this.dieOne.selected === false ? this.dieOne.selected = true : this.dieOne.selected = false;
+        this.socketService.diceMoving(this.availableDice);
+        // this.moveDiceToSaved(this.dieOne);
         break;
       case 1:
-        this.moveDiceToSaved(this.dieTwo);
+        this.dieTwo.selected === false ? this.dieTwo.selected = true : this.dieTwo.selected = false;
+        this.socketService.diceMoving(this.availableDice);
+        // this.moveDiceToSaved(this.dieTwo);
         break;
       case 2:
-        this.moveDiceToSaved(this.dieThree);
+        this.dieThree.selected === false ? this.dieThree.selected = true : this.dieThree.selected = false;
+        this.socketService.diceMoving(this.availableDice);
+        // this.moveDiceToSaved(this.dieThree);
         break;
       case 3:
-        this.moveDiceToSaved(this.dieFour);
+        this.dieFour.selected === false ? this.dieFour.selected = true : this.dieFour.selected = false;
+        this.socketService.diceMoving(this.availableDice);
+        // this.moveDiceToSaved(this.dieFour);
         break;
       case 4:
-        this.moveDiceToSaved(this.dieFive);
+        this.dieFive.selected === false ? this.dieFive.selected = true : this.dieFive.selected = false;
+        this.socketService.diceMoving(this.availableDice);
+        // this.moveDiceToSaved(this.dieFive);
         break;
     }
   }
 
-  /**
-   * Decides what die to send to @function moveDicesToAvailable()
-   * @date 2023-01-31 - 12:13:57
-   * @author Christopher Reineborn
-   *
-   * @public
-   * @param {number} die - which die to send.
-   */
-  public removeDie(die: number): void {
-    switch(die){
-      case 0:
-        this.moveDicesToAvailable(this.dieOne);
-        break;
-      case 1:
-        this.moveDicesToAvailable(this.dieTwo);
-        break;
-      case 2:
-        this.moveDicesToAvailable(this.dieThree);
-        break;
-      case 3:
-        this.moveDicesToAvailable(this.dieFour);
-        break;
-      case 4:
-        this.moveDicesToAvailable(this.dieFive);
-        break;
-    }
-  }
+  // /**
+  //  * Decides what die to send to @function moveDicesToAvailable()
+  //  * @date 2023-01-31 - 12:13:57
+  //  * @author Christopher Reineborn
+  //  *
+  //  * @public
+  //  * @param {number} die - which die to send.
+  //  */
+  // public removeDie(die: number): void {
+  //   switch(die){
+  //     case 0:
+  //       this.moveDicesToAvailable(this.dieOne);
+  //       break;
+  //     case 1:
+  //       this.moveDicesToAvailable(this.dieTwo);
+  //       break;
+  //     case 2:
+  //       this.moveDicesToAvailable(this.dieThree);
+  //       break;
+  //     case 3:
+  //       this.moveDicesToAvailable(this.dieFour);
+  //       break;
+  //     case 4:
+  //       this.moveDicesToAvailable(this.dieFive);
+  //       break;
+  //   }
+  // }
   
-  /**
-   * Moves the incoming die from the array of available dice to the array of saved dice.
-   * @date 2023-01-31 - 12:15:50
-   * @author Christopher Reineborn
-   *
-   * @private
-   * @param {Die} die
-   */
-  private moveDiceToSaved(die: Die): void {
-    die.selected = true;
-    this.savedDice.splice(die.die-1, 1, die);
-    this.availableDice.splice(die.die-1, 1, this.diePlaceholder);
-    this.socketService.diceMoving(this.availableDice, this.savedDice);
-  }
+  // /**
+  //  * Moves the incoming die from the array of available dice to the array of saved dice.
+  //  * @date 2023-01-31 - 12:15:50
+  //  * @author Christopher Reineborn
+  //  *
+  //  * @private
+  //  * @param {Die} die
+  //  */
+  // private moveDiceToSaved(die: Die): void {
+  //   die.selected = true;
+  //   // this.savedDice.splice(die.die-1, 1, die);
+  //   // this.availableDice.splice(die.die-1, 1, this.diePlaceholder);
+  //   this.socketService.diceMoving(this.availableDice);
+  // }
   
-  /**
-   * Moves the incoming die from the array of saved dice to the array of available dice.
-   * @date 2023-01-31 - 12:19:08
-   * @author Christopher Reineborn
-   *
-   * @private
-   * @param {Die} die
-   */
-  private moveDicesToAvailable(die: Die): void {
-    die.selected = false;
-    this.availableDice.splice(die.die-1, 1, die);
-    this.savedDice.splice(die.die-1, 1, this.diePlaceholder);
-    this.socketService.diceMoving(this.availableDice, this.savedDice);
-  }
+  // /**
+  //  * Moves the incoming die from the array of saved dice to the array of available dice.
+  //  * @date 2023-01-31 - 12:19:08
+  //  * @author Christopher Reineborn
+  //  *
+  //  * @private
+  //  * @param {Die} die
+  //  */
+  // private moveDicesToAvailable(die: Die): void {
+  //   die.selected = false;
+  //   // this.availableDice.splice(die.die-1, 1, die);
+  //   // this.savedDice.splice(die.die-1, 1, this.diePlaceholder);
+  // }
 
   /**
    * Generates new values for each of the dice in the array of available dice, if the value is anything else than -1.
@@ -201,7 +211,7 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @public
    */
   public hitDices(): void {
-    this.availableDice.map(die => die.side != -1 ? die.side = Math.floor(Math.random() * 6) + 1 : null)
+    this.availableDice.map(die => die.side != -1 && die.selected === false ? die.side = Math.floor(Math.random() * 6) + 1 : null)
     this.currentHits += 1;
     this.currentHits >= 3 ? this.disablePlayButton = true : this.disablePlayButton = false;
     this.diceAvailable = false;

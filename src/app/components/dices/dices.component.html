@@ -1,31 +1,28 @@
-<div class="d-flex flex-row col-12">
-    <div class="d-flex flex-column col-10">
-        <div class="d-flex w-auto justify-content-between">
-            <div *ngFor="let die of this.availableDice; index as i">
-                <button type="button" *ngIf="die.side === 0" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 display-2" (click)="pickDie(i)"></button>
-                <i *ngIf="die.side === -1" class="btn-dice display-2 bi bi-dice-1 transparent-dice"></i>
-                <button type="button" *ngIf="die.side === 1" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 display-2" (click)="pickDie(i)"></button>
-                <button type="button" *ngIf="die.side === 2" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-2 display-2" (click)="pickDie(i)"></button>
-                <button type="button" *ngIf="die.side === 3" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-3 display-2" (click)="pickDie(i)"></button>
-                <button type="button" *ngIf="die.side === 4" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-4 display-2" (click)="pickDie(i)"></button>
-                <button type="button" *ngIf="die.side === 5" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-5 display-2" (click)="pickDie(i)"></button>
-                <button type="button" *ngIf="die.side === 6" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-6 display-2" (click)="pickDie(i)"></button>
-            </div>
+<div class="d-flex flex-row">
+    <div class="d-flex flex-row justify-content-between mx-auto p-3 bg-white rounded-bottom bg-border">
+        <div *ngFor="let die of this.availableDice; index as i">
+            <button type="button" *ngIf="die.side === 0" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 display-1" (click)="selectDie(i)"></button>
+            <i *ngIf="die.side === -1" class="btn-dice display-1 bi bi-dice-1 transparent-dice"></i>
+            <button type="button" *ngIf="die.side === 1 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 display-1" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 1 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1-fill display-1" (click)="selectDie(i)"></button>
+            
+            <button type="button" *ngIf="die.side === 2 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-2 display-1" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 2 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-2-fill display-1" (click)="selectDie(i)"></button>
+            
+            <button type="button" *ngIf="die.side === 3 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-3 display-1" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 3 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-3-fill display-1" (click)="selectDie(i)"></button>
+            
+            <button type="button" *ngIf="die.side === 4 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-4 display-1" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 4 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-4-fill display-1" (click)="selectDie(i)"></button>
+            
+            <button type="button" *ngIf="die.side === 5 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-5 display-1" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 5 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-5-fill display-1" (click)="selectDie(i)"></button>
+            
+            <button type="button" *ngIf="die.side === 6 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-6 display-1" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 6 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-6-fill display-1" (click)="selectDie(i)"></button>
         </div>
-
-        <hr class="w-full">
-        
-        <div class="d-flex w-auto justify-content-between">
-            <div *ngFor="let die of this.savedDice; index as i">
-                <i *ngIf="die.side === -1" class="btn-dice display-2 bi bi-dice-1 transparent-dice"></i>
-                <button type="button" *ngIf="die.side === 1" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 display-2" (click)="removeDie(i)"></button>
-                <button type="button" *ngIf="die.side === 2" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-2 display-2" (click)="removeDie(i)"></button>
-                <button type="button" *ngIf="die.side === 3" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-3 display-2" (click)="removeDie(i)"></button>
-                <button type="button" *ngIf="die.side === 4" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-4 display-2" (click)="removeDie(i)"></button>
-                <button type="button" *ngIf="die.side === 5" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-5 display-2" (click)="removeDie(i)"></button>
-                <button type="button" *ngIf="die.side === 6" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-6 display-2" (click)="removeDie(i)"></button>
-            </div>
+        <div class="my-auto ps-2 pe-2">
+            <button type="button" class="btn-play bi bi-play-fill m-auto" [disabled]="this.disablePlayButton" (click)="hitDices()"></button>
         </div>
     </div>
-    <button type="button" class="btn-play bi bi-play-fill col-2 mx-auto my-auto" [disabled]="this.disablePlayButton" (click)="hitDices()"></button>
 </div>

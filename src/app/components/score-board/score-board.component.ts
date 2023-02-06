@@ -22,7 +22,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
 
   public players: Player[] = [];
   public clientPlayer: Partial<Player> = {};
-  private lastPlayer: Player = this.players.slice(-1)[0];
+  public lastPlayer: Player = this.players.slice(-1)[0];
   private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService));
 
   private dice: Die[] = [];

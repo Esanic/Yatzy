@@ -1,41 +1,52 @@
-<div class="d-flex flex-row">
-    <div class="scoreboard-scorerows d-flex flex-column col-2">
-        <div class="scoreboard-title scoreboard-header">Scoreboard</div>
-        <div class="scoreboard-header" *ngFor="let scoreHeading of scoreBoardHeaders">
-            {{scoreHeading}}
-        </div>
-    </div>
-    
-    <div class="col-2 d-flex flex-column" *ngFor="let Player of players">
-        <div class="scoreboard-title scoreboard-player-header text-truncate">{{Player.name}}</div>
+<div class="w-100 p-2">
+    <div class="d-flex flex-row justify-content-center ">
         
-        <div *ngIf="Player.currentPlayer === true && Player.socketId === this.clientPlayer.socketId">
-            <div class="scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
-                {{scoreRow.score}}
-                <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
-                <button *ngIf="scoreRow.selectable === true" type="button" class="btn scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+        <div class="d-flex flex-column table-headings-width">
+            <div class="table-header bg-white table-leftup-round">Scoreboard</div>
+            <div class="table-scoreNames table-leftdown-round table-border bg-white" *ngFor="let scoreHeading of scoreBoardHeaders">
+                <div *ngIf="scoreHeading === 'Total' || scoreHeading === 'Bonus' || scoreHeading === 'Subtotal'; else normalScore" class="table-special-scoreNames">
+                    {{scoreHeading}}
+                </div>
+                <ng-template #normalScore>
+                    {{scoreHeading}}
+                </ng-template>
             </div>
         </div>
+        
+        <div class="d-flex flex-column table-column-width" *ngFor="let Player of players">
+            <div *ngIf="Player.name === this.lastPlayer.name; else notLast" class="table-header table-rightup-round text-truncate bg-white">{{Player.name}}</div>
+            <ng-template #notLast>
+                <div class="table-header text-truncate bg-white">{{Player.name}}</div>
+            </ng-template>
+            
+            <div *ngIf="Player.currentPlayer === true && Player.socketId === this.clientPlayer.socketId">
+                <div class="table-border table-rightdown-round d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
+                    {{scoreRow.score}}
+                    <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
+                    <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+                </div>
+            </div>
 
-        <div *ngIf="Player.currentPlayer === false && Player.socketId === this.clientPlayer.socketId">
-            <div class="scoreboard-not-current-player scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of Player.score.scoreBoard">
-                {{scoreRow.score}}
-                <button *ngIf="scoreRow.selectable === true" type="button" class="btn scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+            <div *ngIf="Player.currentPlayer === false && Player.socketId === this.clientPlayer.socketId">
+                <div class="scoreboard-not-current-player table-rightdown-round table-border d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
+                    {{scoreRow.score}}
+                    <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+                </div>
             </div>
-        </div>
 
-        <div *ngIf="Player.currentPlayer === true && Player.socketId !== this.clientPlayer.socketId">
-            <div class="scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
-                {{scoreRow.score}}
-                <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
+            <div *ngIf="Player.currentPlayer === true && Player.socketId !== this.clientPlayer.socketId">
+                <div class="table-border table-rightdown-round d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
+                    {{scoreRow.score}}
+                    <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
+                </div>
+            </div>
+            <div *ngIf="Player.currentPlayer === false && Player.socketId !== this.clientPlayer.socketId">
+                <div class="scoreboard-not-current-player table-border table-rightdown-round d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
+                    {{scoreRow.score}}
+                </div>
             </div>
         </div>
-        <div *ngIf="Player.currentPlayer === false && Player.socketId !== this.clientPlayer.socketId">
-            <div class="scoreboard-not-current-player scoreboard-points d-flex justify-content-between" *ngFor="let scoreRow of Player.score.scoreBoard">
-                {{scoreRow.score}}
-            </div>
-        </div>
-
+    
     </div>
 </div>
 

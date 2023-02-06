@@ -1,61 +1,71 @@
-.scoreboard-header {
+.table-header {
+    font-weight: 600;
     border: 1px solid lightgray;
-    border-top: none;
-    font-weight:600;
-    padding:0.3vh 0.5vw;
-    font-size: 0.85rem;
-    min-width:7rem;
-}
-.scoreboard-header:first-of-type{
-    border-top: 1px solid lightgray
+    border-bottom: 2px solid orange;
+    height: 1.5rem;
+    padding: 0 0.5vw;
+    font-size: 1rem;
 }
 
-.scoreboard-player-header {
+.table-border {
     border: 1px solid lightgray;
-    border-left: none;
-    font-weight:600;
-    padding:0.3vh 0.5vw;
-    font-size: 0.85rem;
+    border-top: none;
+    padding: 0.3vh 0.5vw
+
 }
-.scoreboard-header:last-child {
+
+.table-scoreNames {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.table-special-scoreNames {
     font-weight:700;
 }
 
-.scoreboard-title {
-    border-bottom: 2px solid black;
-    border-right: 1px solid lightgray;
-    border-top: 1px solid lightgray;
-    height:1.5rem;
-    padding-left: 0.5vw;
+.table-headings-width {
+    min-width: 8.5rem;
+    width: fit-content;
+    max-width: 20%;
 }
 
-.scoreboard-scorerows {
-    min-width:7rem;
+.table-leftup-round{
+    border-top-left-radius: 0.375rem;
 }
 
-.scoreboard-player {
-    min-width:7rem;
+.table-leftdown-round:last-child{
+    border-bottom-left-radius: 0.375rem;
+}
+
+.table-rightup-round{
+    border-top-right-radius: 0.375rem;
+}
+
+.table-rightdown-round:last-of-type {
+    border-bottom-right-radius: 0.375rem;
+}
+
+.table-column-width {
+    width:100%;
+    min-width:3rem;
+    max-width:15rem;
 }
 
 .scoreboard-not-current-player {
-    color: gray;
-    opacity: 50%;
+    color: rgb(220, 220, 220);
     pointer-events: none;
 }
 
-.scoreboard-points{
-    border: 1px solid lightgray;
-    border-top: none;
-    border-left: none;
-    padding:0.3vh 0.5vw;
-    font-size: 0.85rem;
-}
-.scoreboard-points:last-child{
-    font-weight:700;
+.scoreboard-btn {
+    --bs-btn-line-height: 1;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 1rem
 }
 
-.scoreboard-btn {
-    --bs-btn-padding-x: 0.1vw;
-    --bs-btn-padding-y: 0;
-    --bs-btn-line-height: 1;
+.player-width {
+    min-width: 4rem;
+    width:20%;
+    max-width: 100%;
 }

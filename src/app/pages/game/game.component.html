@@ -1,24 +1,30 @@
 
-<div *ngIf="this.fullGame === false" class="col-9 bg-250 mx-auto rounded-bottom">
-  <div class="d-flex flex-column position-absolute top-50 start-50 translate-middle justify-content-center ">
-    <div class="spinner-border m-auto" role="status" style="height: 4rem; width: 4rem; color: rgb(240, 140, 0); opacity: 1;">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-    <div class="text-center mt-3">
-      <p>Waiting for other players...</p>
-      <p>{{amtOfPlayers}}/{{maxPlayers}}</p>
+<div *ngIf="this.fullGame === false" class="mx-auto rounded-bottom">
+  <div class="backdrop">
+    <div class="loading bg-250">
+      <div class="d-flex flex-column position-absolute top-50 start-50 translate-middle justify-content-center ">
+        <div class="spinner-border m-auto" role="status" style="height: 4rem; width: 4rem; color: rgb(240, 140, 0); opacity: 1;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="text-center mt-3">
+          <p>Waiting for other players...</p>
+          <p>{{amtOfPlayers}}/{{maxPlayers}}</p>
+        </div>
+      </div>
     </div>
   </div>
 
+
   <div class="not-full-game d-flex flex-column">
-    <app-dices class="col-10 me-auto ms-auto"></app-dices>
-    <app-scoreBoard class="col-10 me-auto ms-auto mb-5"></app-scoreBoard>
+    <app-dices class="col-12 me-auto ms-auto"></app-dices>
+    <app-scoreBoard class="col-12 me-auto ms-auto mb-5"></app-scoreBoard>
   </div>
 </div>
-<div *ngIf="this.fullGame === true" class="bg-250 col-9 mx-auto rounded-bottom">
+<div *ngIf="this.fullGame === true" class=" col-11 mx-auto rounded-bottom">
   <div class="d-flex flex-column mx-auto">
-    <app-dices class="col-10 me-auto ms-auto"></app-dices>
-    <app-scoreBoard class="col-10 me-auto ms-auto mb-5"></app-scoreBoard>
+    <!-- <app-dices class="col-2 me-auto ms-auto"></app-dices> -->
+    <app-dices class="col-12 me-auto ms-auto"></app-dices>
+    <app-scoreBoard class="col-12 me-auto ms-auto mb-5"></app-scoreBoard>
   </div>
 </div>
 

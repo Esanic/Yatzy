@@ -53,9 +53,9 @@ export class SocketService {
    * @param {Die[]} availableDice - array of available dice
    * @param {Die[]} savedDice - array of saved dice
    */
-  diceMoving(availableDice: Die[], savedDice: Die[]){
-    let obj: any = {availableDice: availableDice, savedDice: savedDice}
-    this.socket.emit('diceMove', obj, this.roomName)
+  diceMoving(incDice: Die[]){
+    let dice: Die[] = incDice;
+    this.socket.emit('diceMove', dice, this.roomName)
   }
 
   
