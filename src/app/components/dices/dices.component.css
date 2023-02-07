@@ -93,5 +93,5 @@
 }
 
 .play-btn-icon{
-    font-size: calc(2rem + (1vw+1vh));
+    font-size: calc(2rem + (1vw));
 }
