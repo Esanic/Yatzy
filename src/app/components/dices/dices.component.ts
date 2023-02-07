@@ -6,7 +6,6 @@ import { Player } from 'src/app/models/player';
 import { DiceService } from 'src/app/services/dice.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { SocketService } from 'src/app/services/socket.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-dices',
@@ -17,7 +16,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 export class DicesComponent implements OnInit, OnDestroy {
   public animationState: boolean = true;
-  private diceAudio = new Audio('../../../assets/sounds/rollingdice.mp3')
+  private diceAudio = new Audio('assets/sounds/rollingdice.mp3')
   
   public clientPlayer: Partial<Player> = {};
   public currentPlayer: Partial<Player> = {};
