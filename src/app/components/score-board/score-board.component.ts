@@ -20,7 +20,7 @@ import { SocketService } from 'src/app/services/socket.service';
 })
 export class ScoreBoardComponent implements OnInit, OnDestroy {
   public animationState: boolean = false;
-  private turnAudio = new Audio('assets/sounds/yourturn.mp3')
+  private turnAudio = new Audio('https://zylion.se/yourturn.mp3')
   
   public scoreBoardHeaders = ['Aces','Twos','Threes','Fours','Fives','Sixes', 'Subtotal', 'Bonus', 'One pair', 'Two pair', 'Three of a kind', 'Four of a kind', 'Small straight', 'Large straight', 'House', 'Chance', 'Yatzy', 'Total']
 

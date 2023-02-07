@@ -16,7 +16,7 @@ import { SocketService } from 'src/app/services/socket.service';
 
 export class DicesComponent implements OnInit, OnDestroy {
   public animationState: boolean = true;
-  private diceAudio = new Audio('assets/sounds/rollingdice.mp3')
+  private diceAudio = new Audio('https://zylion.se/rollingdice.mp3')
   
   public clientPlayer: Partial<Player> = {};
   public currentPlayer: Partial<Player> = {};
