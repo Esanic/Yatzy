@@ -9,9 +9,10 @@
     z-index: 2;
     position: fixed;
     top: 5%;
-    bottom: 6%;
-    left: 6%;
-    right: 6%;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .backdrop {

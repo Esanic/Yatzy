@@ -1,8 +1,8 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, pipe, take } from 'rxjs';
+import { yourTurnAnimation } from 'src/app/animations/yourturn.animation';
 import { Die } from 'src/app/models/die';
 import { Player } from 'src/app/models/player';
 import { ScoreBoard } from 'src/app/models/score-board';
@@ -15,15 +15,20 @@ import { SocketService } from 'src/app/services/socket.service';
 @Component({
   selector: 'app-scoreBoard',
   templateUrl: './score-board.component.html',
-  styleUrls: ['./score-board.component.css']
+  styleUrls: ['./score-board.component.css'],
+  animations: [yourTurnAnimation(1000)]
 })
 export class ScoreBoardComponent implements OnInit, OnDestroy {
+  public animationState: boolean = false;
+  private turnAudio = new Audio('../../../assets/sounds/yourturn.mp3')
+  
   public scoreBoardHeaders = ['Aces','Twos','Threes','Fours','Fives','Sixes', 'Subtotal', 'Bonus', 'One pair', 'Two pair', 'Three of a kind', 'Four of a kind', 'Small straight', 'Large straight', 'House', 'Chance', 'Yatzy', 'Total']
 
   public players: Player[] = [];
   public clientPlayer: Partial<Player> = {};
   public lastPlayer: Player = this.players.slice(-1)[0];
   private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService));
+  private chosenMaxPlayers: number = 0;
 
   private dice: Die[] = [];
 
@@ -58,6 +63,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    * @author Christopher Reineborn
    */
   ngOnInit(): void {
+    this.turnAudio.load();
     this.clientPlayer = this.playerService.getClientPlayer();
 
     this.subGetDice$ = this.diceService.getDice().subscribe(dice => {
@@ -84,7 +90,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     })
 
     this.subGetNextPlayer$ = this.socketService.getNextPlayer().subscribe((obj: any) => {
-      console.log(obj);
       this.setScore(obj.scoreRowName, obj.dice);
     })
 
@@ -103,9 +108,14 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
         else if(this.currentPlayerCounter > disconnectedPlayer){
           this.currentPlayerCounter--;
         }
-        this.players.splice(disconnectedPlayer, 1); 
+        this.players.splice(disconnectedPlayer, 1);
+        this.lastPlayer = this.players.slice(-1)[0];
         this.setCurrentPlayer();
       }
+    })
+
+    this.playerService.getChosenMaxPlayers().pipe(take(1)).subscribe(maxPlayers => {
+      this.chosenMaxPlayers = maxPlayers;
     })
   }
 
@@ -162,6 +172,11 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.currentPlayer.currentPlayer = true;
     this.diceHit = false;
     this.playerService.setCurrentPlayer(this.currentPlayer);
+
+    if(this.currentPlayer.socketId === this.clientPlayer.socketId && this.chosenMaxPlayers > 1){
+      console.log("borde animera");
+      this.animate();
+    }
   }
   
   
@@ -179,9 +194,17 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.playerService.setClientPlayer(new Player("", "", false, new ScoreBoard(this.diceService, this.scoreService)))
     this.players = [];
     this._router.navigate([''], {skipLocationChange: true});
-
   }
 
+  private animate() {
+    setTimeout(()=>{
+      this.animationState = !this.animationState;
 
+    },1)
+    this.turnAudio.play();
+    setTimeout(()=>{
+      this.animationState = !this.animationState;
+    },1001)
+  }
 }
  

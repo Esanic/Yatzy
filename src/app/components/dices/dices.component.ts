@@ -1,3 +1,4 @@
+import { rotateAnimation } from 'src/app/animations/rotate.animation';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { Die } from 'src/app/models/die';
@@ -5,29 +6,30 @@ import { Player } from 'src/app/models/player';
 import { DiceService } from 'src/app/services/dice.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { SocketService } from 'src/app/services/socket.service';
-
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-dices',
   templateUrl: './dices.component.html',
-  styleUrls: ['./dices.component.css']
+  styleUrls: ['./dices.component.css'],
+  animations: [rotateAnimation(1080, 300)]
 })
 
 export class DicesComponent implements OnInit, OnDestroy {
+  public animationState: boolean = true;
+  private diceAudio = new Audio('../../../assets/sounds/rollingdice.mp3')
+  
   public clientPlayer: Partial<Player> = {};
   public currentPlayer: Partial<Player> = {};
   public chosenMaxPlayer: number = 0;
-
+  
   public dieOne = new Die(1, 1, false);
   public dieTwo = new Die(2, 1, false);
   public dieThree = new Die(3, 1, false);
   public dieFour = new Die(4, 1, false);
   public dieFive = new Die(5, 1, false);
-  public diePlaceholder = new Die(0, -1, false);
 
   public availableDice: Die[] = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
-  public savedDice: Die[] = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
-  private finalDice: Die[] = [...this.availableDice]
 
   public currentHits: number = 0;
   public diceAvailable: boolean = true;
@@ -53,6 +55,7 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @author Christopher Reineborn
    */
   async ngOnInit(): Promise<void> {
+    this.diceAudio.load();
     this.clientPlayer = this.playerService.getClientPlayer();
 
     this.subNewTurn$ = this.diceService.getNewTurn().subscribe(bool => {
@@ -75,6 +78,8 @@ export class DicesComponent implements OnInit, OnDestroy {
     })
 
     this.subDiceHit$ = this.socketService.getDiceHit().subscribe(dice => {
+      this.animate();
+      this.diceAudio.play();
       this.availableDice.map((die, index) => {
         die.die = dice[index].die,
         die.selected = dice[index].selected,
@@ -84,12 +89,6 @@ export class DicesComponent implements OnInit, OnDestroy {
 
     this.subDiceMovement$ = this.socketService.getDiceMovement().subscribe((dice: any) => {
       this.availableDice = [...dice];
-      // this.availableDice.map((die, index) => {
-      //   die.die = dice[index].die;
-      //   die.selected = dice[index].selected;
-      //   die.side = dice[index].side;
-      // })
-      // this.savedDice = [...diceArrays.savedDice];
     })
 
     this.chosenMaxPlayer = await firstValueFrom(this.playerService.getChosenMaxPlayers());
@@ -119,87 +118,25 @@ export class DicesComponent implements OnInit, OnDestroy {
       case 0:
         this.dieOne.selected === false ? this.dieOne.selected = true : this.dieOne.selected = false;
         this.socketService.diceMoving(this.availableDice);
-        // this.moveDiceToSaved(this.dieOne);
         break;
       case 1:
         this.dieTwo.selected === false ? this.dieTwo.selected = true : this.dieTwo.selected = false;
         this.socketService.diceMoving(this.availableDice);
-        // this.moveDiceToSaved(this.dieTwo);
         break;
       case 2:
         this.dieThree.selected === false ? this.dieThree.selected = true : this.dieThree.selected = false;
         this.socketService.diceMoving(this.availableDice);
-        // this.moveDiceToSaved(this.dieThree);
         break;
       case 3:
         this.dieFour.selected === false ? this.dieFour.selected = true : this.dieFour.selected = false;
         this.socketService.diceMoving(this.availableDice);
-        // this.moveDiceToSaved(this.dieFour);
         break;
       case 4:
         this.dieFive.selected === false ? this.dieFive.selected = true : this.dieFive.selected = false;
         this.socketService.diceMoving(this.availableDice);
-        // this.moveDiceToSaved(this.dieFive);
         break;
     }
   }
-
-  // /**
-  //  * Decides what die to send to @function moveDicesToAvailable()
-  //  * @date 2023-01-31 - 12:13:57
-  //  * @author Christopher Reineborn
-  //  *
-  //  * @public
-  //  * @param {number} die - which die to send.
-  //  */
-  // public removeDie(die: number): void {
-  //   switch(die){
-  //     case 0:
-  //       this.moveDicesToAvailable(this.dieOne);
-  //       break;
-  //     case 1:
-  //       this.moveDicesToAvailable(this.dieTwo);
-  //       break;
-  //     case 2:
-  //       this.moveDicesToAvailable(this.dieThree);
-  //       break;
-  //     case 3:
-  //       this.moveDicesToAvailable(this.dieFour);
-  //       break;
-  //     case 4:
-  //       this.moveDicesToAvailable(this.dieFive);
-  //       break;
-  //   }
-  // }
-  
-  // /**
-  //  * Moves the incoming die from the array of available dice to the array of saved dice.
-  //  * @date 2023-01-31 - 12:15:50
-  //  * @author Christopher Reineborn
-  //  *
-  //  * @private
-  //  * @param {Die} die
-  //  */
-  // private moveDiceToSaved(die: Die): void {
-  //   die.selected = true;
-  //   // this.savedDice.splice(die.die-1, 1, die);
-  //   // this.availableDice.splice(die.die-1, 1, this.diePlaceholder);
-  //   this.socketService.diceMoving(this.availableDice);
-  // }
-  
-  // /**
-  //  * Moves the incoming die from the array of saved dice to the array of available dice.
-  //  * @date 2023-01-31 - 12:19:08
-  //  * @author Christopher Reineborn
-  //  *
-  //  * @private
-  //  * @param {Die} die
-  //  */
-  // private moveDicesToAvailable(die: Die): void {
-  //   die.selected = false;
-  //   // this.availableDice.splice(die.die-1, 1, die);
-  //   // this.savedDice.splice(die.die-1, 1, this.diePlaceholder);
-  // }
 
   /**
    * Generates new values for each of the dice in the array of available dice, if the value is anything else than -1.
@@ -211,11 +148,13 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @public
    */
   public hitDices(): void {
+    this.animate();
+    this.diceAudio.play();
     this.availableDice.map(die => die.side != -1 && die.selected === false ? die.side = Math.floor(Math.random() * 6) + 1 : null)
     this.currentHits += 1;
     this.currentHits >= 3 ? this.disablePlayButton = true : this.disablePlayButton = false;
     this.diceAvailable = false;
-    this.diceService.setDice(this.finalDice);
+    this.diceService.setDice(this.availableDice);
     this.socketService.diceHit(this.availableDice);
   }
 
@@ -232,7 +171,7 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.diceAvailable = true;
     this.disablePlayButton = false;
     
-    this.chosenMaxPlayer === 1 ? this.diceService.setDice(this.finalDice) : null;
+    this.chosenMaxPlayer === 1 ? this.diceService.setDice(this.availableDice) : null;
   }
   
   /**
@@ -248,10 +187,13 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.dieThree = new Die(3, 0, false);
     this.dieFour = new Die(4, 0, false);
     this.dieFive = new Die(5, 0, false);
-    this.savedDice = [this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder, this.diePlaceholder];
     this.availableDice = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
-    this.finalDice = [...this.availableDice];
     this.currentHits = 0;
   }
 
+  private animate() {
+    setTimeout(()=>{
+      this.animationState = !this.animationState;
+    },1)
+  }
 }

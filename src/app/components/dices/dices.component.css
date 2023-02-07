@@ -5,7 +5,7 @@
     --bs-btn-border-width: 1px;
     --bs-btn-border-color: transparent;
     --bs-btn-border-radius: 100%;
-    --btn-custom-height: calc(3rem + 2.4vw);
+    --btn-custom: calc(2.3rem + (1.5vw + 1.5vh));
     display:inline-block;
     color: var(--bs-btn-color);
     text-align: center;
@@ -14,25 +14,22 @@
     cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
-    border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+    border: none;
     border-radius: var(--bs-btn-border-radius);
     background-color: var(--bs-btn-bg);
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    max-width: var(--btn-custom-height);
-    max-height: var(--btn-custom-height);
-    min-width: var(--btn-custom-height);
-    min-height: var(--btn-custom-height);
+    width: var(--btn-custom);
+    height: var(--btn-custom);
     font-size: calc(2rem + 1vw);
 }
 
 .btn-play:hover{
-    border-color: rgb(240, 110, 0);
+
     background-color: rgb(240, 110, 0);
     transition: background-color 0.5s ease-in-out, border-color 0.3s ease-in-out;
 }
 
 .btn-play:active {
-    border-color: rgb(240, 90, 0);
     background-color: rgb(240, 90, 0);
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
@@ -84,4 +81,17 @@
 .bg-border {
     border: solid 1px lightgray;
     border-top: none;
+}
+
+.bg-width {
+    max-width: 40rem;
+    width: 40rem;
+}
+
+.dice-size {
+    font-size: calc(2.5rem + 2vw);
+}
+
+.play-btn-icon{
+    font-size: calc(2rem + (1vw+1vh));
 }

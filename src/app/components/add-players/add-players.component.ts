@@ -47,7 +47,6 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.socketService.triggerQueueNumbers(true);
     this.subQueueNumbers$ = this.socketService.getQueueNumbers().subscribe(queueNumbers => {
-      console.log(queueNumbers);
       this.queueNumbers = queueNumbers;
     })
 

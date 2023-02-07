@@ -48,7 +48,6 @@
 .table-column-width {
     width:100%;
     min-width:3rem;
-    max-width:15rem;
 }
 
 .scoreboard-not-current-player {

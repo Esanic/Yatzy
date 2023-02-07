@@ -1,49 +1,54 @@
-<div class="mx-auto bg-250 col-sm-6 col-11 rounded-bottom">
-  <div class="header">
-    <h4 class="modal-title mx-auto text-center">Fill out to start playing!</h4>
-  </div>
-  <div class="body">
-    <form [formGroup]="nameForm" (ngSubmit)="setName()" class=" col-9 mx-auto">
-      <label for="name" class="form-label">Name: </label>
-      <input type="text" ngbAutoFocus id="name" class="form-control" formControlName="name">
-      
-      <label for="maxPlayers" class="form-label">Max players: </label>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" value="1" id="onePlayer" name="maxPlayers" formControlName="maxPlayers">
-        <label class="form-check-label" for="onePlayer">
-          Single player
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" value="2" id="twoPlayer" name="maxPlayers" formControlName="maxPlayers">
-        <label class="form-check-label" for="twoPlayer">
-          2 players ({{this.queueNumbers.qTwo}}/2)
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" value="3" id="threePlayer" name="maxPlayers" formControlName="maxPlayers">
-        <label class="form-check-label" for="threePlayer">
-          3 players ({{this.queueNumbers.qThree}}/3)
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" value="4" id="fourPlayer" name="maxPlayers" formControlName="maxPlayers">
-        <label class="form-check-label" for="fourPlayer">
-          4 players ({{this.queueNumbers.qFour}}/4)
-        </label>
-      </div>
-
-      <button type="submit" class="btn btn-primary mt-3" [disabled]="!(nameForm.valid) || !(this.onlineCheck)">Join game</button>
-    </form>
-    <div class="mx-auto my-3">
-      <div *ngIf="this.onlineCheck === true" class="col-12 mx-auto text-center">
-        <i class="bi bi-check-circle-fill" style="color: green"></i>
-        Server online
-      </div>
-      <div *ngIf="this.onlineCheck === false" class="col-12 mx-auto text-center">
-        <i class="bi bi-x-circle-fill" style="color: red"></i>
-        Server offline
-      </div>
+<div class="mx-auto bg-250 col-12 col-lg-6 rounded-bottom">
+    <div class="header">
+        <h4 class="modal-title mx-auto text-center">Let's play Yatzy!</h4>
     </div>
-  </div>
+    <div class="body">
+        <form [formGroup]="nameForm" (ngSubmit)="setName()" class=" col-9 mx-auto">
+            <label for="name" class="form-label">Name: </label>
+            <input type="text" ngbAutoFocus id="name" class="form-control" formControlName="name">
+
+            <label for="maxPlayers" class="form-label">Max players: </label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="1" id="onePlayer" name="maxPlayers"
+                    formControlName="maxPlayers">
+                <label class="form-check-label" for="onePlayer">
+                    Single player
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="2" id="twoPlayer" name="maxPlayers"
+                    formControlName="maxPlayers">
+                <label class="form-check-label" for="twoPlayer">
+                    2 players ({{this.queueNumbers.qTwo}}/2)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="3" id="threePlayer" name="maxPlayers"
+                    formControlName="maxPlayers">
+                <label class="form-check-label" for="threePlayer">
+                    3 players ({{this.queueNumbers.qThree}}/3)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="4" id="fourPlayer" name="maxPlayers"
+                    formControlName="maxPlayers">
+                <label class="form-check-label" for="fourPlayer">
+                    4 players ({{this.queueNumbers.qFour}}/4)
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3"
+                [disabled]="!(nameForm.valid) || !(this.onlineCheck)">Join game</button>
+        </form>
+        <div class="mx-auto my-3">
+            <div *ngIf="this.onlineCheck === true" class="col-12 mx-auto text-center">
+                <i class="bi bi-check-circle-fill" style="color: green"></i>
+                Server online
+            </div>
+            <div *ngIf="this.onlineCheck === false" class="col-12 mx-auto text-center">
+                <i class="bi bi-x-circle-fill" style="color: red"></i>
+                Server offline
+            </div>
+        </div>
+    </div>
 </div>

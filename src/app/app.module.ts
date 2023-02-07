@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -11,6 +12,7 @@ import { AddPlayersComponent } from './components/add-players/add-players.compon
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { GameComponent } from './pages/game/game.component';
+
 
 const config: SocketIoConfig = {
   url: environment.socketUrl,
@@ -35,6 +37,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     SocketIoModule.forRoot(config),
     NgbModule,
