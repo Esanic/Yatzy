@@ -1,27 +1,28 @@
+import { TranslateService } from "@ngx-translate/core"
 import { DiceService } from "../services/dice.service"
 import { ScoreService } from "../services/score.service"
 import { Die } from "./die"
 import { ScoreRow } from "./score-row"
 
 export class ScoreBoard {
-    aces = new ScoreRow($localize`Aces`, 0, true)
-    twos = new ScoreRow($localize`Twos`, 0, true)
-    threes = new ScoreRow($localize`Threes`, 0, true)
-    fours = new ScoreRow($localize`Fours`, 0, true)
-    fives = new ScoreRow($localize`Fives`, 0, true)
-    sixes = new ScoreRow($localize`Sixes`, 0, true)
-    subTotal = new ScoreRow($localize`Subtotal`, 0, false)
-    bonus = new ScoreRow($localize`Bonus`, 0, false, false)
-    onePair = new ScoreRow($localize`One pair`, 0, true)
-    twoPair = new ScoreRow($localize`Two pair`, 0, true)
-    threeOfAKind = new ScoreRow($localize`Three of a kind`, 0, true)
-    fourOfAKind = new ScoreRow($localize`Four of a kind`, 0, true)
-    smallStraight = new ScoreRow($localize`Small straight`, 0, true)
-    largeStraight = new ScoreRow($localize`Large straight`, 0, true)
-    house = new ScoreRow($localize`House`, 0, true)
-    chance = new ScoreRow($localize`Chance`, 0, true)
-    yatzy = new ScoreRow($localize`Yatzy`, 0, true)
-    total = new ScoreRow($localize`Total`, 0, false)
+    aces = new ScoreRow(this.translateService.instant('DICE.ACES'), 0, true)
+    twos = new ScoreRow(this.translateService.instant('DICE.TWOS'), 0, true)
+    threes = new ScoreRow(this.translateService.instant('DICE.THREES'), 0, true)
+    fours = new ScoreRow(this.translateService.instant('DICE.FOURS'), 0, true)
+    fives = new ScoreRow(this.translateService.instant('DICE.FIVES'), 0, true)
+    sixes = new ScoreRow(this.translateService.instant('DICE.SIXES'), 0, true)
+    subTotal = new ScoreRow(this.translateService.instant('DICE.SUBTOTAL'), 0, false)
+    bonus = new ScoreRow(this.translateService.instant('DICE.BONUS'), 0, false, false)
+    onePair = new ScoreRow(this.translateService.instant('DICE.ONEPAIR'), 0, true)
+    twoPair = new ScoreRow(this.translateService.instant('DICE.TWOPAIR'), 0, true)
+    threeOfAKind = new ScoreRow(this.translateService.instant('DICE.THREEOFAKIND'), 0, true)
+    fourOfAKind = new ScoreRow(this.translateService.instant('DICE.FOUROFAKIND'), 0, true)
+    smallStraight = new ScoreRow(this.translateService.instant('DICE.SMALLSTRAIGHT'), 0, true)
+    largeStraight = new ScoreRow(this.translateService.instant('DICE.LARGESTRAIGHT'), 0, true)
+    house = new ScoreRow(this.translateService.instant('DICE.HOUSE'), 0, true)
+    chance = new ScoreRow(this.translateService.instant('DICE.CHANCE'), 0, true)
+    yatzy = new ScoreRow(this.translateService.instant('DICE.YATZY'), 0, true)
+    total = new ScoreRow(this.translateService.instant('DICE.TOTAL'), 0, false)
 
     public scoreBoard: ScoreRow[] = [this.aces, this.twos, this.threes, this.fours, this.fives, this.sixes, this.subTotal, this.bonus, this.onePair, this.twoPair, this.threeOfAKind, this.fourOfAKind, this.smallStraight, this.largeStraight, this.house, this.chance, this.yatzy, this.total]
 
@@ -31,7 +32,8 @@ export class ScoreBoard {
 
     constructor(
       private diceService: DiceService, 
-      private scoreService: ScoreService
+      private scoreService: ScoreService,
+      private translateService: TranslateService
     ){}
 
     

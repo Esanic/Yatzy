@@ -1,5 +1,3 @@
-import { DiceService } from "../services/dice.service";
-import { ScoreService } from "../services/score.service";
 import { ScoreBoard } from "./score-board";
 
 export class Player {
