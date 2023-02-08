@@ -12,6 +12,10 @@ import { AddPlayersComponent } from './components/add-players/add-players.compon
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { GameComponent } from './pages/game/game.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LanguageComponent } from './components/language/language.component';
 
 
 const config: SocketIoConfig = {
@@ -26,6 +30,10 @@ const routes: Routes = [
   {path: 'game', component: GameComponent}
 ]
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,12 +42,22 @@ const routes: Routes = [
     AddPlayersComponent,
     LandingPageComponent,
     GameComponent,
+    LanguageComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     RouterModule.forRoot(routes),
     SocketIoModule.forRoot(config),
+    TranslateModule.forRoot({
+      defaultLanguage: 'sv',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     NgbModule,
     FormsModule,
     ReactiveFormsModule,

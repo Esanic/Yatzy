@@ -44,7 +44,7 @@ export class DicesComponent implements OnInit, OnDestroy {
   constructor(
     private diceService: DiceService, 
     private playerService: PlayerService,
-    private socketService: SocketService
+    private socketService: SocketService,
   ) { }
 
   /**

@@ -4,24 +4,24 @@ import { Die } from "./die"
 import { ScoreRow } from "./score-row"
 
 export class ScoreBoard {
-    aces = new ScoreRow('Aces', 0, true)
-    twos = new ScoreRow('Twos', 0, true)
-    threes = new ScoreRow('Threes', 0, true)
-    fours = new ScoreRow('Fours', 0, true)
-    fives = new ScoreRow('Fives', 0, true)
-    sixes = new ScoreRow('Sixes', 0, true)
-    subTotal = new ScoreRow('Subtotal', 0, false)
-    bonus = new ScoreRow('Bonus', 0, false, false)
-    onePair = new ScoreRow('One pair', 0, true)
-    twoPair = new ScoreRow('Two pair', 0, true)
-    threeOfAKind = new ScoreRow('Three of a kind', 0, true)
-    fourOfAKind = new ScoreRow('Four of a kind', 0, true)
-    smallStraight = new ScoreRow('Small straight', 0, true)
-    largeStraight = new ScoreRow('Large straight', 0, true)
-    house = new ScoreRow('House', 0, true)
-    chance = new ScoreRow('Chance', 0, true)
-    yatzy = new ScoreRow('Yatzy', 0, true)
-    total = new ScoreRow('Total', 0, false)
+    aces = new ScoreRow($localize`Aces`, 0, true)
+    twos = new ScoreRow($localize`Twos`, 0, true)
+    threes = new ScoreRow($localize`Threes`, 0, true)
+    fours = new ScoreRow($localize`Fours`, 0, true)
+    fives = new ScoreRow($localize`Fives`, 0, true)
+    sixes = new ScoreRow($localize`Sixes`, 0, true)
+    subTotal = new ScoreRow($localize`Subtotal`, 0, false)
+    bonus = new ScoreRow($localize`Bonus`, 0, false, false)
+    onePair = new ScoreRow($localize`One pair`, 0, true)
+    twoPair = new ScoreRow($localize`Two pair`, 0, true)
+    threeOfAKind = new ScoreRow($localize`Three of a kind`, 0, true)
+    fourOfAKind = new ScoreRow($localize`Four of a kind`, 0, true)
+    smallStraight = new ScoreRow($localize`Small straight`, 0, true)
+    largeStraight = new ScoreRow($localize`Large straight`, 0, true)
+    house = new ScoreRow($localize`House`, 0, true)
+    chance = new ScoreRow($localize`Chance`, 0, true)
+    yatzy = new ScoreRow($localize`Yatzy`, 0, true)
+    total = new ScoreRow($localize`Total`, 0, false)
 
     public scoreBoard: ScoreRow[] = [this.aces, this.twos, this.threes, this.fours, this.fives, this.sixes, this.subTotal, this.bonus, this.onePair, this.twoPair, this.threeOfAKind, this.fourOfAKind, this.smallStraight, this.largeStraight, this.house, this.chance, this.yatzy, this.total]
 
@@ -128,13 +128,12 @@ export class ScoreBoard {
       }
       
       if(this.aces.score > 0 && this.twos.score > 0 && this.threes.score > 0 && this.fours.score > 0 && this.fives.score > 0 && this.sixes.score > 0 && this.bonusSum >= 63 && this.bonus.bonusApplied == false) {
-        Object.assign(this.bonus, {score: 35, bonusApplied: true})
+        Object.assign(this.bonus, {score: 50, bonusApplied: true})
         this.total.score += this.bonus.score;
       }
       this.diceService.setNewTurn(true);
     }
 
-    
     /**
      * Used to determine what score the scorerows would give based upon the current dice.
      * @date 2023-01-31 - 13:51:10

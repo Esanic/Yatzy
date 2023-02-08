@@ -1,0 +1,19 @@
+.flag {
+    --heightwidth: 1.5rem;
+    height:var(--heightwidth);
+    width:var(--heightwidth);
+}
+
+.globe {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.globe::after {
+    visibility: hidden;
+}
+
+.globe:hover {
+    color: rgb(20,20,20)
+}

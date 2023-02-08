@@ -1,0 +1,48 @@
+{
+  "ADDPLAYER": {
+    "LETSPLAY": "Let's Play Yatzy!",
+    "NAME": "Name",
+    "MAXPLAYERS": "Max amount of players",
+    "TWOPLAYER": "2 players",
+    "THREEPLAYER": "3 players",
+    "FOURPLAYER": "4 players",
+    "JOINGAME": "Join game",
+    "SERVERON": "Server online",
+    "SERVEROFF": "Server offline",
+    "SINGLE": "Single player"
+  },
+  "DICE": {
+    "ACES": "Aces",
+    "TWOS": "Twos",
+    "THREES": "Threes",
+    "FOURS": "Fours",
+    "FIVES": "Fives",
+    "SIXES": "Sixes",
+    "SUBTOTAL": "Subtotal",
+    "BONUS": "Bonus",
+    "ONEPAIR": "One pair",
+    "TWOPAIR": "Two pair",
+    "THREEOFAKIND": "Three of a kind",
+    "FOUROFAKIND": "Four of a kind",
+    "SMALLSTRAIGHT": "Small straight",
+    "LARGESTRAIGHT": "Large straight",
+    "HOUSE": "House",
+    "CHANCE": "Chance",
+    "YATZY": "Yatzy",
+    "TOTAL": "Total"
+  },
+  "MODAL": {
+    "RESULT": "Results",
+    "YOUGOT": "You got ",
+    "POINTS": "points",
+    "CLOSE": "Close"
+  },
+  "SCOREBOARD": {
+    "YOURTURN": "YOUR TURN",
+    "PLAYERS": "Players"
+  },
+  "LANGUAGES": {
+    "ENGLISH": "English",
+    "SWEDISH": "Swedish"
+  }
+}

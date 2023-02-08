@@ -1,14 +1,14 @@
 <div class="col-12 col-lg-6 py-2 mx-auto">
     <div class="d-flex flex-row justify-content-center">
-        <div class="position-absolute top-50 start-50 translate-middle display-1 text-center fw-bold" [@yourTurn]="animationState">YOUR TURN</div>
+        <div class="position-absolute top-50 start-50 translate-middle display-1 text-center fw-bold" [@yourTurn]="animationState">{{"SCOREBOARD.YOURTURN" | translate}}</div>
         
         <div class="d-flex flex-column table-headings-width">
-            <div class="table-header bg-white table-leftup-round">Scoreboard</div>
+            <div class="table-header bg-white table-leftup-round">{{"SCOREBOARD.PLAYERS" | translate}}</div>
             <div class="table-scoreNames table-leftdown-round table-border bg-white" *ngFor="let scoreHeading of scoreBoardHeaders">
-                <div *ngIf="scoreHeading === 'Total' || scoreHeading === 'Bonus' || scoreHeading === 'Subtotal'; else normalScore" class="table-special-scoreNames">
+                <div *ngIf="scoreHeading === scoreBoardHeaders[6] || scoreHeading === scoreBoardHeaders[7] || scoreHeading === scoreBoardHeaders[17]; else normalScore" class="table-special-scoreNames">
                     {{scoreHeading}}
                 </div>
-                <ng-template #normalScore>
+                <ng-template  #normalScore>
                     {{scoreHeading}}
                 </ng-template>
             </div>
@@ -94,26 +94,26 @@
 <ng-template #content let-modal>
     <div *ngIf="this.players.length >=2">
         <div class="modal-header">
-            <h4 class="modal-title">Result</h4>
+            <h4 class="modal-title">{{'MODAL.RESULT' | translate}}</h4>
             <button type="button" class="btn-close" aria-label="Close" (click)="closeModalAndReset()"></button>
         </div>
         <div class="modal-body">
             <p class="text-center" *ngFor="let Player of this.players; index as i">{{i+1}}. {{Player.name}} - {{Player.score.total.score}}</p>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-ligt" (click)="closeModalAndReset()">Close</button>
+            <button  type="button" class="btn btn-ligt" (click)="closeModalAndReset()">{{"MODAL.CLOSE" | translate}}</button>
         </div>
     </div>
     <div *ngIf="this.players.length === 1">
         <div class="modal-header">
-            <h4 class="modal-title">Result</h4>
+            <h4 class="modal-title">{{'MODAL.RESULT' | translate}}</h4>
             <button type="button" class="btn-close" aria-label="Close" (click)="closeModalAndReset()"></button>
         </div>
         <div class="modal-body">
-            <p class="text-center">You got {{this.players[0].score.total.score}} points!!! </p>
+            <p class="text-center">{{"MODAL.YOUGOT" | translate}} {{this.players[0].score.total.score}} {{"MODAL.POINTS" | translate}}! </p>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-ligt" (click)="closeModalAndReset()">Close</button>
+            <button  type="button" class="btn btn-ligt" (click)="closeModalAndReset()">{{"MODAL.CLOSE" | translate}}</button>
         </div>
     </div>
 </ng-template>

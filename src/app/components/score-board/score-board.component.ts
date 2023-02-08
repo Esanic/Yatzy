@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription, pipe, take } from 'rxjs';
 import { yourTurnAnimation } from 'src/app/animations/yourturn.animation';
 import { Die } from 'src/app/models/die';
@@ -21,8 +22,28 @@ import { SocketService } from 'src/app/services/socket.service';
 export class ScoreBoardComponent implements OnInit, OnDestroy {
   public animationState: boolean = false;
   private turnAudio = new Audio('https://zylion.se/yourturn.mp3')
+
   
-  public scoreBoardHeaders = ['Aces','Twos','Threes','Fours','Fives','Sixes', 'Subtotal', 'Bonus', 'One pair', 'Two pair', 'Three of a kind', 'Four of a kind', 'Small straight', 'Large straight', 'House', 'Chance', 'Yatzy', 'Total']
+  public scoreBoardHeaders = [
+    this.translateService.instant('DICE.ACES'),
+    this.translateService.instant('DICE.TWOS'),
+    this.translateService.instant('DICE.THREES'),
+    this.translateService.instant('DICE.FOURS'),
+    this.translateService.instant('DICE.FIVES'),
+    this.translateService.instant('DICE.SIXES'), 
+    this.translateService.instant('DICE.SUBTOTAL'),
+    this.translateService.instant('DICE.BONUS'), 
+    this.translateService.instant('DICE.ONEPAIR'), 
+    this.translateService.instant('DICE.TWOPAIR'), 
+    this.translateService.instant('DICE.THREEOFAKIND'),
+    this.translateService.instant('DICE.FOUROFAKIND'),
+    this.translateService.instant('DICE.SMALLSTRAIGHT'),
+    this.translateService.instant('DICE.LARGESTRAIGHT'),
+    this.translateService.instant('DICE.HOUSE'),
+    this.translateService.instant('DICE.CHANCE'),
+    this.translateService.instant('DICE.YATZY'),
+    this.translateService.instant('DICE.TOTAL'),
+  ]
 
   public players: Player[] = [];
   public clientPlayer: Partial<Player> = {};
@@ -51,7 +72,8 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     private diceService: DiceService, 
     private scoreService: ScoreService, 
     private playerService: PlayerService, 
-    private modalService: NgbModal, 
+    private modalService: NgbModal,
+    private translateService: TranslateService,
     private _router: Router
   ) { }
 

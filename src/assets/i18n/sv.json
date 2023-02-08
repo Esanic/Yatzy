@@ -1,0 +1,48 @@
+{
+  "ADDPLAYER": {
+    "LETSPLAY": "Kasta loss tärningarna!",
+    "NAME": "Namn",
+    "MAXPLAYERS": "Max antal spelare",
+    "TWOPLAYER": "2 spelare",
+    "THREEPLAYER": "3 spelare",
+    "FOURPLAYER": "4 spelare",
+    "JOINGAME": "Börja spela",
+    "SERVERON": "Server igång",
+    "SERVEROFF": "Server nere",
+    "SINGLE": "Singel"
+  },
+  "DICE": {
+    "ACES": "Ettor",
+    "TWOS": "Tvåor",
+    "THREES": "Treor",
+    "FOURS": "Fyror",
+    "FIVES": "Femmor",
+    "SIXES": "Sexor",
+    "SUBTOTAL": "Delsumma",
+    "BONUS": "Bonus",
+    "ONEPAIR": "Ett par",
+    "TWOPAIR": "Två par",
+    "THREEOFAKIND": "Tretal",
+    "FOUROFAKIND": "Fyrtal",
+    "SMALLSTRAIGHT": "Liten stege",
+    "LARGESTRAIGHT": "Stor stege",
+    "HOUSE": "Kåk",
+    "CHANCE": "Chans",
+    "YATZY": "Yatzy",
+    "TOTAL": "Summa"
+  },
+  "MODAL": {
+    "RESULT": "Resultat",
+    "YOUGOT": "Du fick ",
+    "POINTS": "poäng",
+    "CLOSE": "Stäng"
+  },
+  "SCOREBOARD": {
+    "YOURTURN": "DIN TUR",
+    "PLAYERS": "Spelare"
+  },
+  "LANGUAGES": {
+    "ENGLISH": "Engelska",
+    "SWEDISH": "Svenska"
+  }
+}

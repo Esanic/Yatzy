@@ -2,6 +2,7 @@ import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnChanges, OnDestr
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, max, Subscription, take } from 'rxjs';
 import { Player } from 'src/app/models/player';
 import { ScoreBoard } from 'src/app/models/score-board';
@@ -20,7 +21,7 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
   public onlineCheck: boolean = false;
   public queueNumbers: any = {};
   public nameForm = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9åäöÅÄÖ]{3,20}')]],
+    name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9åäöÅÄÖ\\s-]{2,30}')]],
     maxPlayers: ['', [Validators.required]]
   })
 
@@ -35,7 +36,7 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
     private scoreService: ScoreService, 
     private socketService: SocketService, 
     private formBuilder: FormBuilder, 
-    private playerService: PlayerService
+    private playerService: PlayerService,
   ) {}
 
   /**
