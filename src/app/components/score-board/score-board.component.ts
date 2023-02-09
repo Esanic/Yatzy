@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
+import { DefaultLangChangeEvent, LangChangeEvent, TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
 import { Subscription, pipe, take } from 'rxjs';
 import { yourTurnAnimation } from 'src/app/animations/yourturn.animation';
 import { Die } from 'src/app/models/die';
@@ -23,27 +23,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   public animationState: boolean = false;
   private turnAudio = new Audio('https://zylion.se/yourturn.mp3')
 
-  
-  public scoreBoardHeaders = [
-    this.translateService.instant('DICE.ACES'),
-    this.translateService.instant('DICE.TWOS'),
-    this.translateService.instant('DICE.THREES'),
-    this.translateService.instant('DICE.FOURS'),
-    this.translateService.instant('DICE.FIVES'),
-    this.translateService.instant('DICE.SIXES'), 
-    this.translateService.instant('DICE.SUBTOTAL'),
-    this.translateService.instant('DICE.BONUS'), 
-    this.translateService.instant('DICE.ONEPAIR'), 
-    this.translateService.instant('DICE.TWOPAIR'), 
-    this.translateService.instant('DICE.THREEOFAKIND'),
-    this.translateService.instant('DICE.FOUROFAKIND'),
-    this.translateService.instant('DICE.SMALLSTRAIGHT'),
-    this.translateService.instant('DICE.LARGESTRAIGHT'),
-    this.translateService.instant('DICE.HOUSE'),
-    this.translateService.instant('DICE.CHANCE'),
-    this.translateService.instant('DICE.YATZY'),
-    this.translateService.instant('DICE.TOTAL'),
-  ]
+  public scoreBoardHeaders = Object.values(this.translateService.instant('DICE'))
 
   public players: Player[] = [];
   public clientPlayer: Partial<Player> = {};
@@ -63,7 +43,8 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   private subGetNextPlayer$: Subscription = new Subscription;
   private subGetEndOfGame$: Subscription = new Subscription;
   private subDisconnectedPlayer$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.subGetDice$, this.subGetPlayers$, this.subGetNextPlayer$, this.subGetEndOfGame$, this.subDisconnectedPlayer$]
+  private subLangChange$: Subscription = new Subscription;
+  private subscriptions: Subscription[] = [this.subLangChange$, this.subGetDice$, this.subGetPlayers$, this.subGetNextPlayer$, this.subGetEndOfGame$, this.subDisconnectedPlayer$]
 
   @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
 
@@ -87,6 +68,15 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.turnAudio.load();
     this.clientPlayer = this.playerService.getClientPlayer();
+
+    this.subLangChange$ = this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.translateService.stream('DICE').subscribe(translation => {
+        const scoreRowNames: string[] = Object.keys(translation);
+        for(let i = 0; i < this.scoreBoardHeaders.length; i++){
+          this.scoreBoardHeaders[i] = translation[scoreRowNames[i]]
+        }
+      })
+    })
 
     this.subGetDice$ = this.diceService.getDice().subscribe(dice => {
       this.dice = dice;
@@ -196,7 +186,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.playerService.setCurrentPlayer(this.currentPlayer);
 
     if(this.currentPlayer.socketId === this.clientPlayer.socketId && this.chosenMaxPlayers > 1){
-      console.log("borde animera");
       this.animate();
     }
   }

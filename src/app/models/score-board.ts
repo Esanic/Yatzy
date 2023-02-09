@@ -1,4 +1,5 @@
-import { TranslateService } from "@ngx-translate/core"
+import { LangChangeEvent, TranslateService } from "@ngx-translate/core"
+import { Subscription } from "rxjs"
 import { DiceService } from "../services/dice.service"
 import { ScoreService } from "../services/score.service"
 import { Die } from "./die"
@@ -30,11 +31,19 @@ export class ScoreBoard {
 
     dice: Die[] = [];
 
-    constructor(
-      private diceService: DiceService, 
-      private scoreService: ScoreService,
-      private translateService: TranslateService
-    ){}
+    private subLangChange$: Subscription = new Subscription();
+
+    constructor(private diceService: DiceService, private scoreService: ScoreService, private translateService: TranslateService) {
+      this.subLangChange$ = this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+        this.translateService.stream('DICE').subscribe(translation => {
+          const scoreRowNames: string[] = Object.keys(translation);
+
+          for(let i = 0; i < this.scoreBoard.length; i++){
+            this.scoreBoard[i].name = translation[scoreRowNames[i]]
+          }
+        })
+      })
+    }
 
     
     /**
@@ -146,7 +155,7 @@ export class ScoreBoard {
      * @param {Die[]} dice - the current dice and their value
      * @returns {number[]} - returns an array of numbers, indexed after @param names, with each number representing the score the user would recieve if choosing that scorerow.
      */
-    public possibleScore(names: string[], dice: Die[]): number[] {
+    public possibleScore(names: any, dice: Die[]): number[] {
       let possibleScores: number[] = [];
       this.dice = dice;
 
