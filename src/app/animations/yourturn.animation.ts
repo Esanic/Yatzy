@@ -6,18 +6,18 @@ export function yourTurnAnimation (animationSpeed: number): AnimationTriggerMeta
             '0',
             style({
                 opacity: '0',
-                // easing: 'ease',
-                // offset: '0',
-                visibility: 'hidden'
+                visibility: 'hidden',
+                fontSize: '0rem',
+
             })
         ),
         state(
             '1',
             style({
                 opacity: '1',
-                // easing: 'ease',
-                // offset: '1',
-                visibility: 'visible'
+                visibility: 'visible',
+                fontSize: '5rem',
+
             })
         ),
         transition(

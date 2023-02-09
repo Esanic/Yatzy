@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { PlayerService } from 'src/app/services/player.service';
 
 @Component({
   selector: 'app-language',
@@ -16,7 +15,7 @@ export class LanguageComponent implements OnInit, OnDestroy {
 
   private subLangChange$: Subscription = new Subscription();
 
-  constructor(private translate: TranslateService, private playerService: PlayerService) { }
+  constructor(private translate: TranslateService) { }
 
 
   ngOnInit(): void {
