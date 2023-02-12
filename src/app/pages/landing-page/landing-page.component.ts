@@ -9,12 +9,12 @@ import { NavigationStart, Router } from '@angular/router';
 export class LandingPageComponent {
 
   constructor(private _router: Router) {
-    _router.events.forEach((event) => {
-      if(event instanceof NavigationStart) {
-        if (event.navigationTrigger === 'popstate') {
-          _router.navigate([''], {skipLocationChange: true})
-        }
-      }
-    });
+  //   _router.events.forEach((event) => {
+  //     if(event instanceof NavigationStart) {
+  //       if (event.navigationTrigger === 'popstate') {
+  //         _router.navigate([''], {skipLocationChange: true})
+  //       }
+  //     }
+  //   });
    }
 }

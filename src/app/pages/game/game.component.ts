@@ -23,13 +23,13 @@ export class GameComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [this.subAmtOfPlayers$, this.subDisconnectedInQueue$, this.subFullGame$, this.subGetRoom$, this.subMaxPlayers$]
 
   constructor(private socketService: SocketService, private playerService: PlayerService, private _router: Router) {
-    _router.events.forEach((event) => {
-      if(event instanceof NavigationStart) {
-        if (event.navigationTrigger === 'popstate') {
-          _router.navigate([''], {skipLocationChange: true})
-        }
-      }
-    });
+    // _router.events.forEach((event) => {
+    //   if(event instanceof NavigationStart) {
+    //     if (event.navigationTrigger === 'popstate') {
+    //       _router.navigate([''], {skipLocationChange: true})
+    //     }
+    //   }
+    // });
    }
 
    /**
