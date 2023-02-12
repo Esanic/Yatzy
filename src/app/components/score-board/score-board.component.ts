@@ -190,7 +190,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     }
   }
   
-  
   /**
    * Closes the final score modal, resets the player array, resets chosenMaxPlayers, resets clientPlayer and redirects the user to the landing page.
    * @date 2023-01-31 - 13:16:39
@@ -210,9 +209,10 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   private animate() {
     setTimeout(()=>{
       this.animationState = !this.animationState;
-
     },1)
+
     this.turnAudio.play();
+
     setTimeout(()=>{
       this.animationState = !this.animationState;
     },1001)

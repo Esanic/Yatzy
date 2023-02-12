@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,9 +8,10 @@ import { Observable, Subject } from 'rxjs';
 export class ScoreService {
   private endOfGame = new Subject<boolean>();
 
-  constructor() { }
+  constructor(private socketService: SocketService) { }
 
   public setEndOfGame(endOfGame: boolean): void {
+    this.socketService.setGameEnd(this.socketService.roomName);
     this.endOfGame.next(endOfGame);
   }
 

@@ -37,7 +37,6 @@ export class ScoreBoard {
       this.subLangChange$ = this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
         this.translateService.stream('DICE').subscribe(translation => {
           const scoreRowNames: string[] = Object.keys(translation);
-
           for(let i = 0; i < this.scoreBoard.length; i++){
             this.scoreBoard[i].name = translation[scoreRowNames[i]]
           }
@@ -45,7 +44,6 @@ export class ScoreBoard {
       })
     }
 
-    
     /**
      * Sets the score depending on what scorerow the user picks and the values of the dice.
      * @date 2023-01-31 - 13:45:09

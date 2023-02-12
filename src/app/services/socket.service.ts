@@ -7,7 +7,7 @@ import { Player } from '../models/player';
   providedIn: 'root'
 })
 export class SocketService {
-  public roomName?: string;
+  public roomName: string = "";
   
   constructor(private socket: Socket) {
   }
@@ -57,7 +57,6 @@ export class SocketService {
     let dice: Die[] = incDice;
     this.socket.emit('diceMove', dice, this.roomName)
   }
-
   
   /**
    * Emit the scorerow name and array of dice used to place score
@@ -70,14 +69,20 @@ export class SocketService {
   nextPlayer(scoreRowName: string, dice: Die[]){
     this.socket.emit('nextPlayer', scoreRowName, dice, this.roomName);
   }
-  
-  setRoomName(room: string){
-    this.roomName = room;
+
+  setGameEnd(room: string){
+    this.socket.emit('gameDone', room);
   }
 
   triggerQueueNumbers(x: any){
     this.socket.emit('triggerQueue', x);
   }
+  
+  setRoomName(room: string){
+    this.roomName = room;
+  }
+
+
 
 
   //Recieves

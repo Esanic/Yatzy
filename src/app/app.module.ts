@@ -21,7 +21,8 @@ import { LanguageComponent } from './components/language/language.component';
 const config: SocketIoConfig = {
   url: environment.socketUrl,
   options: {
-    transports: ['websocket']
+    transports: ['websocket'],
+    reconnection: false
   }
 }
 
