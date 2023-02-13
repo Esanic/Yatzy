@@ -6,6 +6,7 @@ import { Player } from 'src/app/models/player';
 import { DiceService } from 'src/app/services/dice.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-dices',
@@ -15,6 +16,7 @@ import { SocketService } from 'src/app/services/socket.service';
 })
 
 export class DicesComponent implements OnInit, OnDestroy {
+  private soundState?: boolean;
   public animationState: boolean = true;
   private diceAudio = new Audio('https://zylion.se/rollingdice.mp3')
   
@@ -39,12 +41,14 @@ export class DicesComponent implements OnInit, OnDestroy {
   private subCurrentPlayer$: Subscription = new Subscription;
   private subDiceHit$: Subscription = new Subscription;
   private subDiceMovement$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.subNewTurn$, this.subResetDice$, this.subCurrentPlayer$, this.subDiceHit$, this.subDiceMovement$];
+  private subSoundChange$: Subscription = new Subscription;
+  private subscriptions: Subscription[] = [this.subNewTurn$, this.subResetDice$, this.subCurrentPlayer$, this.subDiceHit$, this.subDiceMovement$, this.subSoundChange$];
 
   constructor(
     private diceService: DiceService, 
     private playerService: PlayerService,
     private socketService: SocketService,
+    private clientService: ClientService
   ) { }
 
   /**
@@ -62,6 +66,10 @@ export class DicesComponent implements OnInit, OnDestroy {
         this.newTurn();
         this.diceService.setNewTurn(false);
       }
+    })
+
+    this.subSoundChange$ = this.clientService.getSound().subscribe(sound => {
+      this.soundState = sound;
     })
 
     this.subResetDice$ = this.diceService.getReset().subscribe(bool =>{
@@ -148,7 +156,7 @@ export class DicesComponent implements OnInit, OnDestroy {
    */
   public hitDices(): void {
     this.animate();
-    this.diceAudio.play();
+    this.soundState === true ? this.diceAudio.play() : null;
     this.availableDice.map(die => die.side != -1 && die.selected === false ? die.side = Math.floor(Math.random() * 6) + 1 : null)
     this.currentHits += 1;
     this.currentHits >= 3 ? this.disablePlayButton = true : this.disablePlayButton = false;

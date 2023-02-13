@@ -7,6 +7,7 @@ import { yourTurnAnimation } from 'src/app/animations/yourturn.animation';
 import { Die } from 'src/app/models/die';
 import { Player } from 'src/app/models/player';
 import { ScoreBoard } from 'src/app/models/score-board';
+import { ClientService } from 'src/app/services/client.service';
 import { DiceService } from 'src/app/services/dice.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { ScoreService } from 'src/app/services/score.service';
@@ -20,6 +21,7 @@ import { SocketService } from 'src/app/services/socket.service';
   animations: [yourTurnAnimation(1000)]
 })
 export class ScoreBoardComponent implements OnInit, OnDestroy {
+  private soundState?: boolean
   public animationState: boolean = false;
   private turnAudio = new Audio('https://zylion.se/yourturn.mp3')
 
@@ -44,6 +46,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   private subGetEndOfGame$: Subscription = new Subscription;
   private subDisconnectedPlayer$: Subscription = new Subscription;
   private subLangChange$: Subscription = new Subscription;
+  private subSoundChange$: Subscription = new Subscription;
   private subscriptions: Subscription[] = [this.subLangChange$, this.subGetDice$, this.subGetPlayers$, this.subGetNextPlayer$, this.subGetEndOfGame$, this.subDisconnectedPlayer$]
 
   @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
@@ -55,6 +58,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     private playerService: PlayerService, 
     private modalService: NgbModal,
     private translateService: TranslateService,
+    private clientService: ClientService,
     private _router: Router
   ) { }
 
@@ -76,6 +80,10 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
           this.scoreBoardHeaders[i] = translation[scoreRowNames[i]]
         }
       })
+    })
+
+    this.subSoundChange$ = this.clientService.getSound().subscribe(sound => {
+      this.soundState = sound;
     })
 
     this.subGetDice$ = this.diceService.getDice().subscribe(dice => {
@@ -211,7 +219,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
       this.animationState = !this.animationState;
     },1)
 
-    this.turnAudio.play();
+    this.soundState === true ? this.turnAudio.play() : null;
 
     setTimeout(()=>{
       this.animationState = !this.animationState;

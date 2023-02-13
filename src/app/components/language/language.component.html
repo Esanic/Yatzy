@@ -1,5 +1,5 @@
 <div ngbDropdown display="dynamic" class="d-inline-block">
-    <button type="button" class="bi bi-globe globe" id="langDropdown" ngbDropdownToggle></button>
+    <button type="button" class="bi bi-globe icon" id="langDropdown" ngbDropdownToggle></button>
     <div ngbDropdownMenu aria-labelledby="langDropdown">
         <button *ngFor="let language of languageList" ngbDropdownItem (click)="changeSiteLanguage(language.code)" class="d-flex justify-content-start">
             <img src="{{language.flag}}" class="flag me-2">

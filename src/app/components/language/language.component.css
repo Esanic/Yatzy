@@ -4,16 +4,16 @@
     width:var(--heightwidth);
 }
 
-.globe {
+.icon {
     background: transparent;
     border: none;
     font-size: 1.5rem;
 }
 
-.globe::after {
+.icon::after {
     visibility: hidden;
 }
 
-.globe:hover {
+.icon:hover {
     color: rgb(20,20,20)
 }
