@@ -33,9 +33,12 @@
   },
   "MODAL": {
     "RESULT": "Results",
-    "YOUGOT": "You got ",
-    "POINTS": "points",
-    "CLOSE": "Close"
+    "YOUGOT": "You got {{value}} points!",
+    "CLOSE": "Close",
+    "CONFIRM": "Confirmation",
+    "SETSCORE": "Are you sure you want to place 0 points at {{value}}?",
+    "YES": "Yes",
+    "NO": "No"
   },
   "SCOREBOARD": {
     "YOURTURN": "YOUR TURN",

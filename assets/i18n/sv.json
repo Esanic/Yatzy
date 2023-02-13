@@ -33,9 +33,12 @@
   },
   "MODAL": {
     "RESULT": "Resultat",
-    "YOUGOT": "Du fick ",
-    "POINTS": "poäng",
-    "CLOSE": "Stäng"
+    "YOUGOT": "Du fick {{value}} poäng!",
+    "CLOSE": "Stäng",
+    "SETSCORE": "Är du säker på att du vill lägga 0 poäng på {{value}}?",
+    "CONFIRM": "Bekräfta",
+    "YES": "Ja",
+    "NO": "Nej"
   },
   "SCOREBOARD": {
     "YOURTURN": "DIN TUR",
