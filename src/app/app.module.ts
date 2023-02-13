@@ -17,6 +17,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageComponent } from './components/language/language.component';
 import { SoundComponent } from './components/sound/sound.component';
+import { SetScoreConfirmationComponent } from './components/modals/set-score-confirmation/set-score-confirmation.component';
 
 
 const config: SocketIoConfig = {
@@ -45,7 +46,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LandingPageComponent,
     GameComponent,
     LanguageComponent,
-    SoundComponent
+    SoundComponent,
+    SetScoreConfirmationComponent
   ],
   imports: [
     BrowserModule,

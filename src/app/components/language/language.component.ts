@@ -19,6 +19,9 @@ export class LanguageComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    const locale = localStorage.getItem('locale');
+    locale ? this.changeSiteLanguage(locale) : null;
+
     this.subLangChange$ = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
       this.translate.stream('LANGUAGES').subscribe(translation => {
         const languages: string[] = Object.keys(translation);
@@ -34,11 +37,11 @@ export class LanguageComponent implements OnInit, OnDestroy {
   }
 
   changeSiteLanguage(localeCode: string): void {
-    const selectedLanguage = this.languageList
-      .find((language) => language.code === localeCode)
-      ?.label.toString();
+    const selectedLanguage = this.languageList.find((language) => language.code === localeCode)?.label.toString();
+    
     if (selectedLanguage) {
       this.translate.use(localeCode);
+      localStorage.setItem('locale', localeCode);
     }
   }
 

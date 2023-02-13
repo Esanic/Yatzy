@@ -2,11 +2,11 @@
   "translationFiles": [
     {
       "lang": "en",
-      "uri": "assets/i18n/en.json"
+      "uri": "src/assets/i18n/en.json"
     },
     {
       "lang": "sv",
-      "uri": "assets/i18n/sv.json"
+      "uri": "src/assets/i18n/sv.json"
     }
   ]
 }

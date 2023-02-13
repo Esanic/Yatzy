@@ -37,7 +37,8 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
     private socketService: SocketService, 
     private formBuilder: FormBuilder, 
     private playerService: PlayerService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private modal: NgbModal
   ) {}
 
   /**
@@ -85,7 +86,7 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
   public setName(): void {
     if(this.nameForm.valid && this.onlineCheck){
       const name = this.nameForm.controls['name'].value!;
-      const clientPlayer = new Player(name, this.sid, false, new ScoreBoard(this.diceService, this.scoreService, this.translateService));
+      const clientPlayer = new Player(name, this.sid, false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modal));
       const maxPlayers = Number(this.nameForm.controls['maxPlayers'].value)
       
       this.playerService.setChosenMaxPlayers(maxPlayers);

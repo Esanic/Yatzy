@@ -30,7 +30,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   public players: Player[] = [];
   public clientPlayer: Partial<Player> = {};
   public lastPlayer: Player = this.players.slice(-1)[0];
-  private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService, this.translateService));
+  private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService));
   private chosenMaxPlayers: number = 0;
 
   private dice: Die[] = [];
@@ -47,9 +47,9 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   private subDisconnectedPlayer$: Subscription = new Subscription;
   private subLangChange$: Subscription = new Subscription;
   private subSoundChange$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.subLangChange$, this.subGetDice$, this.subGetPlayers$, this.subGetNextPlayer$, this.subGetEndOfGame$, this.subDisconnectedPlayer$]
+  private subscriptions: Subscription[] = [this.subLangChange$, this.subGetDice$, this.subGetPlayers$, this.subGetNextPlayer$, this.subGetEndOfGame$, this.subDisconnectedPlayer$, this.subSoundChange$]
 
-  @ViewChild('content', {read: TemplateRef}) content!: TemplateRef<any>;
+  @ViewChild('results', {read: TemplateRef}) results!: TemplateRef<any>;
 
   constructor(
     private socketService: SocketService, 
@@ -101,7 +101,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
       if(maxPlayers > 1){
         this.subGetPlayers$ = this.socketService.getPlayers().subscribe((players: any) => {
           players.map((player: any) => {
-            this.players.push(new Player(player.name, player.sid, false, new ScoreBoard(this.diceService, this.scoreService, this.translateService)));
+            this.players.push(new Player(player.name, player.sid, false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService)));
           });
           this.lastPlayer = this.players.slice(-1)[0];
           this.setCurrentPlayer();
@@ -115,7 +115,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
 
     this.subGetEndOfGame$ = this.scoreService.getEndOfGame().subscribe(bool => {
       this.players.sort((a:Player, b:Player) => b.score.total.score - a.score.total.score)
-      bool ? this.modalService.open(this.content, {centered: true, animation: true, keyboard: true}) : null;
+      bool ? this.modalService.open(this.results, {centered: true, animation: true, keyboard: true}) : null;
     })
 
     this.subDisconnectedPlayer$ = this.socketService.getDisconnectedPlayer().subscribe(socketID => {
@@ -209,7 +209,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.modalService.dismissAll()
     this.diceService.setNewTurn(true);
     this.playerService.setChosenMaxPlayers(0);
-    this.playerService.setClientPlayer(new Player("", "", false, new ScoreBoard(this.diceService, this.scoreService, this.translateService)))
+    this.playerService.setClientPlayer(new Player("", "", false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService)))
     this.players = [];
     this._router.navigate([''], {skipLocationChange: true});
   }

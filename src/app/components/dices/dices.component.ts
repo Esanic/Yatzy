@@ -24,11 +24,11 @@ export class DicesComponent implements OnInit, OnDestroy {
   public currentPlayer: Partial<Player> = {};
   public chosenMaxPlayer: number = 0;
   
-  public dieOne = new Die(1, 1, false);
-  public dieTwo = new Die(2, 1, false);
-  public dieThree = new Die(3, 1, false);
-  public dieFour = new Die(4, 1, false);
-  public dieFive = new Die(5, 1, false);
+  public dieOne = new Die(1, 0, false);
+  public dieTwo = new Die(2, 0, false);
+  public dieThree = new Die(3, 0, false);
+  public dieFour = new Die(4, 0, false);
+  public dieFive = new Die(5, 0, false);
 
   public availableDice: Die[] = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
 

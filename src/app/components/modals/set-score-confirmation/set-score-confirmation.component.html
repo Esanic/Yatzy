@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{'MODAL.CONFIRM' | translate}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close(false)"></button>
+</div>  
+<div class="modal-body">
+    <p>{{ 'MODAL.SETSCORE' | translate: {value: scoreRow} }}</p>
+</div>
+<div class="modal-footer flex-d justify-content-between">
+    <button type="button" class="btn btn-ligt" (click)="activeModal.close(false)">{{'MODAL.NO' | translate}}</button>
+    <button type="button" class="btn btn-ligt" (click)="activeModal.close(true)">{{'MODAL.YES' | translate}}</button>
+</div>
+
+
+
+

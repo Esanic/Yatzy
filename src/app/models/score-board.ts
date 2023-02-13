@@ -1,5 +1,7 @@
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap"
 import { LangChangeEvent, TranslateService } from "@ngx-translate/core"
 import { Subscription } from "rxjs"
+import { SetScoreConfirmationComponent } from "../components/modals/set-score-confirmation/set-score-confirmation.component"
 import { DiceService } from "../services/dice.service"
 import { ScoreService } from "../services/score.service"
 import { Die } from "./die"
@@ -33,7 +35,7 @@ export class ScoreBoard {
 
     private subLangChange$: Subscription = new Subscription();
 
-    constructor(private diceService: DiceService, private scoreService: ScoreService, private translateService: TranslateService) {
+    constructor(private diceService: DiceService, private scoreService: ScoreService, private translateService: TranslateService, private modal: NgbModal) {
       this.subLangChange$ = this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
         this.translateService.stream('DICE').subscribe(translation => {
           const scoreRowNames: string[] = Object.keys(translation);
@@ -264,8 +266,22 @@ export class ScoreBoard {
      * @param {ScoreRow} scoreRow - what scorerow to retrieve score from.
      */
     private addTotalScoreAndMakeUnselectable(scoreRow: ScoreRow): void{
+      if(scoreRow.score === 0){
+        const modalRef = this.modal.open(SetScoreConfirmationComponent, {centered: true});
+        modalRef.componentInstance.scoreRow = scoreRow.name;
+        modalRef.result.then(
+          (result) => {
+            if(result === true){
+              this.total.score += scoreRow.score;
+              scoreRow.selectable = false;
+            }
+        });
+      }
+      if(scoreRow.score > 0){
         this.total.score += scoreRow.score;
         scoreRow.selectable = false;
+      }
+
     }
     
     

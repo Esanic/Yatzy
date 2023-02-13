@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Player } from '../models/player';
@@ -10,11 +11,11 @@ import { ScoreService } from './score.service';
   providedIn: 'root'
 })
 export class PlayerService {
-  private clientPlayer: Player = {name: "", socketId: "", currentPlayer: true, score: new ScoreBoard(this.diceService, this.scoreService, this.translateService)};
+  private clientPlayer: Player = {name: "", socketId: "", currentPlayer: true, score: new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modal)};
   private currentPlayer = new Subject<Player>();
   private chosenMaxPlayers = new BehaviorSubject<number>(0);
 
-  constructor(private diceService: DiceService, private scoreService: ScoreService, private translateService: TranslateService) { }
+  constructor(private diceService: DiceService, private scoreService: ScoreService, private translateService: TranslateService, private modal: NgbModal) { }
 
   public setClientPlayer(player: Player): void {
     this.clientPlayer = player
