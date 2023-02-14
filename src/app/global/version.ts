@@ -7,7 +7,7 @@ export const version: string = "v1.0.4.3";
 // V = Bugfix
 
 // 1.0.4.3
-// - Implemented opacity change upon not being clientPlayers turn and added some comments to the html file for clarity.
+// - Implemented opacity change on place score button upon not being clientPlayers turn and added some comments to the html file for clarity.
 
 // 1.0.3.3
 // - Passed in currentPlayer and clientPlayer into setScore method in order to prevent modal to trigger for the other players.
