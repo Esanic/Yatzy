@@ -164,19 +164,25 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    * @param {string} scoreRowName - The scorerow to set the score to.
    * @param {?Die[]} [dice] - Optional and used if retrieved from the backend else @param this.dice is used.
    */
-  public setScore(scoreRowName: string, dice?: Die[]): void{
+  public async setScore(scoreRowName: string, dice?: Die[]): Promise<void> {
     if(dice){
-      this.currentPlayer.score.setScore(scoreRowName, dice);
+      await this.currentPlayer.score.setScore(scoreRowName, dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(value => {
+        this.lastPlayer.score.checkEndOfGame();
+        this.currentPlayerCounter < this.players.length-1 ? this.currentPlayerCounter++ : this.currentPlayerCounter = 0;
+        this.possibleScores = [];
+        this.setCurrentPlayer();
+      });
+
     }
     else {
-      this.currentPlayer.score.setScore(scoreRowName, this.dice);
+      await this.currentPlayer.score.setScore(scoreRowName, this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(value => {
+        this.lastPlayer.score.checkEndOfGame();
+        this.currentPlayerCounter < this.players.length-1 ? this.currentPlayerCounter++ : this.currentPlayerCounter = 0;
+        this.possibleScores = [];
+        this.setCurrentPlayer();
+      });
       this.socketService.nextPlayer(scoreRowName, this.dice);
     }
-
-    this.lastPlayer.score.checkEndOfGame();
-    this.currentPlayerCounter < this.players.length-1 ? this.currentPlayerCounter++ : this.currentPlayerCounter = 0;
-    this.possibleScores = [];
-    this.setCurrentPlayer();
   }
 
   /**

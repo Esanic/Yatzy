@@ -67,6 +67,10 @@
     width: 1.5rem;
 }
 
+.scoreboard-btn:disabled{
+    opacity:0.5;
+}
+
 .player-width {
     min-width: 4rem;
     width:20%;
