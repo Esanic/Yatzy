@@ -133,7 +133,7 @@ export class ScoreBoard {
   
         case this.yatzy.name:
           let yatzyArr = this.mapOccurencies(5);
-          yatzyArr[0] != undefined && yatzyArr[0][1] == 5 ? this.yatzy.score = 50 : null;
+          yatzyArr[0] != undefined && yatzyArr[0][1] == 5 && this.dice.some(die => {die.side !== 0})? this.yatzy.score = 50 : null;
           this.addTotalScoreAndMakeUnselectable(this.yatzy);
           break;
       }
