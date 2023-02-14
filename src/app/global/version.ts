@@ -1,10 +1,13 @@
-export const version: string = "v1.0.4.3";
+export const version: string = "v1.0.4.4";
 
 // vX.Y.Z.V
 // X = Major
 // Y = Minor 
 // Z = Feature
 // V = Bugfix
+
+// 1.0.4.4
+// - Fixed yourTurn text to wrap on mobile devices.
 
 // 1.0.4.3
 // - Implemented opacity change on place score button upon not being clientPlayers turn and added some comments to the html file for clarity.

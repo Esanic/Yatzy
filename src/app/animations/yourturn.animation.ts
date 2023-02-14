@@ -16,7 +16,7 @@ export function yourTurnAnimation (animationSpeed: number): AnimationTriggerMeta
             style({
                 opacity: '1',
                 visibility: 'visible',
-                fontSize: '5rem',
+                fontSize: '3rem',
 
             })
         ),
