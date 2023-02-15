@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/co
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DefaultLangChangeEvent, LangChangeEvent, TranslateService, TranslationChangeEvent } from '@ngx-translate/core';
-import { Subscription, pipe, take } from 'rxjs';
+import { Subscription, pipe, take, firstValueFrom } from 'rxjs';
 import { yourTurnAnimation } from 'src/app/animations/yourturn.animation';
 import { Die } from 'src/app/models/die';
 import { Player } from 'src/app/models/player';
@@ -21,33 +21,37 @@ import { SocketService } from 'src/app/services/socket.service';
   animations: [yourTurnAnimation(1000)]
 })
 export class ScoreBoardComponent implements OnInit, OnDestroy {
-  private soundState?: boolean
-  public animationState: boolean = false;
-  private turnAudio = new Audio('https://zylion.se/yourturn.mp3')
+  //Score
+  public scoreBoardHeaders = Object.values(this.translateService.instant('DICE'));
+  public possibleScores: number[] = [];
 
-  public scoreBoardHeaders = Object.values(this.translateService.instant('DICE'))
+  //Dice
+  private dice: Die[] = [];
+  public diceHit: boolean = false;
 
+  //Players
   public players: Player[] = [];
   public clientPlayer: Partial<Player> = {};
   public lastPlayer: Player = this.players.slice(-1)[0];
   private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService));
   private chosenMaxPlayers: number = 0;
+  private connectedPlayersCounter: number = 0;
 
-  private dice: Die[] = [];
+  //Misc
+  private soundState?: boolean
+  public animationState: boolean = false;
+  private turnAudio = new Audio('https://zylion.se/yourturn.mp3')
 
-  public possibleScores: number[] = []
-
-  private currentPlayerCounter: number = 0;
-  public diceHit: boolean = false;
-
-  private subGetDice$: Subscription = new Subscription;
-  private subGetPlayers$: Subscription = new Subscription;
-  private subGetNextPlayer$: Subscription = new Subscription;
-  private subGetEndOfGame$: Subscription = new Subscription;
-  private subDisconnectedPlayer$: Subscription = new Subscription;
-  private subLangChange$: Subscription = new Subscription;
-  private subSoundChange$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.subLangChange$, this.subGetDice$, this.subGetPlayers$, this.subGetNextPlayer$, this.subGetEndOfGame$, this.subDisconnectedPlayer$, this.subSoundChange$]
+  //Subscriptions
+  private getDice$: Subscription = new Subscription;
+  private getPlayers$: Subscription = new Subscription;
+  private getCurrentPlayerResult: Subscription = new Subscription;
+  private getEndOfGame$: Subscription = new Subscription;
+  private getChosenMaxPlayers$: Subscription = new Subscription;
+  private disconnectedPlayer$: Subscription = new Subscription;
+  private langChange$: Subscription = new Subscription;
+  private soundChange$: Subscription = new Subscription;
+  private subscriptions: Subscription[] = [this.getChosenMaxPlayers$, this.langChange$, this.getDice$, this.getPlayers$, this.getCurrentPlayerResult, this.getEndOfGame$, this.disconnectedPlayer$, this.soundChange$]
 
   @ViewChild('results', {read: TemplateRef}) results!: TemplateRef<any>;
 
@@ -64,16 +68,21 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
 
 
   /**
+   * Loading in the audio.
    * Retrieves the client player and stores it in @param this.clientPlayer
    * Subscribes to multiple observables in order to recieve updates.
    * @date 2023-01-31 - 12:54:05
    * @author Christopher Reineborn
    */
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.turnAudio.load();
     this.clientPlayer = this.playerService.getClientPlayer();
 
-    this.subLangChange$ = this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+    //Retrieves user's chosen max player
+    this.chosenMaxPlayers = await firstValueFrom(this.playerService.getChosenMaxPlayers());
+
+    //Subscribes to language change
+    this.langChange$ = this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this.translateService.stream('DICE').subscribe(translation => {
         const scoreRowNames: string[] = Object.keys(translation);
         for(let i = 0; i < this.scoreBoardHeaders.length; i++){
@@ -82,60 +91,62 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
       })
     })
 
-    this.subSoundChange$ = this.clientService.getSound().subscribe(sound => {
+    //Subscribes to sound state change
+    this.soundChange$ = this.clientService.getSound().subscribe(sound => {
       this.soundState = sound;
     })
 
-    this.subGetDice$ = this.diceService.getDice().subscribe(dice => {
+    //Subscribes to dice update
+    this.getDice$ = this.diceService.getDice().subscribe(dice => {
       this.dice = dice;
       this.possibleScores = this.currentPlayer.score.possibleScore(this.scoreBoardHeaders, this.dice);
       this.diceHit = true;
     });
 
-    this.playerService.getChosenMaxPlayers().subscribe(maxPlayers => {
+    //Subscribes to user's chosen max players.
+    this.getChosenMaxPlayers$ = this.playerService.getChosenMaxPlayers().subscribe(async maxPlayers => {
+      //If singleplayer
       if(maxPlayers === 1){
         this.players.push(this.playerService.getClientPlayer());
-        this.lastPlayer = this.players.slice(-1)[0];
-        this.setCurrentPlayer();
       }
+      //If multiplayer
       if(maxPlayers > 1){
-        this.subGetPlayers$ = this.socketService.getPlayers().subscribe((players: any) => {
+        await firstValueFrom(this.socketService.getPlayers()).then((players: any) => {
           players.map((player: any) => {
             this.players.push(new Player(player.name, player.sid, false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService)));
           });
-          this.lastPlayer = this.players.slice(-1)[0];
-          this.setCurrentPlayer();
-        });
+        })
       }
+      this.lastPlayer = this.players.slice(-1)[0];
+      this.setNextPlayer();
     })
 
-    this.subGetNextPlayer$ = this.socketService.getNextPlayer().subscribe((obj: any) => {
-      this.setScore(obj.scoreRowName, obj.dice);
+    //Subscribes to current player result from backend
+    this.getCurrentPlayerResult = this.socketService.getCurrentPlayerResult().subscribe((previousPlayerResult: any) => {
+      this.setScore(previousPlayerResult.scoreRowName, previousPlayerResult.dice);
     })
 
-    this.subGetEndOfGame$ = this.scoreService.getEndOfGame().subscribe(bool => {
+    //End game subscription
+    this.getEndOfGame$ = this.scoreService.getEndOfGame().subscribe(bool => {
       this.players.sort((a:Player, b:Player) => b.score.total.score - a.score.total.score)
       bool ? this.modalService.open(this.results, {centered: true, animation: true, keyboard: true}) : null;
     })
 
-    this.subDisconnectedPlayer$ = this.socketService.getDisconnectedPlayer().subscribe(socketID => {
+    ////Subscribes to disconnected players from backend
+    this.disconnectedPlayer$ = this.socketService.getDisconnectedPlayer().subscribe(socketID => {
       let disconnectedPlayer = this.players.findIndex(player => player.socketId === socketID);
       
       if(disconnectedPlayer !== -1){
-        if(this.currentPlayerCounter === disconnectedPlayer){
+        if(this.connectedPlayersCounter === disconnectedPlayer){
           this.diceService.setReset(true);
         }
-        else if(this.currentPlayerCounter > disconnectedPlayer){
-          this.currentPlayerCounter--;
+        else if(this.connectedPlayersCounter > disconnectedPlayer){
+          this.connectedPlayersCounter--;
         }
         this.players.splice(disconnectedPlayer, 1);
         this.lastPlayer = this.players.slice(-1)[0];
-        this.setCurrentPlayer();
+        this.setNextPlayer();
       }
-    })
-
-    this.playerService.getChosenMaxPlayers().pipe(take(1)).subscribe(maxPlayers => {
-      this.chosenMaxPlayers = maxPlayers;
     })
   }
 
@@ -153,55 +164,56 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Sets the score of the player.
-   * Checks the last player if they have a full scoreboard.
-   * Controls if the current player counter is bigger than the amount of players, if not it increments the counter else it sets it to 0.
-   * Proceeds to set the next player.
+   * Sets the score of the current player.
+   * Checks if the function was triggered from the socketService by controlling if @param {?Die[]} [dice] was provided or not.
+   * If not provided, sets the chosen score for @param this.currentPlayer based upon @param this.dice, proceeds to set the next player and emits the chosen score for the @param this.currentPlayer to the other sockets in the room.
+   * If provided, sets the chosen score for @param this.currentPlayer based upon @param {?Die[]} [dice] and proceeds to set the next player.
+   * 
    * @date 2023-01-31 - 13:09:43
    * @author Christopher Reineborn
    * 
    * @public
    * @param {string} scoreRowName - The scorerow to set the score to.
-   * @param {?Die[]} [dice] - Optional and used if retrieved from the backend else @param this.dice is used.
+   * @param {?Die[]} [dice] - Optional and used if retrieved from the backend. Else @param this.dice is used.
    */
   public async setScore(scoreRowName: string, dice?: Die[]): Promise<void> {
-    if(dice){
-      await this.currentPlayer.score.setScore(scoreRowName, dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(value => {
-        this.lastPlayer.score.checkEndOfGame();
-        this.currentPlayerCounter < this.players.length-1 ? this.currentPlayerCounter++ : this.currentPlayerCounter = 0;
-        this.possibleScores = [];
-        this.setCurrentPlayer();
-      });
-
-    }
-    else {
-      await this.currentPlayer.score.setScore(scoreRowName, this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(value => {
-        this.lastPlayer.score.checkEndOfGame();
-        this.currentPlayerCounter < this.players.length-1 ? this.currentPlayerCounter++ : this.currentPlayerCounter = 0;
-        this.possibleScores = [];
-        this.setCurrentPlayer();
+    if(!dice){
+      await this.currentPlayer.score.setScore(scoreRowName, this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(() => {
+        this.setNextPlayer();
       });
       this.socketService.nextPlayer(scoreRowName, this.dice);
     }
+    else {
+      await this.currentPlayer.score.setScore(scoreRowName, dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(() => {
+        this.setNextPlayer();
+      });
+    }
   }
 
+
   /**
-   * Sets the next player by using the current player counter and assigns the new current player to the player service.
+   * Checks if the game is over by calling @function checkEndOfGame() of the last player.
+   * Checks if the @param this.connectedPlayersCounter is less than the amount of players in @param this.players. If true, increments the counter. If false, resets the counter
+   * Resets the possibleScores array
+   * Sets the next player by using @param this.connectedPlayersCounter and assigns the new current player to the player service.
+   * If the client player is the current player and it is a multiplayer game, uses the yourTurn animation.
    * @date 2023-01-31 - 13:14:02
    * @author Christopher Reineborn
    *
    * @private
    */
-  private setCurrentPlayer(): void {
+  private setNextPlayer(): void {
+    this.lastPlayer.score.checkEndOfGame();
+    this.connectedPlayersCounter < this.players.length-1 ? this.connectedPlayersCounter++ : this.connectedPlayersCounter = 0;
+    this.possibleScores = [];
+
     this.currentPlayer.currentPlayer = false;
-    this.currentPlayer = this.players[this.currentPlayerCounter];
+    this.currentPlayer = this.players[this.connectedPlayersCounter];
     this.currentPlayer.currentPlayer = true;
     this.diceHit = false;
     this.playerService.setCurrentPlayer(this.currentPlayer);
 
-    if(this.currentPlayer.socketId === this.clientPlayer.socketId && this.chosenMaxPlayers > 1){
-      this.animate();
-    }
+    this.currentPlayer.socketId === this.clientPlayer.socketId && this.chosenMaxPlayers > 1 ? this.animationYourTurn() : null
   }
   
   /**
@@ -220,7 +232,14 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this._router.navigate([''], {skipLocationChange: true});
   }
 
-  private animate() {
+  
+  /**
+   * Trigger the yourTurn animation and plays the associated audio if sound is not muted.
+   * @date 2/15/2023 - 10:19:33 AM
+   *
+   * @private
+   */
+  private animationYourTurn() {
     setTimeout(()=>{
       this.animationState = !this.animationState;
     },1)

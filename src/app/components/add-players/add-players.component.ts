@@ -17,21 +17,24 @@ import { SocketService } from 'src/app/services/socket.service';
   styleUrls: ['./add-players.component.css']
 })
 export class AddPlayersComponent implements OnInit, OnDestroy {
+  //Misc variables
   public sid: string = "";
   public onlineCheck: boolean = false;
   public queueNumbers: any = {};
+  
+  //Form
   public nameForm = this.formBuilder.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9åäöÅÄÖ\\s-]{2,30}')]],
     maxPlayers: ['', [Validators.required]]
   })
 
-
-  private subOnlineCheck$: Subscription = new Subscription;
-  private subQueueNumbers$: Subscription = new Subscription;
-  private subUserId$: Subscription = new Subscription;
+  //Subscriptions
+  private onlineCheck$: Subscription = new Subscription;
+  private queueNumbers$: Subscription = new Subscription;
+  private clientId$: Subscription = new Subscription;
 
   constructor(
-    private _router: Router, 
+    private router: Router, 
     private diceService: DiceService, 
     private scoreService: ScoreService, 
     private socketService: SocketService, 
@@ -42,23 +45,25 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
   ) {}
 
   /**
+   * Trigger the backend to emit the queue numbers and then retrieves them.
+   * Trigger the backend to emit online status and then retrieves it.
    * Retrieves the clients socket ID from the backend.
-   * Fetches wether backend is online or not
+   *
    * @date 2023-02-02 - 12:41:07
    * @author Christopher Reineborn
    */
   ngOnInit(): void {
     this.socketService.triggerQueueNumbers(true);
-    this.subQueueNumbers$ = this.socketService.getQueueNumbers().subscribe(queueNumbers => {
+    this.queueNumbers$ = this.socketService.getQueueNumbers().subscribe(queueNumbers => {
       this.queueNumbers = queueNumbers;
     })
 
     this.socketService.triggerOnlineCheck(true);
-    this.subOnlineCheck$ = this.socketService.getOnlineCheck().subscribe(online => {
+    this.onlineCheck$ = this.socketService.getOnlineCheck().subscribe(online => {
       this.onlineCheck = online;
     })
 
-    this.subUserId$ = this.socketService.getUserID().subscribe(userID => {
+    this.clientId$ = this.socketService.getUserID().subscribe(userID => {
       this.sid = userID;
     })
   }
@@ -69,15 +74,19 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
    * @author Christopher Reineborn
    */
   ngOnDestroy(): void {
-    this.subOnlineCheck$.unsubscribe();
-    this.subUserId$.unsubscribe();
-    this.subQueueNumbers$.unsubscribe();
+    this.onlineCheck$.unsubscribe();
+    this.clientId$.unsubscribe();
+    this.queueNumbers$.unsubscribe();
   }
 
  /**
-  * Sets the client player in the playerService.
-  * Sends request to backend to join a room.
+  * Creates a new player.
+  * Sets the chosen maxplayers in the playerService
+  * Sets the clientPlayer in the playerService
+  * Asks the backend to join a room if the user has chose more than 1 maxplayers.
+  * Resets the form
   * Directs the user to the game component.
+  * 
   * @date 2023-01-31 - 11:37:00
   * @author Christopher Reineborn
   *
@@ -90,14 +99,14 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
       const maxPlayers = Number(this.nameForm.controls['maxPlayers'].value)
       
       this.playerService.setChosenMaxPlayers(maxPlayers);
+      this.playerService.setClientPlayer(clientPlayer);
       
       if(maxPlayers > 1){
         this.socketService.joinRoom(name, maxPlayers);
       }
       this.nameForm.reset();
 
-      this.playerService.setClientPlayer(clientPlayer);
-      this._router.navigate(['game'], {skipLocationChange: true});
+      this.router.navigate(['game'], {skipLocationChange: true});
     }
   }
 }

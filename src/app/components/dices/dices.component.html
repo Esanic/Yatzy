@@ -1,24 +1,24 @@
 <div class="d-flex flex-row">
     <div class="col-12 col-lg-6 d-flex flex-row justify-content-between mx-auto p-3 bg-white rounded-bottom bg-border">
-        <div *ngFor="let die of this.availableDice; index as i">
-            <button type="button" *ngIf="die.side === 0" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 dice-size" (click)="selectDie(i)"></button>
-            <button type="button" *ngIf="die.side === 1 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1 dice-size" (click)="selectDie(i)" [@rotate]="animationState "></button>
-            <button type="button" *ngIf="die.side === 1 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-1-fill dice-size" (click)="selectDie(i)"></button>
+        <div *ngFor="let die of this.dice; index as i">
+            <button type="button" *ngIf="die.side === 0" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-1 dice-size" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 1 && die.selected === false" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-1 dice-size" (click)="selectDie(i)" [@rotate]="animationState "></button>
+            <button type="button" *ngIf="die.side === 1 && die.selected === true" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-1-fill dice-size" (click)="selectDie(i)"></button>
             
-            <button type="button" *ngIf="die.side === 2 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-2 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
-            <button type="button" *ngIf="die.side === 2 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-2-fill dice-size" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 2 && die.selected === false" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-2 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
+            <button type="button" *ngIf="die.side === 2 && die.selected === true" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-2-fill dice-size" (click)="selectDie(i)"></button>
             
-            <button type="button" *ngIf="die.side === 3 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-3 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
-            <button type="button" *ngIf="die.side === 3 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-3-fill dice-size" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 3 && die.selected === false" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-3 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
+            <button type="button" *ngIf="die.side === 3 && die.selected === true" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-3-fill dice-size" (click)="selectDie(i)"></button>
             
-            <button type="button" *ngIf="die.side === 4 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-4 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
-            <button type="button" *ngIf="die.side === 4 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-4-fill dice-size" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 4 && die.selected === false" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-4 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
+            <button type="button" *ngIf="die.side === 4 && die.selected === true" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-4-fill dice-size" (click)="selectDie(i)"></button>
             
-            <button type="button" *ngIf="die.side === 5 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-5 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
-            <button type="button" *ngIf="die.side === 5 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-5-fill dice-size" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 5 && die.selected === false" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-5 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
+            <button type="button" *ngIf="die.side === 5 && die.selected === true" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-5-fill dice-size" (click)="selectDie(i)"></button>
             
-            <button type="button" *ngIf="die.side === 6 && die.selected === false" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-6 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
-            <button type="button" *ngIf="die.side === 6 && die.selected === true" [disabled]="this.diceAvailable" class="btn-dice bi bi-dice-6-fill dice-size" (click)="selectDie(i)"></button>
+            <button type="button" *ngIf="die.side === 6 && die.selected === false" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-6 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
+            <button type="button" *ngIf="die.side === 6 && die.selected === true" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-6-fill dice-size" (click)="selectDie(i)"></button>
         </div>
         <div class="my-auto ps-2 pe-2">
             <button type="button" class="btn-play" [disabled]="this.disablePlayButton" (click)="hitDices()">

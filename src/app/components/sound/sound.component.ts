@@ -11,16 +11,31 @@ export class SoundComponent implements OnInit {
 
   constructor(private clientService: ClientService) { }
 
+  
+  /**
+   * Fetches the @param sound from localestorage in order to use the users last chosen state on sound.
+   * @date 2/15/2023 - 11:17:21 AM
+   */
   ngOnInit(): void {
     localStorage.getItem('sound') === 'true' ? this.enableSound() : this.muteSound();
   }
 
+  
+  /**
+   * Mutes the sound for all audio.
+   * @date 2/15/2023 - 11:18:29 AM
+   */
   muteSound(){
     this.sound = false;
     this.clientService.setSound(false);
     localStorage.setItem('sound', 'false')
   }
 
+  
+  /**
+   * Enables the sound for all audio.
+   * @date 2/15/2023 - 11:18:44 AM
+   */
   enableSound(){
     this.sound = true;
     this.clientService.setSound(true);

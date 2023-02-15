@@ -15,18 +15,20 @@ export class GameComponent implements OnInit, OnDestroy {
   public amtOfPlayers: number = 1;
   public maxPlayers: number = 0;
 
-  private subFullGame$: Subscription = new Subscription;
-  private subGetRoom$: Subscription = new Subscription;
-  private subAmtOfPlayers$: Subscription = new Subscription;
-  private subDisconnectedInQueue$: Subscription = new Subscription;
-  private subMaxPlayers$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.subAmtOfPlayers$, this.subDisconnectedInQueue$, this.subFullGame$, this.subGetRoom$, this.subMaxPlayers$]
+  //Subscriptions
+  private fullGame$: Subscription = new Subscription;
+  private getRoom$: Subscription = new Subscription;
+  private amtOfPlayers$: Subscription = new Subscription;
+  private disconnectedInQueue$: Subscription = new Subscription;
+  private maxPlayers$: Subscription = new Subscription;
+  private subscriptions: Subscription[] = [this.amtOfPlayers$, this.disconnectedInQueue$, this.fullGame$, this.getRoom$, this.maxPlayers$]
 
-  constructor(private socketService: SocketService, private playerService: PlayerService, private _router: Router) {
-    _router.events.forEach((event) => {
+  constructor(private socketService: SocketService, private playerService: PlayerService, private router: Router) {
+    //To prevent possibility to go back and forth into game.
+    router.events.forEach((event) => {
       if(event instanceof NavigationStart) {
         if (event.navigationTrigger === 'popstate') {
-          _router.navigate([''], {skipLocationChange: true})
+          router.navigate([''], {skipLocationChange: true})
         }
       }
     });
@@ -43,7 +45,8 @@ export class GameComponent implements OnInit, OnDestroy {
     */
 
   ngOnInit(): void {
-    this.subMaxPlayers$ = this.playerService.getChosenMaxPlayers().subscribe(players => {
+    //Subscribes to chosen max players
+    this.maxPlayers$ = this.playerService.getChosenMaxPlayers().subscribe(players => {
       this.maxPlayers = players;
 
       if(this.maxPlayers === 1){
@@ -51,32 +54,37 @@ export class GameComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.subFullGame$ = this.socketService.getRoomFull().subscribe(status => {
+    //Subscribes to get when current room is full from the backend
+    this.fullGame$ = this.socketService.getRoomFull().subscribe(status => {
       if(status){
         this.fullGame = true;
       }
     })
 
-    this.subAmtOfPlayers$ = this.socketService.getAmtOfPlayersInRoom().subscribe(amtOfPlayers => {
+    //Subscribes to recieve number of players in the room from the backend
+    this.amtOfPlayers$ = this.socketService.getAmtOfPlayersInRoom().subscribe(amtOfPlayers => {
       this.amtOfPlayers = Number(amtOfPlayers);
     })
 
-    this.subGetRoom$ = this.socketService.getRoomName().subscribe(room => {
+    //Subscribes to recieve the room name from the backend.
+    //Used to emit stuff to the same room socket is in.
+    this.getRoom$ = this.socketService.getRoomName().subscribe(room => {
       this.socketService.setRoomName(room);
     })
 
+    //Depending on the amount of maxPlayers, subscribes to get disconnects while in queue.
     if(this.maxPlayers === 2){
-      this.subDisconnectedInQueue$ = this.socketService.getDisconnectedPlayerInTwoQueue().subscribe(amtOfPlayers => {
+      this.disconnectedInQueue$ = this.socketService.getDisconnectedPlayerInTwoQueue().subscribe(amtOfPlayers => {
         this.amtOfPlayers = amtOfPlayers;
       })
     }
     if(this.maxPlayers === 3){
-      this.subDisconnectedInQueue$ = this.socketService.getDisconnectedPlayerInThreeQueue().subscribe(amtOfPlayers => {
+      this.disconnectedInQueue$ = this.socketService.getDisconnectedPlayerInThreeQueue().subscribe(amtOfPlayers => {
         this.amtOfPlayers = amtOfPlayers;
       })
     }
     if(this.maxPlayers === 4){
-      this.subDisconnectedInQueue$ = this.socketService.getDisconnectedPlayerInFourQueue().subscribe(amtOfPlayers => {
+      this.disconnectedInQueue$ = this.socketService.getDisconnectedPlayerInFourQueue().subscribe(amtOfPlayers => {
         this.amtOfPlayers = amtOfPlayers;
       })
     }

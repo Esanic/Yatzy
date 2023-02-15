@@ -1,10 +1,19 @@
-export const version: string = "v1.0.4.4";
+export const version: string = "v1.1.5.5";
 
 // vX.Y.Z.V
 // X = Major
 // Y = Minor 
 // Z = Feature
 // V = Bugfix
+
+// 1.1.5.5
+// - Added documentation
+
+// 1.0.5.5
+// - Gone through the whole project to add comments.
+
+// 1.0.4.5
+// - Fixed sound playing when other player hit dice when muted
 
 // 1.0.4.4
 // - Fixed yourTurn text to wrap on mobile devices.

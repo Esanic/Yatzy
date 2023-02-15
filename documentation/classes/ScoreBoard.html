@@ -1,0 +1,2127 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>yatzy documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">yatzy documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >ScoreBoard</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/models/score-board.ts</code>
+        </p>
+
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#aces" >aces</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#bonus" >bonus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#bonusSum" >bonusSum</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#chance" >chance</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#clientPlayerSid" >clientPlayerSid</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#currentPlayerSid" >currentPlayerSid</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#dice" >dice</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#fives" >fives</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#fourOfAKind" >fourOfAKind</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#fours" >fours</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#house" >house</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#largeStraight" >largeStraight</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#onePair" >onePair</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#scoreBoard" >scoreBoard</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#sixes" >sixes</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#smallStraight" >smallStraight</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subLangChange$" >subLangChange$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#subTotal" >subTotal</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#threeOfAKind" >threeOfAKind</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#threes" >threes</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#total" >total</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#twoPair" >twoPair</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#twos" >twos</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#yatzy" >yatzy</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#acesThroughSixesScore" >acesThroughSixesScore</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#acesThroughSixesScorePossibleScore" >acesThroughSixesScorePossibleScore</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#addTotalScoreAndMakeUnselectable" >addTotalScoreAndMakeUnselectable</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#checkEndOfGame" >checkEndOfGame</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#mapOccurences" >mapOccurences</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#possibleScore" >possibleScore</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#setScore" >setScore</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(diceService: <a href="../injectables/DiceService.html" target="_self">DiceService</a>, scoreService: <a href="../injectables/ScoreService.html" target="_self">ScoreService</a>, translateService: TranslateService, modal: NgbModal)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/models/score-board.ts:42</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>diceService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DiceService.html" target="_self" >DiceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>scoreService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ScoreService.html" target="_self" >ScoreService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>modal</td>
+                                                  
+                                                        <td>
+                                                                    <code>NgbModal</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="aces"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>aces</b></span>
+                        <a href="#aces"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.ACES&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/models/score-board.ts:12</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bonus"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>bonus</b></span>
+                        <a href="#bonus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.BONUS&#x27;), 0, false, false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/models/score-board.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="bonusSum"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>bonusSum</b></span>
+                        <a href="#bonusSum"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/models/score-board.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="chance"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>chance</b></span>
+                        <a href="#chance"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.CHANCE&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/models/score-board.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clientPlayerSid"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>clientPlayerSid</b></span>
+                        <a href="#clientPlayerSid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;&quot;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/models/score-board.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentPlayerSid"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>currentPlayerSid</b></span>
+                        <a href="#currentPlayerSid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;&quot;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/models/score-board.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dice"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>dice</b></span>
+                        <a href="#dice"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Die.html" target="_self" >Die[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/models/score-board.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fives"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>fives</b></span>
+                        <a href="#fives"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.FIVES&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/models/score-board.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fourOfAKind"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>fourOfAKind</b></span>
+                        <a href="#fourOfAKind"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.FOUROFAKIND&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/models/score-board.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fours"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>fours</b></span>
+                        <a href="#fours"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.FOURS&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/models/score-board.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="house"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>house</b></span>
+                        <a href="#house"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.HOUSE&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/models/score-board.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="largeStraight"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>largeStraight</b></span>
+                        <a href="#largeStraight"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.LARGESTRAIGHT&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/models/score-board.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onePair"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>onePair</b></span>
+                        <a href="#onePair"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.ONEPAIR&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/models/score-board.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scoreBoard"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>scoreBoard</b></span>
+                        <a href="#scoreBoard"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/ScoreRow.html" target="_self" >ScoreRow[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[this.aces, this.twos, this.threes, this.fours, this.fives, this.sixes, this.subTotal, this.bonus, this.onePair, this.twoPair, this.threeOfAKind, this.fourOfAKind, this.smallStraight, this.largeStraight, this.house, this.chance, this.yatzy, this.total]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/models/score-board.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sixes"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>sixes</b></span>
+                        <a href="#sixes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.SIXES&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/models/score-board.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="smallStraight"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>smallStraight</b></span>
+                        <a href="#smallStraight"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.SMALLSTRAIGHT&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/models/score-board.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subLangChange$"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subLangChange$</b></span>
+                        <a href="#subLangChange$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/models/score-board.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subTotal"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>subTotal</b></span>
+                        <a href="#subTotal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.SUBTOTAL&#x27;), 0, false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/models/score-board.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="threeOfAKind"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>threeOfAKind</b></span>
+                        <a href="#threeOfAKind"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.THREEOFAKIND&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/models/score-board.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="threes"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>threes</b></span>
+                        <a href="#threes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.THREES&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/models/score-board.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="total"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>total</b></span>
+                        <a href="#total"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.TOTAL&#x27;), 0, false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/models/score-board.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="twoPair"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>twoPair</b></span>
+                        <a href="#twoPair"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.TWOPAIR&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/models/score-board.ts:21</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="twos"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>twos</b></span>
+                        <a href="#twos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.TWOS&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/models/score-board.ts:13</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="yatzy"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>yatzy</b></span>
+                        <a href="#yatzy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new ScoreRow(this.translateService.instant(&#x27;DICE.YATZY&#x27;), 0, true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/models/score-board.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="acesThroughSixesScore"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>acesThroughSixesScore</b></span>
+                        <a href="#acesThroughSixesScore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>acesThroughSixesScore(dieSide: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, scoreRow: <a href="../classes/ScoreRow.html" target="_self">ScoreRow</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="317"
+                            class="link-to-prism">src/app/models/score-board.ts:317</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Increments the scorerow with each die that has the same value as @param dieSide</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dieSide</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>value to look for in each die.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>scoreRow</td>
+                                    <td>
+                                                <code><a href="../classes/ScoreRow.html" target="_self" >ScoreRow</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>scorerow to add the score to.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <ul>
+<li>returns true if modal was opened - has no use other than delivering a promise</li>
+</ul>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="acesThroughSixesScorePossibleScore"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>acesThroughSixesScorePossibleScore</b></span>
+                        <a href="#acesThroughSixesScorePossibleScore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>acesThroughSixesScorePossibleScore(dieSide: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="338"
+                            class="link-to-prism">src/app/models/score-board.ts:338</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Increments the possible score with each die that has the same value as @param dieSide</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>dieSide</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>value to look for in each die.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addTotalScoreAndMakeUnselectable"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>addTotalScoreAndMakeUnselectable</b></span>
+                        <a href="#addTotalScoreAndMakeUnselectable"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addTotalScoreAndMakeUnselectable(scoreRow: <a href="../classes/ScoreRow.html" target="_self">ScoreRow</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="354"
+                            class="link-to-prism">src/app/models/score-board.ts:354</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Adds the selected scorerow score to the total and makes it unselectable.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>scoreRow</td>
+                                    <td>
+                                                <code><a href="../classes/ScoreRow.html" target="_self" >ScoreRow</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>what scorerow to retrieve score from.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <ul>
+<li>returns true if modal has been opened - - has no use other than delivering a promise</li>
+</ul>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkEndOfGame"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>checkEndOfGame</b></span>
+                        <a href="#checkEndOfGame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkEndOfGame()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="413"
+                            class="link-to-prism">src/app/models/score-board.ts:413</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Controls if all the scorerows in the scoreboard has had their property selectable set to false.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mapOccurences"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>mapOccurences</b></span>
+                        <a href="#mapOccurences"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>mapOccurences(desiredOccurences: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="393"
+                            class="link-to-prism">src/app/models/score-board.ts:393</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates an array where it groups each value of the dice with amount of occurencies</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>desiredOccurences</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>minimum of occurencies that is going to be included in the returning array</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>any[]</code>
+
+                    </div>
+                    <div class="io-description">
+                        <ul>
+<li>array of values grouped with occurencies of said value.</li>
+</ul>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="possibleScore"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span ><b>possibleScore</b></span>
+                        <a href="#possibleScore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>possibleScore(names: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, dice: <a href="../classes/Die.html" target="_self">Die[]</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="215"
+                            class="link-to-prism">src/app/models/score-board.ts:215</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Used to determine what score the scorerows would give based upon the current dice.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>names</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>array of scorerow names</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>dice</td>
+                                    <td>
+                                                <code><a href="../classes/Die.html" target="_self" >Die[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>the current dice and their value</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>number[]</code>
+
+                    </div>
+                    <div class="io-description">
+                        <ul>
+<li>returns an array of numbers, indexed after</li>
+</ul>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setScore"></a>
+                    <span class="name">
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Async</span>
+                        <span ><b>setScore</b></span>
+                        <a href="#setScore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setScore(scoreRowName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, dice: <a href="../classes/Die.html" target="_self">Die[]</a>, currentPlayerSid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, clientPlayerSid: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="72"
+                            class="link-to-prism">src/app/models/score-board.ts:72</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets the score depending on what scorerow the user picks and the values of the dice.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>scoreRowName</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>ScoreRow to place score at.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>dice</td>
+                                    <td>
+                                                <code><a href="../classes/Die.html" target="_self" >Die[]</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>Array of dice to determine the score.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>currentPlayerSid</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>current player&#39;s socket ID.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>clientPlayerSid</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <ul>
+<li>client player&#39;s socket ID.</li>
+</ul>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        <ul>
+<li>Returns true/false based upon if the user wanted to place 0 points into something - - has no use other than delivering a promise.</li>
+</ul>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgbModal } from &quot;@ng-bootstrap/ng-bootstrap&quot;
+import { LangChangeEvent, TranslateService } from &quot;@ngx-translate/core&quot;
+import { Subscription } from &quot;rxjs&quot;
+import { SetScoreConfirmationComponent } from &quot;../components/modals/set-score-confirmation/set-score-confirmation.component&quot;
+import { DiceService } from &quot;../services/dice.service&quot;
+import { ScoreService } from &quot;../services/score.service&quot;
+import { Die } from &quot;./die&quot;
+import { ScoreRow } from &quot;./score-row&quot;
+
+export class ScoreBoard {
+  //Scorerows
+  public aces &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.ACES&#x27;), 0, true)
+  public twos &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.TWOS&#x27;), 0, true)
+  public threes &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.THREES&#x27;), 0, true)
+  public fours &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.FOURS&#x27;), 0, true)
+  public fives &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.FIVES&#x27;), 0, true)
+  public sixes &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.SIXES&#x27;), 0, true)
+  public subTotal &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.SUBTOTAL&#x27;), 0, false)
+  public bonus &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.BONUS&#x27;), 0, false, false)
+  public onePair &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.ONEPAIR&#x27;), 0, true)
+  public twoPair &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.TWOPAIR&#x27;), 0, true)
+  public threeOfAKind &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.THREEOFAKIND&#x27;), 0, true)
+  public fourOfAKind &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.FOUROFAKIND&#x27;), 0, true)
+  public smallStraight &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.SMALLSTRAIGHT&#x27;), 0, true)
+  public largeStraight &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.LARGESTRAIGHT&#x27;), 0, true)
+  public house &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.HOUSE&#x27;), 0, true)
+  public chance &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.CHANCE&#x27;), 0, true)
+  public yatzy &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.YATZY&#x27;), 0, true)
+  public total &#x3D; new ScoreRow(this.translateService.instant(&#x27;DICE.TOTAL&#x27;), 0, false)
+  public scoreBoard: ScoreRow[] &#x3D; [this.aces, this.twos, this.threes, this.fours, this.fives, this.sixes, this.subTotal, this.bonus, this.onePair, this.twoPair, this.threeOfAKind, this.fourOfAKind, this.smallStraight, this.largeStraight, this.house, this.chance, this.yatzy, this.total]
+
+  //Dice
+  private dice: Die[] &#x3D; [];
+
+  //Misc
+  private bonusSum: number &#x3D; 0;
+
+  //Socket IDs
+  private clientPlayerSid: string &#x3D; &quot;&quot;;
+  private currentPlayerSid: string &#x3D; &quot;&quot;;
+
+  private subLangChange$: Subscription &#x3D; new Subscription();
+
+  constructor( 
+    private diceService: DiceService, 
+    private scoreService: ScoreService, 
+    private translateService: TranslateService, 
+    private modal: NgbModal) {
+    this.subLangChange$ &#x3D; this.translateService.onLangChange.subscribe((event: LangChangeEvent) &#x3D;&gt; {
+      this.translateService.stream(&#x27;DICE&#x27;).subscribe(translation &#x3D;&gt; {
+        const scoreRowNames: string[] &#x3D; Object.keys(translation);
+        for(let i &#x3D; 0; i &lt; this.scoreBoard.length; i++){
+          this.scoreBoard[i].name &#x3D; translation[scoreRowNames[i]]
+        }
+      })
+    })
+  }
+
+  /**
+   * Sets the score depending on what scorerow the user picks and the values of the dice.
+   * @date 2/15/2023 - 11:33:23 AM
+   * @author Christopher Reineborn
+   *
+   * @public
+   * @async
+   * @param {string} scoreRowName - ScoreRow to place score at.
+   * @param {Die[]} dice - Array of dice to determine the score.
+   * @param {string} currentPlayerSid - current player&#x27;s socket ID.
+   * @param {string} clientPlayerSid - client player&#x27;s socket ID.
+   * @returns {Promise&lt;boolean&gt;} - Returns true/false based upon if the user wanted to place 0 points into something - - has no use other than delivering a promise.
+   */
+  public async setScore(scoreRowName: string, dice: Die[], currentPlayerSid: string, clientPlayerSid: string): Promise&lt;boolean&gt; {
+    let modal: boolean;
+    this.dice &#x3D; dice;
+    
+    this.currentPlayerSid &#x3D; currentPlayerSid;
+    this.clientPlayerSid &#x3D; clientPlayerSid;
+    
+    return new Promise&lt;boolean&gt;(async resolve &#x3D;&gt; {
+      switch(scoreRowName){
+        case this.aces.name:
+          modal &#x3D; await this.acesThroughSixesScore(1, this.aces);
+          break;
+          
+        case this.twos.name:
+          modal &#x3D; await this.acesThroughSixesScore(2, this.twos);
+          break;
+  
+        case this.threes.name:
+          modal &#x3D; await this.acesThroughSixesScore(3, this.threes);
+          break;
+  
+        case this.fours.name:
+          modal &#x3D; await this.acesThroughSixesScore(4, this.fours);
+          break;
+  
+        case this.fives.name:
+          modal &#x3D; await this.acesThroughSixesScore(5, this.fives);
+          break;
+          
+        case this.sixes.name:
+          modal &#x3D; await this.acesThroughSixesScore(6, this.sixes);
+          break;
+  
+        // Uses the mapOccurencies method to group any die that occurs twice or more 
+        // and then uses the map method to loop through each element and controls if the elements value (dice side/value) is bigger than onePairSide.
+        // This way we can assure that the highest value pair will be the one chosen.
+        // Then sets the score to the scorerow by multiplying it by 2.
+        case this.onePair.name:
+          let onePairSide &#x3D; 0;
+          this.mapOccurences(2).map(obj &#x3D;&gt; obj[0] &gt; onePairSide ? onePairSide &#x3D; obj[0] : null);
+          this.onePair.score &#x3D; onePairSide * 2;
+          modal &#x3D; await this.addTotalScoreAndMakeUnselectable(this.onePair)
+          break;
+        
+        // Uses the mapOccurencies method to group any die that occurs twice or more and stores the result in an array.
+        // Then uses the ternary operator to see if the array contains 2 elements or more.
+        // If true; sets the score to the scorerow by multiplying both element&#x27;s values by 2 and then add them together.
+        case this.twoPair.name:
+          let twoPairArr &#x3D; this.mapOccurences(2);
+          twoPairArr.length &gt;&#x3D; 2 ? this.twoPair.score &#x3D; (twoPairArr[0][0] * 2)+(twoPairArr[1][0] *2) : null;  
+          modal &#x3D; await this.addTotalScoreAndMakeUnselectable(this.twoPair);
+          break;
+        
+        // Uses the mapOccurencies method to group any die that occurs 3 times or more and stores the result in an array.
+        // Then uses the ternary operator to make sure that the first element of the array is not undefined.
+        // If true; sets the score of the scorerow by multiplying the first elements value by 3.
+        // If false; sets the score of the scorerow to 0.
+        case this.threeOfAKind.name:
+          let threeOfAKindArr &#x3D; this.mapOccurences(3);
+          threeOfAKindArr[0] !&#x3D;&#x3D; undefined ? this.threeOfAKind.score &#x3D; threeOfAKindArr[0][0] * 3 : this.threeOfAKind.score &#x3D; 0;
+          modal &#x3D; await this.addTotalScoreAndMakeUnselectable(this.threeOfAKind);
+          break;
+        
+        // Uses the mapOccurencies method to group any die that occurs 4 times or more and stores the result in an array.
+        // Then uses the ternary operator to make sure that the first element of the array is not undefined.
+        // If true; sets the score of the scorerow by multiplying the first elements value by 4.
+        // If false; sets the score of the scorerow to 0.
+        case this.fourOfAKind.name:
+          let fourOfAKindArr &#x3D; this.mapOccurences(4);
+          fourOfAKindArr[0] !&#x3D;&#x3D; undefined ? this.fourOfAKind.score &#x3D; fourOfAKindArr[0][0] * 4 : this.fourOfAKind.score &#x3D; 0;
+          modal &#x3D; await this.addTotalScoreAndMakeUnselectable(this.fourOfAKind);
+          break;
+  
+        // Creates an array of all the dice sides/values.
+        // Then uses the ternary operator to check if the array includes 1 through 5.
+        // If true; sets the sore of the scorerow to 15.
+        case this.smallStraight.name:
+          let smallStraightArr &#x3D; this.dice.map(die &#x3D;&gt; die.side)
+          smallStraightArr.includes(1) &amp;&amp; smallStraightArr.includes(2) &amp;&amp; smallStraightArr.includes(3) &amp;&amp; smallStraightArr.includes(4) &amp;&amp; smallStraightArr.includes(5) ? this.smallStraight.score &#x3D; 15 : null;
+          modal &#x3D; await this.addTotalScoreAndMakeUnselectable(this.smallStraight);
+          break;
+        
+        // Creates an array of all the dice sides/values.
+        // Then uses the ternary operator to check if the array includes 2 through 6.
+        // If true; sets the score of the scorerow to 20.
+        case this.largeStraight.name:
+          let largeStraightArr &#x3D; this.dice.map(die &#x3D;&gt; die.side)
+          largeStraightArr.includes(2) &amp;&amp; largeStraightArr.includes(3) &amp;&amp; largeStraightArr.includes(4) &amp;&amp; largeStraightArr.includes(5) &amp;&amp; largeStraightArr.includes(6) ? this.largeStraight.score &#x3D; 20 : null;
+          modal &#x3D; await this.addTotalScoreAndMakeUnselectable(this.largeStraight);
+          break;
+  
+        // Uses the mapOccurencies method to group any die that occurs 2 times or more and stores the result in an array.
+        // Then uses the ternary operator to see if the array contains 2 elements or more.
+        // If true; Uses one more ternary operator that with the help of map method loops through each element to determine if they occur three times.
+        // If true; sets the score of the scorerow by multiplying both elements occurences by it&#x27;s value and then add them together.
+        case this.house.name:
+          let houseArr &#x3D; this.mapOccurences(2);
+          houseArr.length &gt;&#x3D; 2 ? houseArr.map(obj &#x3D;&gt; obj[1] &#x3D;&#x3D;&#x3D; 3 ? this.house.score &#x3D; (houseArr[0][0]*houseArr[0][1]) + (houseArr[1][0]*houseArr[1][1]) : null) : null;
+          modal &#x3D; await this.addTotalScoreAndMakeUnselectable(this.house);
+          break;
+  
+        // Uses the map method to add each die&#x27;s value to the scorerows score.
+        case this.chance.name:
+          this.dice.map(die &#x3D;&gt; this.chance.score +&#x3D; die.side);
+          modal &#x3D; await this.addTotalScoreAndMakeUnselectable(this.chance);
+          break;
+  
+        // Uses the mapOccurencies method to group any die that occurs 5 times and stores the result in an array.
+        // Then uses the ternary operator to make sure that the first element of the array is not undefined.
+        // Also makes sure that the first element has 5 occurences and that none of the dice sides/values are 0 (to prevent gaining points from dice not being rolled)
+        // If all those are true; sets the score of the scorerow to 50.
+        case this.yatzy.name:
+          let yatzyArr &#x3D; this.mapOccurences(5);
+          yatzyArr[0] !&#x3D; undefined &amp;&amp; yatzyArr[0][1] &#x3D;&#x3D;&#x3D; 5 &amp;&amp; this.dice.some(die &#x3D;&gt; {die.side !&#x3D;&#x3D; 0})? this.yatzy.score &#x3D; 50 : null;
+          modal &#x3D; await this.addTotalScoreAndMakeUnselectable(this.yatzy);
+          break;
+      }
+      
+      // Controls if aces through sixes has recieved points, that the bonusSum is 63 or more and that the bonus scorerow has not had it bonus applied.
+      // If all those are true; Assigns 50 to bonus score and marks the bonus as applied.
+      // Adds the bonus score to the total.
+      if(this.aces.score &gt; 0 &amp;&amp; this.twos.score &gt; 0 &amp;&amp; this.threes.score &gt; 0 &amp;&amp; this.fours.score &gt; 0 &amp;&amp; this.fives.score &gt; 0 &amp;&amp; this.sixes.score &gt; 0 &amp;&amp; this.bonusSum &gt;&#x3D; 63 &amp;&amp; this.bonus.bonusApplied &#x3D;&#x3D; false) {
+        Object.assign(this.bonus, {score: 50, bonusApplied: true})
+        this.total.score +&#x3D; this.bonus.score;
+      }
+
+      this.diceService.setNewTurn(true);
+
+      resolve(modal);
+    })
+    
+  }
+
+  /**
+   * Used to determine what score the scorerows would give based upon the current dice.
+   * @date 2023-01-31 - 13:51:10
+   * @author Christopher Reineborn
+   *
+   * @public
+   * @param {string[]} names - array of scorerow names
+   * @param {Die[]} dice - the current dice and their value
+   * @returns {number[]} - returns an array of numbers, indexed after @param names, with each number representing the score the user would recieve if choosing that scorerow.
+   */
+  public possibleScore(names: any, dice: Die[]): number[] {
+    let possibleScores: number[] &#x3D; [];
+    this.dice &#x3D; dice;
+
+    for(let name of names){
+      switch(name){
+        case this.bonus.name:
+          possibleScores.push(0);
+          break;
+        case this.subTotal.name:
+          possibleScores.push(0);
+          break;
+        case this.total.name:
+          possibleScores.push(0);
+        break;
+
+        case this.aces.name:
+          possibleScores.push(this.acesThroughSixesScorePossibleScore(1));
+          break;
+          
+        case this.twos.name:
+          possibleScores.push(this.acesThroughSixesScorePossibleScore(2));
+          break;
+  
+        case this.threes.name:
+          possibleScores.push(this.acesThroughSixesScorePossibleScore(3));
+          break;
+  
+        case this.fours.name:
+          possibleScores.push(this.acesThroughSixesScorePossibleScore(4));
+          break;
+  
+        case this.fives.name:
+          possibleScores.push(this.acesThroughSixesScorePossibleScore(5));
+          break;
+          
+        case this.sixes.name:
+          possibleScores.push(this.acesThroughSixesScorePossibleScore(6));
+          break;
+  
+        case this.onePair.name:
+          let onePairSide &#x3D; 0;
+          this.mapOccurences(2).map(obj &#x3D;&gt; obj[0] &gt; onePairSide ? onePairSide &#x3D; obj[0] : null);
+          possibleScores.push((onePairSide * 2));
+          break;
+        
+        case this.twoPair.name:
+          let twoPairArr &#x3D; this.mapOccurences(2);
+          twoPairArr.length &gt;&#x3D; 2 ? possibleScores.push((twoPairArr[0][0] * 2)+(twoPairArr[1][0] *2)) : possibleScores.push(0);
+          break;
+        
+        case this.threeOfAKind.name:
+          let threeOfAKindArr &#x3D; this.mapOccurences(3);
+          threeOfAKindArr[0] !&#x3D; undefined &amp;&amp; threeOfAKindArr[0][1] &#x3D;&#x3D; 3? possibleScores.push((threeOfAKindArr[0][0] * 3)) : possibleScores.push(0);
+          break;
+  
+        case this.fourOfAKind.name:
+          let fourOfAKindArr &#x3D; this.mapOccurences(4);
+          fourOfAKindArr[0] !&#x3D; undefined &amp;&amp; fourOfAKindArr[0][1] &#x3D;&#x3D; 4? possibleScores.push((fourOfAKindArr[0][0] * 4)) : possibleScores.push(0);
+          break;
+  
+        case this.smallStraight.name:
+          let smallStraightArr &#x3D; this.dice.map(die &#x3D;&gt; die.side)
+          smallStraightArr.includes(1) &amp;&amp; smallStraightArr.includes(2) &amp;&amp; smallStraightArr.includes(3) &amp;&amp; smallStraightArr.includes(4) &amp;&amp; smallStraightArr.includes(5) ? possibleScores.push(15) : possibleScores.push(0);
+          break;
+        
+        case this.largeStraight.name:
+          let largeStraightArr &#x3D; this.dice.map(die &#x3D;&gt; die.side)
+          largeStraightArr.includes(2) &amp;&amp; largeStraightArr.includes(3) &amp;&amp; largeStraightArr.includes(4) &amp;&amp; largeStraightArr.includes(5) &amp;&amp; largeStraightArr.includes(6) ? possibleScores.push(20) : possibleScores.push(0);
+          break;
+  
+        case this.house.name:
+          let houseArr &#x3D; this.mapOccurences(2);
+          houseArr.length &gt;&#x3D; 2 ? houseArr.map(obj &#x3D;&gt; obj[1] &#x3D;&#x3D;&#x3D; 3 ? possibleScores.push((houseArr[0][0]*houseArr[0][1]) + (houseArr[1][0]*houseArr[1][1])) : possibleScores.push(0)) : possibleScores.push(0);
+          break;
+  
+        case this.chance.name:
+          let scoreChance &#x3D; 0;
+          this.dice.map(die &#x3D;&gt; scoreChance +&#x3D; die.side);
+          possibleScores.push(scoreChance);
+          break;
+  
+        case this.yatzy.name:
+          let yatzyArr &#x3D; this.mapOccurences(5);
+          yatzyArr[0] !&#x3D; undefined &amp;&amp; yatzyArr[0][1] &#x3D;&#x3D; 5 ? possibleScores.push(50) : possibleScores.push(0);
+          break;
+      }
+    }
+    return possibleScores;
+  }
+
+  /**
+ * Increments the scorerow with each die that has the same value as @param dieSide
+ * @date 2/15/2023 - 1:07:21 PM
+ * @author Christopher Reineborn
+ *
+ * @private
+ * @async
+ * @param {number} dieSide - value to look for in each die.
+ * @param {ScoreRow} scoreRow - scorerow to add the score to.
+ * @returns {Promise&lt;boolean&gt;} - returns true if modal was opened - has no use other than delivering a promise
+ */
+  private async acesThroughSixesScore(dieSide: number, scoreRow: ScoreRow): Promise&lt;boolean&gt;{
+    let modal: boolean;
+    return new Promise&lt;boolean&gt;(async resolve &#x3D;&gt; {
+      this.dice.map(die &#x3D;&gt; die.side &#x3D;&#x3D;&#x3D; dieSide ? scoreRow.score +&#x3D; die.side : null)
+      this.bonusSum +&#x3D; scoreRow.score;
+      this.subTotal.score +&#x3D; scoreRow.score;
+      modal &#x3D; await this.addTotalScoreAndMakeUnselectable(scoreRow);
+      resolve(modal);
+    })
+
+  }
+
+  /**
+ * Increments the possible score with each die that has the same value as @param dieSide
+ * @date 2023-01-31 - 14:42:24
+ * @author Christopher Reineborn
+ *
+ * @private
+ * @param {number} dieSide - value to look for in each die.
+ * @returns {number}
+ */
+  private acesThroughSixesScorePossibleScore(dieSide:number): number{
+    let score &#x3D; 0;
+    this.dice.map(die &#x3D;&gt; die.side &#x3D;&#x3D;&#x3D; dieSide ? score +&#x3D; die.side : null)
+    return score;
+  }
+  
+  /**
+   * Adds the selected scorerow score to the total and makes it unselectable.
+   * @date 2/15/2023 - 1:04:46 PM
+   * @author Christopher Reineborn
+   *
+   * @private
+   * @async
+   * @param {ScoreRow} scoreRow - what scorerow to retrieve score from.
+   * @returns {Promise&lt;boolean&gt;} - returns true if modal has been opened - - has no use other than delivering a promise
+   */
+  private async addTotalScoreAndMakeUnselectable(scoreRow: ScoreRow): Promise&lt;boolean&gt;{
+    return new Promise&lt;boolean&gt;(async resolve &#x3D;&gt; {
+      if(scoreRow.score &#x3D;&#x3D;&#x3D; 0){
+        if(this.clientPlayerSid &#x3D;&#x3D;&#x3D; this.currentPlayerSid){
+          const modalRef &#x3D; this.modal.open(SetScoreConfirmationComponent, {centered: true});
+          modalRef.componentInstance.scoreRow &#x3D; scoreRow.name;
+          modalRef.result.then(
+            (result) &#x3D;&gt; {
+              if(result &#x3D;&#x3D;&#x3D; true){
+                this.total.score +&#x3D; scoreRow.score;
+                scoreRow.selectable &#x3D; false;
+                resolve(true)
+              }
+          });
+        }
+        else {
+          this.total.score +&#x3D; scoreRow.score;
+          scoreRow.selectable &#x3D; false;
+          resolve(false);
+        }       
+
+      }
+      if(scoreRow.score &gt; 0){
+        this.total.score +&#x3D; scoreRow.score;
+        scoreRow.selectable &#x3D; false;
+        resolve(false);
+      }
+    })
+  }
+  
+  /**
+   * Creates an array where it groups each value of the dice with amount of occurencies 
+   * @date 2023-01-31 - 13:59:23
+   * @author Christopher Reineborn
+   *
+   * @private
+   * @param {number} desiredOccurences - minimum of occurencies that is going to be included in the returning array
+   * @returns {any[]} - array of values grouped with occurencies of said value.
+   */
+  private mapOccurences(desiredOccurences: number): any[] {
+    let arr &#x3D; this.dice.map(die &#x3D;&gt; die.side !&#x3D; 0 ? die.side : null);
+    const map &#x3D; arr.reduce((acc, e) &#x3D;&gt; acc.set(e, (acc.get(e) || 0) + 1), new Map());
+    
+    let pairArr &#x3D; []
+    for(let obj of map){
+      if(obj[1] &gt;&#x3D; desiredOccurences){
+        pairArr.push(obj);
+      }
+    }
+    return pairArr;
+  }
+
+  /**
+   * Controls if all the scorerows in the scoreboard has had their property selectable set to false.
+   * @date 2023-01-31 - 14:43:36
+   * @author Christopher Reineborn
+   *
+   * @public
+   */
+  public checkEndOfGame(): void {
+    let check &#x3D; this.scoreBoard.every(score &#x3D;&gt; score.selectable &#x3D;&#x3D; false);
+    if(check &#x3D;&#x3D;&#x3D; true){
+      this.scoreService.setEndOfGame(true);
+    }
+  }
+}
+    
+
+
+
+
+
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'ScoreBoard.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

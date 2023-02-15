@@ -12,37 +12,40 @@ import { ClientService } from 'src/app/services/client.service';
   selector: 'app-dices',
   templateUrl: './dices.component.html',
   styleUrls: ['./dices.component.css'],
-  animations: [rotateAnimation(1080, 300)]
+  animations: [rotateAnimation(4, 300)]
 })
 
 export class DicesComponent implements OnInit, OnDestroy {
-  private soundState?: boolean;
-  public animationState: boolean = true;
-  private diceAudio = new Audio('https://zylion.se/rollingdice.mp3')
-  
-  public clientPlayer: Partial<Player> = {};
-  public currentPlayer: Partial<Player> = {};
-  public chosenMaxPlayer: number = 0;
-  
+  //Dice
   public dieOne = new Die(1, 0, false);
   public dieTwo = new Die(2, 0, false);
   public dieThree = new Die(3, 0, false);
   public dieFour = new Die(4, 0, false);
   public dieFive = new Die(5, 0, false);
-
-  public availableDice: Die[] = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
-
+  public dice: Die[] = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
   public currentHits: number = 0;
-  public diceAvailable: boolean = true;
+  public isDiceAvailable: boolean = true;
+
+  //Player
+  public clientPlayer: Partial<Player> = {};
+  public currentPlayer: Partial<Player> = {};
+  public chosenMaxPlayer: number = 0;
+  
   public disablePlayButton: boolean = false;
 
-  private subNewTurn$: Subscription = new Subscription;
-  private subResetDice$: Subscription = new Subscription;
-  private subCurrentPlayer$: Subscription = new Subscription;
-  private subDiceHit$: Subscription = new Subscription;
-  private subDiceMovement$: Subscription = new Subscription;
-  private subSoundChange$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.subNewTurn$, this.subResetDice$, this.subCurrentPlayer$, this.subDiceHit$, this.subDiceMovement$, this.subSoundChange$];
+  //Misc
+  private soundState?: boolean;
+  public animationState: boolean = true;
+  private diceAudio = new Audio('https://zylion.se/rollingdice.mp3')
+
+  //Subscriptions
+  private newTurn$: Subscription = new Subscription;
+  private resetDice$: Subscription = new Subscription;
+  private currentPlayer$: Subscription = new Subscription;
+  private diceHit$: Subscription = new Subscription;
+  private diceMovement$: Subscription = new Subscription;
+  private soundChange$: Subscription = new Subscription;
+  private subscriptions: Subscription[] = [this.newTurn$, this.resetDice$, this.currentPlayer$, this.diceHit$, this.diceMovement$, this.soundChange$];
 
   constructor(
     private diceService: DiceService, 
@@ -61,44 +64,51 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.diceAudio.load();
     this.clientPlayer = this.playerService.getClientPlayer();
 
-    this.subNewTurn$ = this.diceService.getNewTurn().subscribe(bool => {
+    //Retrieves user's chosen max player
+    this.chosenMaxPlayer = await firstValueFrom(this.playerService.getChosenMaxPlayers());
+
+    //Subscribes to sound state change
+    this.soundChange$ = this.clientService.getSound().subscribe(sound => {
+      this.soundState = sound;
+    })
+
+    //Subscribes to new turn
+    this.newTurn$ = this.diceService.getNewTurn().subscribe(bool => {
       if(bool) {
         this.newTurn();
         this.diceService.setNewTurn(false);
       }
     })
 
-    this.subSoundChange$ = this.clientService.getSound().subscribe(sound => {
-      this.soundState = sound;
-    })
-
-    this.subResetDice$ = this.diceService.getReset().subscribe(bool =>{
+    //Subscribes to reset dice
+    this.resetDice$ = this.diceService.getReset().subscribe(bool =>{
       if(bool){
         this.resetDices();
         this.diceService.setReset(false);
       }
     })
 
-    this.subCurrentPlayer$ = this.playerService.getCurrentPlayer().subscribe(player => {
+    //Subscribes to Current Player
+    this.currentPlayer$ = this.playerService.getCurrentPlayer().subscribe(player => {
       this.currentPlayer = player;
       this.currentPlayer.socketId === this.clientPlayer.socketId ? this.disablePlayButton = false : this.disablePlayButton = true;
     })
 
-    this.subDiceHit$ = this.socketService.getDiceHit().subscribe(dice => {
-      this.animate();
-      this.diceAudio.play();
-      this.availableDice.map((die, index) => {
+    //Subscribes to dice hit from backend
+    this.diceHit$ = this.socketService.getDiceHit().subscribe(dice => {
+      this.animateDiceRoll();
+      this.soundState === true ? this.diceAudio.play() : null;
+      this.dice.map((die, index) => {
         die.die = dice[index].die,
         die.selected = dice[index].selected,
         die.side = dice[index].side
       })
     })
 
-    this.subDiceMovement$ = this.socketService.getDiceMovement().subscribe((dice: any) => {
-      this.availableDice = [...dice];
+    //Subscribes to dice movement from backend
+    this.diceMovement$ = this.socketService.getDiceMovement().subscribe((dice: any) => {
+      this.dice = [...dice];
     })
-
-    this.chosenMaxPlayer = await firstValueFrom(this.playerService.getChosenMaxPlayers());
   }
 
   /**
@@ -124,28 +134,29 @@ export class DicesComponent implements OnInit, OnDestroy {
     switch(die){
       case 0:
         this.dieOne.selected === false ? this.dieOne.selected = true : this.dieOne.selected = false;
-        this.socketService.diceMoving(this.availableDice);
+        this.socketService.diceMoving(this.dice);
         break;
       case 1:
         this.dieTwo.selected === false ? this.dieTwo.selected = true : this.dieTwo.selected = false;
-        this.socketService.diceMoving(this.availableDice);
+        this.socketService.diceMoving(this.dice);
         break;
       case 2:
         this.dieThree.selected === false ? this.dieThree.selected = true : this.dieThree.selected = false;
-        this.socketService.diceMoving(this.availableDice);
+        this.socketService.diceMoving(this.dice);
         break;
       case 3:
         this.dieFour.selected === false ? this.dieFour.selected = true : this.dieFour.selected = false;
-        this.socketService.diceMoving(this.availableDice);
+        this.socketService.diceMoving(this.dice);
         break;
       case 4:
         this.dieFive.selected === false ? this.dieFive.selected = true : this.dieFive.selected = false;
-        this.socketService.diceMoving(this.availableDice);
+        this.socketService.diceMoving(this.dice);
         break;
     }
   }
 
   /**
+   * Animate dice rolling and play dice rolling sound if sound is not muted.
    * Generates new values for each of the dice in the array of available dice, if the value is anything else than -1.
    * Controls what the current hits counter is and enables/disables the play button upon that control.
    * Makes the dice available to be moved and sends the dice to both backend and dice service.
@@ -155,19 +166,22 @@ export class DicesComponent implements OnInit, OnDestroy {
    * @public
    */
   public hitDices(): void {
-    this.animate();
+    this.animateDiceRoll();
     this.soundState === true ? this.diceAudio.play() : null;
-    this.availableDice.map(die => die.side != -1 && die.selected === false ? die.side = Math.floor(Math.random() * 6) + 1 : null)
+
+    this.dice.map(die => die.side != -1 && die.selected === false ? die.side = Math.floor(Math.random() * 6) + 1 : null)
+    
     this.currentHits += 1;
     this.currentHits >= 3 ? this.disablePlayButton = true : this.disablePlayButton = false;
-    this.diceAvailable = false;
-    this.diceService.setDice(this.availableDice);
-    this.socketService.diceHit(this.availableDice);
+    this.isDiceAvailable = false;
+    
+    this.diceService.setDice(this.dice);
+    this.socketService.diceHit(this.dice);
   }
 
   /**
    * Resets all dice, resets all the arrays, resets the hit counter, makes the dice unavailable and disables the play button.
-   * If single-player, also sends the resetted dice into dice service.
+   * If singleplayer, also sends the resetted dice into dice service.
    * @date 2023-01-31 - 12:30:25
    * @author Christopher Reineborn
    *
@@ -175,10 +189,10 @@ export class DicesComponent implements OnInit, OnDestroy {
    */
   private newTurn(): void {
     this.resetDices();
-    this.diceAvailable = true;
+    this.isDiceAvailable = true;
     this.disablePlayButton = false;
     
-    this.chosenMaxPlayer === 1 ? this.diceService.setDice(this.availableDice) : null;
+    this.chosenMaxPlayer === 1 ? this.diceService.setDice(this.dice) : null;
   }
   
   /**
@@ -194,11 +208,18 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.dieThree = new Die(3, 0, false);
     this.dieFour = new Die(4, 0, false);
     this.dieFive = new Die(5, 0, false);
-    this.availableDice = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
+    this.dice = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
     this.currentHits = 0;
   }
 
-  private animate() {
+  
+  /**
+   * Animate dice rolling
+   * @date 2/15/2023 - 11:13:24 AM
+   *
+   * @private
+   */
+  private animateDiceRoll() {
     setTimeout(()=>{
       this.animationState = !this.animationState;
     },1)

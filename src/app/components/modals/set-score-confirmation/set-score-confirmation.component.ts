@@ -6,12 +6,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './set-score-confirmation.component.html',
   styleUrls: ['./set-score-confirmation.component.css']
 })
-export class SetScoreConfirmationComponent implements OnInit {
+export class SetScoreConfirmationComponent {
   @Input() scoreRow: string = "";
 
   constructor(public activeModal: NgbActiveModal) { }
-
-  ngOnInit(): void {
-  }
 
 }

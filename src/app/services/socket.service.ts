@@ -23,6 +23,7 @@ export class SocketService {
   triggerOnlineCheck(x: any){
     this.socket.emit('checkOnline', x);
   }
+
   /**
    * Emits the name the user typed in.
    * @date 2023-01-31 - 14:58:21
@@ -70,20 +71,40 @@ export class SocketService {
     this.socket.emit('nextPlayer', scoreRowName, dice, this.roomName);
   }
 
+  /**
+   * Emit that the game has ended.
+   * @date 2/15/2023 - 2:50:09 PM
+   * @author Christopher Reineborn
+   *
+   * @param {string} room - room to distribute the message to.
+   */
   setGameEnd(room: string){
     this.socket.emit('gameDone', room);
   }
 
+  
+  /**
+   * Trigger to recieve queue numbers
+   * @date 2/15/2023 - 2:50:45 PM
+   * @author Christopher Reineborn
+   *
+   * @param {*} x
+   */
   triggerQueueNumbers(x: any){
     this.socket.emit('triggerQueue', x);
   }
   
+  
+  /**
+   * Method to set the room name locally
+   * @date 2/15/2023 - 2:53:07 PM
+   * @author Christopher Reineborn
+   *
+   * @param {string} room - room name to be set.
+   */
   setRoomName(room: string){
     this.roomName = room;
   }
-
-
-
 
   //Recieves
 
@@ -98,7 +119,6 @@ export class SocketService {
    return this.socket.fromEvent<string>('roomName');
   }
   
-  
   /**
    * Distributes if the game room is full from the backend
    * @date 2023-01-31 - 15:10:34
@@ -110,7 +130,6 @@ export class SocketService {
     return this.socket.fromEvent<boolean>('fullGame');
   }
 
-  
   /**
    * Distributes the array of players in the game room from the backend.
    * @date 2023-01-31 - 15:11:04
@@ -122,7 +141,6 @@ export class SocketService {
     return this.socket.fromEvent('players');
   }
 
-  
   /**
    * Distributes the number of players currently in the socket room
    * @date 2023-02-02 - 15:30:21
@@ -133,7 +151,6 @@ export class SocketService {
     return this.socket.fromEvent('amtOfPlayers')
   }
 
-  
   /**
    * Distributes the array of dice that was hit from the backend.
    * @date 2023-01-31 - 15:12:19
@@ -157,7 +174,6 @@ export class SocketService {
     return this.socket.fromEvent('getDiceMovement');
   }
 
-  
   /**
    * Distributes what scorerow and dice the emitting player used to put score
    * @date 2023-01-31 - 15:13:40
@@ -165,11 +181,10 @@ export class SocketService {
    *
    * @returns {*}
    */
-  getNextPlayer(){
+  getCurrentPlayerResult(){
     return this.socket.fromEvent('getNextPlayer');
   }
 
-  
   /**
    * Distributes the users socket id from the backend
    * @date 2023-01-31 - 15:14:34
@@ -236,6 +251,14 @@ export class SocketService {
     return this.socket.fromEvent<boolean>('online');
   }
 
+  
+  /**
+   * Distributes the queue numbers.
+   * @date 2/15/2023 - 2:49:19 PM
+   * @author Christopher Reineborn
+   *
+   * @returns {*}
+   */
   getQueueNumbers(){
     return this.socket.fromEvent('queueNumbers');
   }
