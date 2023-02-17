@@ -1,10 +1,17 @@
-export const version: string = "v1.1.5.5";
+export const version: string = "v1.1.5.7";
 
 // vX.Y.Z.V
 // X = Major
 // Y = Minor 
 // Z = Feature
 // V = Bugfix
+
+// 1.1.5.8
+// - Fixed some css for smaller devices.
+
+// 1.1.5.7
+// - Fixed a bug where yatzy wouldn't place points correctly.
+// - Fixed a bug where possible score for house wouldn't display correctly.
 
 // 1.1.5.5
 // - Added documentation

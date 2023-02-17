@@ -182,7 +182,8 @@ export class ScoreBoard {
         // If all those are true; sets the score of the scorerow to 50.
         case this.yatzy.name:
           let yatzyArr = this.mapOccurences(5);
-          yatzyArr[0] != undefined && yatzyArr[0][1] === 5 && this.dice.some(die => {die.side !== 0})? this.yatzy.score = 50 : null;
+          yatzyArr[0] != undefined && yatzyArr[0][1] === 5 && this.dice.some(die => die.side !== 0) ? this.yatzy.score = 50 : null;
+          console.log(this.yatzy);
           modal = await this.addTotalScoreAndMakeUnselectable(this.yatzy);
           break;
       }
@@ -284,9 +285,20 @@ export class ScoreBoard {
           break;
   
         case this.house.name:
-          let houseArr = this.mapOccurences(2);
-          houseArr.length >= 2 ? houseArr.map(obj => obj[1] === 3 ? possibleScores.push((houseArr[0][0]*houseArr[0][1]) + (houseArr[1][0]*houseArr[1][1])) : possibleScores.push(0)) : possibleScores.push(0);
-          break;
+          case this.house.name:
+            let houseArr = this.mapOccurences(2);
+            if(houseArr.length >= 2){
+              if(houseArr[0][1] == 3 || houseArr[1][1] == 3){
+                possibleScores.push(((houseArr[0][0]*houseArr[0][1]) + (houseArr[1][0]*houseArr[1][1])))
+              }
+              else{
+                possibleScores.push(0)
+              }
+            }
+            else{
+              possibleScores.push(0)
+            }
+            break;
   
         case this.chance.name:
           let scoreChance = 0;
@@ -354,6 +366,7 @@ export class ScoreBoard {
   private async addTotalScoreAndMakeUnselectable(scoreRow: ScoreRow): Promise<boolean>{
     return new Promise<boolean>(async resolve => {
       if(scoreRow.score === 0){
+        console.log(scoreRow.score);
         if(this.clientPlayerSid === this.currentPlayerSid){
           const modalRef = this.modal.open(SetScoreConfirmationComponent, {centered: true});
           modalRef.componentInstance.scoreRow = scoreRow.name;

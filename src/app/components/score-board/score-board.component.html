@@ -24,20 +24,20 @@
             <!-- CurrentPlayer = true & socketId match -->
             <div *ngIf="Player.currentPlayer === true && Player.socketId === this.clientPlayer.socketId">
                 <div *ngIf="Player.socketId === this.lastPlayer.socketId; else notLastOccurenceTrueMatch">
-                    <div class="table-border table-rightdown-round d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
+                    <div class="table-border table-rightdown-round d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
                         {{scoreRow.score}}
-                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">
+                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">
                             +{{this.possibleScores[i]}}
                         </span>
-                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" (click)="this.setScore(scoreRow.name)"></button>
                     </div>
                 </div>
                 
                 <ng-template #notLastOccurenceTrueMatch>
-                    <div class="table-border d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
+                    <div class="table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
                         {{scoreRow.score}}
-                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
-                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus" (click)="this.setScore(scoreRow.name)"></button>
+                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">+{{this.possibleScores[i]}}</span>
+                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" (click)="this.setScore(scoreRow.name)"></button>
                     </div>
                 </ng-template>
             </div>
@@ -45,16 +45,16 @@
             <!-- CurrentPlayer = true & socketId doesn't match -->
             <div *ngIf="Player.currentPlayer === true && Player.socketId !== this.clientPlayer.socketId">
                 <div *ngIf="Player.socketId === this.lastPlayer.socketId; else notLastOccurenceTrueNoMatch">
-                    <div class="table-border table-rightdown-round d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
+                    <div class="table-border table-rightdown-round d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
                         {{scoreRow.score}}
-                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">+{{this.possibleScores[i]}}</span>
+                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">+{{this.possibleScores[i]}}</span>
                     </div>
                 </div>
                 
                 <ng-template #notLastOccurenceTrueNoMatch>
-                    <div class="table-border d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
+                    <div class="table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
                         {{scoreRow.score}}
-                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" style="color:green">
+                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">
                             +{{this.possibleScores[i]}}
                         </span>
                     </div>
@@ -64,16 +64,16 @@
             <!-- CurrentPlayer = false & socketId match -->
             <div *ngIf="Player.currentPlayer === false && Player.socketId === this.clientPlayer.socketId">
                 <div *ngIf="Player.socketId === this.lastPlayer.socketId; else notLastOccurenceFalseMatch">
-                    <div class="scoreboard-not-current-player table-rightdown-round table-border d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
+                    <div class="scoreboard-not-current-player table-rightdown-round table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
                         {{scoreRow.score}}
-                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.name)"></button>
+                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.name)"></button>
                     </div>
                 </div>
                 
                 <ng-template #notLastOccurenceFalseMatch>
-                    <div class="scoreboard-not-current-player table-border d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
+                    <div class="scoreboard-not-current-player table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
                         {{scoreRow.score}}
-                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.name)"></button>
+                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.name)"></button>
                     </div>
                 </ng-template>
             </div>
@@ -81,13 +81,13 @@
             <!-- CurrentPlayer = false & socketId doesn't match -->
             <div *ngIf="Player.currentPlayer === false && Player.socketId !== this.clientPlayer.socketId">
                 <div *ngIf="Player.socketId === this.lastPlayer.socketId; else notLastOccurenceFalseNoMatch">
-                    <div class="scoreboard-not-current-player table-border table-rightdown-round d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
+                    <div class="scoreboard-not-current-player table-border table-rightdown-round d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
                         {{scoreRow.score}}
                     </div>
                 </div>
 
                 <ng-template #notLastOccurenceFalseNoMatch>
-                    <div class="scoreboard-not-current-player table-border d-flex justify-content-between bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
+                    <div class="scoreboard-not-current-player table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
                         {{scoreRow.score}}
                     </div>
                 </ng-template>

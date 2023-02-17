@@ -35,7 +35,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   public lastPlayer: Player = this.players.slice(-1)[0];
   private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService));
   private chosenMaxPlayers: number = 0;
-  private connectedPlayersCounter: number = 0;
+  private connectedPlayersCounter: number = -1;
 
   //Misc
   private soundState?: boolean
@@ -204,7 +204,14 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    */
   private setNextPlayer(): void {
     this.lastPlayer.score.checkEndOfGame();
-    this.connectedPlayersCounter < this.players.length-1 ? this.connectedPlayersCounter++ : this.connectedPlayersCounter = 0;
+    
+    if(this.connectedPlayersCounter !== -1){
+      this.connectedPlayersCounter < this.players.length-1 ? this.connectedPlayersCounter++ : this.connectedPlayersCounter = 0;
+    }
+    else {
+      this.connectedPlayersCounter = 0;
+    }
+    
     this.possibleScores = [];
 
     this.currentPlayer.currentPlayer = false;

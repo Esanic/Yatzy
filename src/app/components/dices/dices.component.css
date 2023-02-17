@@ -5,7 +5,7 @@
     --bs-btn-border-width: 1px;
     --bs-btn-border-color: transparent;
     --bs-btn-border-radius: 100%;
-    --btn-custom: calc(2.3rem + (1.5vw + 1.5vh));
+    --btn-custom: calc(2.3rem + 2.7vw);
     display:inline-block;
     color: var(--bs-btn-color);
     text-align: center;
@@ -21,11 +21,10 @@
     width: var(--btn-custom);
     height: var(--btn-custom);
     font-size: calc(2rem + 1vw);
-    margin: 0 0 0 1rem;
+    margin: 0 0 0 0;
 }
 
 .btn-play:hover{
-
     background-color: rgb(240, 110, 0);
     transition: background-color 0.5s ease-in-out, border-color 0.3s ease-in-out;
 }
@@ -90,9 +89,9 @@
 }
 
 .dice-size {
-    font-size: calc(2.5rem + 2vw);
+    font-size: calc(2rem + 2.7vw);
 }
 
 .play-btn-icon{
-    font-size: calc(2rem + (1vw));
+    font-size: calc(1rem + 2vw);
 }

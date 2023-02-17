@@ -12,7 +12,7 @@ import { ClientService } from 'src/app/services/client.service';
   selector: 'app-dices',
   templateUrl: './dices.component.html',
   styleUrls: ['./dices.component.css'],
-  animations: [rotateAnimation(4, 300)]
+  animations: [rotateAnimation(3, 300)]
 })
 
 export class DicesComponent implements OnInit, OnDestroy {

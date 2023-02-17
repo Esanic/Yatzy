@@ -3,20 +3,21 @@
     border: 1px solid lightgray;
     border-bottom: 2px solid rgb(240, 140, 0);
     height: 1.5rem;
-    padding: 0 0.5vw;
-    font-size: 1rem;
+    padding: 0 0.5vh;
+    font-size: 0.85rem;
 }
 
 .table-border {
     border: 1px solid lightgray;
     border-top: none;
-    padding: 0.5vh 0.5vw
+    padding: 0.25vh 0.2vh;
+    font-size: 0.85rem;
 
 }
 
 .table-scoreNames {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.85rem;
 }
 
 .table-special-scoreNames {
@@ -24,7 +25,7 @@
 }
 
 .table-headings-width {
-    min-width: 8.5rem;
+    min-width: 7.2rem;
     width: fit-content;
     max-width: 20%;
 }
@@ -56,16 +57,38 @@
 }
 
 .scoreboard-btn {
+    --custom-size: 1rem;
     --bs-btn-line-height: 1;
     border: none;
     background: rgb(240, 140, 0);
     padding: 0;
-    margin: 0 2px 0 0;
-    font-size: 1rem;
+    /* font-size: calc(0.45rem + 0.35vh); */
+    font-size: 0.8rem;
     color: white;
     border-radius: 100%;
-    width: 1.5rem;
+    width: var(--custom-size);
+    height: var(--custom-size);
+    margin: auto 0;
+    vertical-align: 0;
 }
+
+.possible-score {
+    font-size: 0.65rem;
+    color:green;
+    font-weight: 700;
+    margin: auto 0;
+    padding-top: 1px;
+}
+
+/* .scoreboard-btn {
+    --bs-btn-line-height: 1;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0 2px 0 0;
+    font-size: 0.9rem;
+    width:100%;
+} */
 
 .scoreboard-btn:disabled{
     opacity:0.5;
