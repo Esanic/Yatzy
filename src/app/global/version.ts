@@ -1,10 +1,13 @@
-export const version: string = "v1.1.5.7";
+export const version: string = "v1.1.5.9";
 
 // vX.Y.Z.V
 // X = Major
 // Y = Minor 
 // Z = Feature
 // V = Bugfix
+
+// 1.1.5.9
+// - Fixed bugs regarding disconnecting players.
 
 // 1.1.5.8
 // - Fixed some css for smaller devices.

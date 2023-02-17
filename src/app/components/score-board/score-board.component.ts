@@ -35,7 +35,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   public lastPlayer: Player = this.players.slice(-1)[0];
   private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService));
   private chosenMaxPlayers: number = 0;
-  private connectedPlayersCounter: number = -1;
+  private connectedPlayersCounter: number = 0;
 
   //Misc
   private soundState?: boolean
@@ -135,6 +135,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     ////Subscribes to disconnected players from backend
     this.disconnectedPlayer$ = this.socketService.getDisconnectedPlayer().subscribe(socketID => {
       let disconnectedPlayer = this.players.findIndex(player => player.socketId === socketID);
+      console.log(disconnectedPlayer);
       
       if(disconnectedPlayer !== -1){
         if(this.connectedPlayersCounter === disconnectedPlayer){
@@ -179,15 +180,23 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   public async setScore(scoreRowName: string, dice?: Die[]): Promise<void> {
     if(!dice){
       await this.currentPlayer.score.setScore(scoreRowName, this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(() => {
+        this.preparationForNextPlayer();
         this.setNextPlayer();
       });
       this.socketService.nextPlayer(scoreRowName, this.dice);
     }
     else {
       await this.currentPlayer.score.setScore(scoreRowName, dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(() => {
+        this.preparationForNextPlayer();
         this.setNextPlayer();
       });
     }
+  }
+
+  private preparationForNextPlayer(): void {
+    this.lastPlayer.score.checkEndOfGame();
+    this.connectedPlayersCounter > this.players.length-1 ? this.connectedPlayersCounter = 0 : null;
+    this.possibleScores = [];
   }
 
 
@@ -203,17 +212,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    * @private
    */
   private setNextPlayer(): void {
-    this.lastPlayer.score.checkEndOfGame();
-    
-    if(this.connectedPlayersCounter !== -1){
-      this.connectedPlayersCounter < this.players.length-1 ? this.connectedPlayersCounter++ : this.connectedPlayersCounter = 0;
-    }
-    else {
-      this.connectedPlayersCounter = 0;
-    }
-    
-    this.possibleScores = [];
-
     this.currentPlayer.currentPlayer = false;
     this.currentPlayer = this.players[this.connectedPlayersCounter];
     this.currentPlayer.currentPlayer = true;
