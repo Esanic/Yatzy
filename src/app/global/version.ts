@@ -1,10 +1,13 @@
-export const version: string = "v1.1.6.10";
+export const version: string = "v1.2.6.10";
 
 // vX.Y.Z.V
 // X = Major
 // Y = Minor 
 // Z = Feature
 // V = Bugfix
+
+// 1.2.6.10
+// - Hosting from Azure instead
 
 // 1.1.6.10
 // - Redesigned the dropdown for languages.

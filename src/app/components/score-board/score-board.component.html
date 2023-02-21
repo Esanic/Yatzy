@@ -8,7 +8,7 @@
                 <div *ngIf="scoreHeading === scoreBoardHeaders[6] || scoreHeading === scoreBoardHeaders[7] || scoreHeading === scoreBoardHeaders[17]; else normalScore" class="table-special-scoreNames">
                     {{scoreHeading}}
                 </div>
-                <ng-template  #normalScore>
+                <ng-template #normalScore>
                     {{scoreHeading}}
                 </ng-template>
             </div>

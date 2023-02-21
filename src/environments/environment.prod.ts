@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  socketUrl: 'yatzyserver-production.up.railway.app'
+  socketUrl: 'https://yatzyserver.azurewebsites.net/'
 };

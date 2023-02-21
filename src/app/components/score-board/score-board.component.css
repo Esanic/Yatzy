@@ -10,7 +10,7 @@
 .table-border {
     border: 1px solid lightgray;
     border-top: none;
-    padding: 0.25vh 0.2vh;
+    padding: 0.25vh 0.5vh;
     font-size: 0.85rem;
 
 }
