@@ -23,7 +23,9 @@ import { SetScoreConfirmationComponent } from './components/modals/set-score-con
 const config: SocketIoConfig = {
   url: environment.socketUrl,
   options: {
-    transports: ['websocket']
+    transports: ['websocket'],
+    reconnection: true,
+    
   }
 }
 

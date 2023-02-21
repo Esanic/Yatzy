@@ -118,6 +118,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
         })
       }
       this.lastPlayer = this.players.slice(-1)[0];
+      console.log(this.players);
       this.setNextPlayer();
     })
 
@@ -179,26 +180,25 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    */
   public async setScore(scoreRowName: string, dice?: Die[]): Promise<void> {
     if(!dice){
-      await this.currentPlayer.score.setScore(scoreRowName, this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(() => {
-        this.preparationForNextPlayer();
+      await this.currentPlayer.score.setScore(scoreRowName, this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(async () => {
+        await this.preparationForNextPlayer();
         this.setNextPlayer();
       });
       this.socketService.nextPlayer(scoreRowName, this.dice);
     }
     else {
-      await this.currentPlayer.score.setScore(scoreRowName, dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(() => {
-        this.preparationForNextPlayer();
+      await this.currentPlayer.score.setScore(scoreRowName, dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(async () => {
+        await this.preparationForNextPlayer();
         this.setNextPlayer();
       });
     }
   }
 
-  private preparationForNextPlayer(): void {
+  private async preparationForNextPlayer(): Promise<void> {
     this.lastPlayer.score.checkEndOfGame();
-    this.connectedPlayersCounter > this.players.length-1 ? this.connectedPlayersCounter = 0 : null;
+    this.connectedPlayersCounter < this.players.length-1 ? this.connectedPlayersCounter++ : this.connectedPlayersCounter = 0;
     this.possibleScores = [];
   }
-
 
   /**
    * Checks if the game is over by calling @function checkEndOfGame() of the last player.
@@ -212,8 +212,10 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    * @private
    */
   private setNextPlayer(): void {
+    console.log(this.currentPlayer)
     this.currentPlayer.currentPlayer = false;
     this.currentPlayer = this.players[this.connectedPlayersCounter];
+    console.log(this.currentPlayer)
     this.currentPlayer.currentPlayer = true;
     this.diceHit = false;
     this.playerService.setCurrentPlayer(this.currentPlayer);

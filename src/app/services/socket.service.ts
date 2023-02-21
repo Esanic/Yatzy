@@ -12,6 +12,17 @@ export class SocketService {
   constructor(private socket: Socket) {
   }
 
+  /**
+   * Method to set the room name locally
+   * @date 2/15/2023 - 2:53:07 PM
+   * @author Christopher Reineborn
+   *
+   * @param {string} room - room name to be set.
+   */
+    setRoomName(room: string){
+      this.roomName = room;
+    }
+    
   //Emits
    /**
     * Emitting random value in order to trigger online-check from server.
@@ -82,7 +93,6 @@ export class SocketService {
     this.socket.emit('gameDone', room);
   }
 
-  
   /**
    * Trigger to recieve queue numbers
    * @date 2/15/2023 - 2:50:45 PM
@@ -92,18 +102,6 @@ export class SocketService {
    */
   triggerQueueNumbers(x: any){
     this.socket.emit('triggerQueue', x);
-  }
-  
-  
-  /**
-   * Method to set the room name locally
-   * @date 2/15/2023 - 2:53:07 PM
-   * @author Christopher Reineborn
-   *
-   * @param {string} room - room name to be set.
-   */
-  setRoomName(room: string){
-    this.roomName = room;
   }
 
   //Recieves

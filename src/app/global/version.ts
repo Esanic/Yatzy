@@ -1,10 +1,13 @@
-export const version: string = "v1.1.5.9";
+export const version: string = "v1.1.5.10";
 
 // vX.Y.Z.V
 // X = Major
 // Y = Minor 
 // Z = Feature
 // V = Bugfix
+
+// 1.1.5.10
+// - Fixed turn-handling bug.
 
 // 1.1.5.9
 // - Fixed bugs regarding disconnecting players.
