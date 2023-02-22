@@ -1,4 +1,4 @@
-export const version: string = "v1.3.7.13";
+export const version: string = "v1.3.7.14";
 
 // vX.Y.Z.V
 // X = Major
