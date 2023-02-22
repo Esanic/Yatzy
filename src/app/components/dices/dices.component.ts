@@ -42,10 +42,11 @@ export class DicesComponent implements OnInit, OnDestroy {
   private newTurn$: Subscription = new Subscription;
   private resetDice$: Subscription = new Subscription;
   private currentPlayer$: Subscription = new Subscription;
+  private getClientPlayer$: Subscription = new Subscription;
   private diceHit$: Subscription = new Subscription;
   private diceMovement$: Subscription = new Subscription;
   private soundChange$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.newTurn$, this.resetDice$, this.currentPlayer$, this.diceHit$, this.diceMovement$, this.soundChange$];
+  private subscriptions: Subscription[] = [this.getClientPlayer$, this.newTurn$, this.resetDice$, this.currentPlayer$, this.diceHit$, this.diceMovement$, this.soundChange$];
 
   constructor(
     private diceService: DiceService, 
@@ -62,7 +63,10 @@ export class DicesComponent implements OnInit, OnDestroy {
    */
   async ngOnInit(): Promise<void> {
     this.diceAudio.load();
-    this.clientPlayer = this.playerService.getClientPlayer();
+    // this.clientPlayer = this.playerService.getClientPlayer();
+    this.getClientPlayer$ = this.playerService.getClientPlayer().subscribe(player => {
+      this.clientPlayer = player;
+    });
 
     //Retrieves user's chosen max player
     this.chosenMaxPlayer = await firstValueFrom(this.playerService.getChosenMaxPlayers());
@@ -191,7 +195,6 @@ export class DicesComponent implements OnInit, OnDestroy {
     this.resetDices();
     this.isDiceAvailable = true;
     this.disablePlayButton = false;
-    
     this.chosenMaxPlayer === 1 ? this.diceService.setDice(this.dice) : null;
   }
   

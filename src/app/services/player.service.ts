@@ -5,19 +5,34 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Player } from '../models/player';
 import { ScoreBoard } from '../models/score-board';
 import { DiceService } from './dice.service';
-import { ScoreService } from './score.service';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
-  private clientPlayer: Player = {name: "", socketId: "", currentPlayer: true, score: new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modal)};
+  // private clientPlayer: Player = {name: "", socketId: "", currentPlayer: true, score: new ScoreBoard(this.diceService, this.translateService, this.modal, this.socketService)};
   private currentPlayer = new Subject<Player>();
+  private clientPlayerSid = new Subject<string>();
+  private clientPlayerSidString: string = "";
   private chosenMaxPlayers = new BehaviorSubject<number>(0);
+  private clientPlayer = new BehaviorSubject<Player>({name: "", socketId: "", currentPlayer: true, score: new ScoreBoard(this.diceService, this.translateService, this.modal, this.socketService)})
 
-  constructor(private diceService: DiceService, private scoreService: ScoreService, private translateService: TranslateService, private modal: NgbModal) { }
+  constructor(private diceService: DiceService, private socketService: SocketService, private translateService: TranslateService, private modal: NgbModal) { }
 
-  
+  public setClientPlayerSid(sid: string): void {
+    this.clientPlayerSidString = sid;
+    this.clientPlayerSid.next(sid);
+  }
+
+  public getClientPlayerSid(): Observable<string> {
+    return this.clientPlayerSid.asObservable();
+  }
+
+  public getClientPlayerSidString(): string {
+    return this.clientPlayerSidString;
+  }
+
   /**
    * Setting the client player
    * @date 2/15/2023 - 2:18:07 PM
@@ -27,7 +42,8 @@ export class PlayerService {
    * @param {Player} player - the client player.
    */
   public setClientPlayer(player: Player): void {
-    this.clientPlayer = player
+    this.clientPlayer.next(player);
+    // this.clientPlayer = player
   }
 
   /**
@@ -38,8 +54,9 @@ export class PlayerService {
    * @public
    * @returns {Player} - the client player
    */
-  public getClientPlayer(): Player {
-    return this.clientPlayer;
+  public getClientPlayer(): Observable<Player> {
+    return this.clientPlayer.asObservable();
+    // return this.clientPlayer;
   }
 
   /**

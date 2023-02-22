@@ -89,7 +89,7 @@ export class SocketService {
    *
    * @param {string} room - room to distribute the message to.
    */
-  setGameEnd(room: string){
+  setEndOfGame(room: string){
     this.socket.emit('gameDone', room);
   }
 
@@ -248,7 +248,6 @@ export class SocketService {
   getOnlineCheck(){
     return this.socket.fromEvent<boolean>('online');
   }
-
   
   /**
    * Distributes the queue numbers.
@@ -259,6 +258,10 @@ export class SocketService {
    */
   getQueueNumbers(){
     return this.socket.fromEvent('queueNumbers');
+  }
+
+  getEndOfGame(){
+    return this.socket.fromEvent('endOfGame');
   }
 }
 

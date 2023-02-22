@@ -1,10 +1,16 @@
-export const version: string = "v1.3.7.10";
+export const version: string = "v1.3.7.13";
 
 // vX.Y.Z.V
 // X = Major
 // Y = Minor 
 // Z = Feature
 // V = Bugfix
+
+// 1.3.7.14
+// - Fixed gameDone emit to not be distributed locally but sent through socket. This to avoid double logic for gameDone.
+// - Fixed gameDone to be recieved from backend correctly.
+// - Fixed bug that caused clients that would play multiple multiplayer games to not have their socket id brought into the next game.
+// - Fixed bug that caused the previous hit of dice to be counted for when trying to place 0 if the score row previously had points to place.
 
 // 1.3.7.10
 // - Improved the styling overall

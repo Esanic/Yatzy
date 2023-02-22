@@ -10,6 +10,13 @@ export class DiceService {
   public reset = new Subject<boolean>();
   public newTurn = new Subject<boolean>();
 
+  public dieOne = new Die(1, 0, false);
+  public dieTwo = new Die(2, 0, false);
+  public dieThree = new Die(3, 0, false);
+  public dieFour = new Die(4, 0, false);
+  public dieFive = new Die(5, 0, false);
+  public diceArray: Die[] = [this.dieOne, this.dieTwo, this.dieThree, this.dieFour, this.dieFive];
+
   constructor() { }
 
   

@@ -10,7 +10,6 @@ import { ScoreBoard } from 'src/app/models/score-board';
 import { ClientService } from 'src/app/services/client.service';
 import { DiceService } from 'src/app/services/dice.service';
 import { PlayerService } from 'src/app/services/player.service';
-import { ScoreService } from 'src/app/services/score.service';
 import { SocketService } from 'src/app/services/socket.service';
 
 
@@ -33,7 +32,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   public players: Player[] = [];
   public clientPlayer: Partial<Player> = {};
   public lastPlayer: Player = this.players.slice(-1)[0];
-  private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService));
+  private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.translateService, this.modalService, this.socketService));
   private chosenMaxPlayers: number = 0;
   private connectedPlayersCounter: number = 0;
 
@@ -45,20 +44,20 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   //Subscriptions
   private getDice$: Subscription = new Subscription;
   private getPlayers$: Subscription = new Subscription;
-  private getCurrentPlayerResult: Subscription = new Subscription;
+  private getClientPlayer$: Subscription = new Subscription;
+  private getCurrentPlayerResult$: Subscription = new Subscription;
   private getEndOfGame$: Subscription = new Subscription;
   private getChosenMaxPlayers$: Subscription = new Subscription;
   private disconnectedPlayer$: Subscription = new Subscription;
   private langChange$: Subscription = new Subscription;
   private soundChange$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.getChosenMaxPlayers$, this.langChange$, this.getDice$, this.getPlayers$, this.getCurrentPlayerResult, this.getEndOfGame$, this.disconnectedPlayer$, this.soundChange$]
+  private subscriptions: Subscription[] = [this.getClientPlayer$, this.getChosenMaxPlayers$, this.langChange$, this.getDice$, this.getPlayers$, this.getCurrentPlayerResult$, this.getEndOfGame$, this.disconnectedPlayer$, this.soundChange$]
 
   @ViewChild('results', {read: TemplateRef}) results!: TemplateRef<any>;
 
   constructor(
     private socketService: SocketService, 
     private diceService: DiceService, 
-    private scoreService: ScoreService, 
     private playerService: PlayerService, 
     private modalService: NgbModal,
     private translateService: TranslateService,
@@ -76,7 +75,9 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    */
   async ngOnInit(): Promise<void> {
     this.turnAudio.load();
-    this.clientPlayer = this.playerService.getClientPlayer();
+    this.getClientPlayer$ = this.playerService.getClientPlayer().subscribe(player => {
+      this.clientPlayer = player;
+    });
 
     //Retrieves user's chosen max player
     this.chosenMaxPlayers = await firstValueFrom(this.playerService.getChosenMaxPlayers());
@@ -107,33 +108,34 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.getChosenMaxPlayers$ = this.playerService.getChosenMaxPlayers().subscribe(async maxPlayers => {
       //If singleplayer
       if(maxPlayers === 1){
-        this.players.push(this.playerService.getClientPlayer());
+        this.players.push(await firstValueFrom(this.playerService.getClientPlayer()));
       }
       //If multiplayer
       if(maxPlayers > 1){
         await firstValueFrom(this.socketService.getPlayers()).then((players: any) => {
           players.map((player: any) => {
-            this.players.push(new Player(player.name, player.sid, false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService)));
+            this.players.push(new Player(player.name, player.sid, false, new ScoreBoard(this.diceService, this.translateService, this.modalService, this.socketService)));
           });
         })
       }
       this.lastPlayer = this.players.slice(-1)[0];
-      console.log(this.players);
       this.setNextPlayer();
     })
 
     //Subscribes to current player result from backend
-    this.getCurrentPlayerResult = this.socketService.getCurrentPlayerResult().subscribe((previousPlayerResult: any) => {
+    this.getCurrentPlayerResult$ = this.socketService.getCurrentPlayerResult().subscribe((previousPlayerResult: any) => {
       this.setScore(previousPlayerResult.scoreRowName, previousPlayerResult.dice);
     })
 
     //End game subscription
-    this.getEndOfGame$ = this.scoreService.getEndOfGame().subscribe(bool => {
-      this.players.sort((a:Player, b:Player) => b.score.total.score - a.score.total.score)
-      bool ? this.modalService.open(this.results, {centered: true, animation: true, keyboard: true}) : null;
+    this.getEndOfGame$ = this.socketService.getEndOfGame().subscribe(bool => {
+      if(bool){
+        this.players.sort((a:Player, b:Player) => b.score.total.score - a.score.total.score)
+        this.modalService.open(this.results, {centered: true, animation: true, keyboard: true})
+      }
     })
 
-    ////Subscribes to disconnected players from backend
+    //Subscribes to disconnected players from backend
     this.disconnectedPlayer$ = this.socketService.getDisconnectedPlayer().subscribe(socketID => {
       let disconnectedPlayer = this.players.findIndex(player => player.socketId === socketID);
       console.log(disconnectedPlayer);
@@ -180,11 +182,13 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    */
   public async setScore(scoreRowName: string, dice?: Die[]): Promise<void> {
     if(!dice){
+      console.log(this.dice);
       await this.currentPlayer.score.setScore(scoreRowName, this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(async () => {
         await this.preparationForNextPlayer();
         this.setNextPlayer();
       });
       this.socketService.nextPlayer(scoreRowName, this.dice);
+
     }
     else {
       await this.currentPlayer.score.setScore(scoreRowName, dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(async () => {
@@ -192,12 +196,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
         this.setNextPlayer();
       });
     }
-  }
-
-  private async preparationForNextPlayer(): Promise<void> {
-    this.lastPlayer.score.checkEndOfGame();
-    this.connectedPlayersCounter < this.players.length-1 ? this.connectedPlayersCounter++ : this.connectedPlayersCounter = 0;
-    this.possibleScores = [];
   }
 
   /**
@@ -212,13 +210,12 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    * @private
    */
   private setNextPlayer(): void {
-    console.log(this.currentPlayer)
     this.currentPlayer.currentPlayer = false;
     this.currentPlayer = this.players[this.connectedPlayersCounter];
-    console.log(this.currentPlayer)
     this.currentPlayer.currentPlayer = true;
     this.diceHit = false;
     this.playerService.setCurrentPlayer(this.currentPlayer);
+    this.dice = [...this.diceService.diceArray];
 
     this.currentPlayer.socketId === this.clientPlayer.socketId && this.chosenMaxPlayers > 1 ? this.animationYourTurn() : null
   }
@@ -234,8 +231,10 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.modalService.dismissAll()
     this.diceService.setNewTurn(true);
     this.playerService.setChosenMaxPlayers(0);
-    this.playerService.setClientPlayer(new Player("", "", false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService)))
+    this.playerService.setClientPlayer(new Player("", "", false, new ScoreBoard(this.diceService, this.translateService, this.modalService, this.socketService)))
     this.players = [];
+    this.connectedPlayersCounter = 0;
+    this.currentPlayer = new Player('', '', false, new ScoreBoard(this.diceService, this.translateService, this.modalService, this.socketService));
     this._router.navigate([''], {skipLocationChange: true});
   }
 
@@ -256,6 +255,12 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     setTimeout(()=>{
       this.animationState = !this.animationState;
     },1001)
+  }
+
+  private async preparationForNextPlayer(): Promise<void> {
+    this.lastPlayer.score.checkEndOfGame();
+    this.connectedPlayersCounter < this.players.length-1 ? this.connectedPlayersCounter++ : this.connectedPlayersCounter = 0;
+    this.possibleScores = [];
   }
 }
  

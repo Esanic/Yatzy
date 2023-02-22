@@ -3,7 +3,7 @@ import { LangChangeEvent, TranslateService } from "@ngx-translate/core"
 import { Subscription } from "rxjs"
 import { SetScoreConfirmationComponent } from "../components/modals/set-score-confirmation/set-score-confirmation.component"
 import { DiceService } from "../services/dice.service"
-import { ScoreService } from "../services/score.service"
+import { SocketService } from "../services/socket.service"
 import { Die } from "./die"
 import { ScoreRow } from "./score-row"
 
@@ -43,9 +43,10 @@ export class ScoreBoard {
 
   constructor( 
     private diceService: DiceService, 
-    private scoreService: ScoreService, 
     private translateService: TranslateService, 
-    private modal: NgbModal) {
+    private modal: NgbModal,
+    private socketService: SocketService
+  ){
     this.subLangChange$ = this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this.translateService.stream('DICE').subscribe(translation => {
         const scoreRowNames: string[] = Object.keys(translation);
@@ -72,6 +73,7 @@ export class ScoreBoard {
   public async setScore(scoreRowName: string, dice: Die[], currentPlayerSid: string, clientPlayerSid: string): Promise<boolean> {
     let modal: boolean;
     this.dice = dice;
+    console.log(dice);
     
     this.currentPlayerSid = currentPlayerSid;
     this.clientPlayerSid = clientPlayerSid;
@@ -366,7 +368,6 @@ export class ScoreBoard {
   private async addTotalScoreAndMakeUnselectable(scoreRow: ScoreRow): Promise<boolean>{
     return new Promise<boolean>(async resolve => {
       if(scoreRow.score === 0){
-        console.log(scoreRow.score);
         if(this.clientPlayerSid === this.currentPlayerSid){
           const modalRef = this.modal.open(SetScoreConfirmationComponent, {centered: true});
           modalRef.componentInstance.scoreRow = scoreRow.name;
@@ -426,7 +427,7 @@ export class ScoreBoard {
   public checkEndOfGame(): void {
     let check = this.scoreBoard.every(score => score.selectable == false);
     if(check === true){
-      this.scoreService.setEndOfGame(true);
+      this.socketService.setEndOfGame(this.socketService.roomName);
     }
   }
 }

@@ -8,7 +8,6 @@ import { Player } from 'src/app/models/player';
 import { ScoreBoard } from 'src/app/models/score-board';
 import { DiceService } from 'src/app/services/dice.service';
 import { PlayerService } from 'src/app/services/player.service';
-import { ScoreService } from 'src/app/services/score.service';
 import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
@@ -36,7 +35,6 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router, 
     private diceService: DiceService, 
-    private scoreService: ScoreService, 
     private socketService: SocketService, 
     private formBuilder: FormBuilder, 
     private playerService: PlayerService,
@@ -64,7 +62,7 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
     })
 
     this.clientId$ = this.socketService.getUserID().subscribe(userID => {
-      this.sid = userID;
+      this.playerService.setClientPlayerSid(userID);
     })
   }
   
@@ -77,6 +75,7 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
     this.onlineCheck$.unsubscribe();
     this.clientId$.unsubscribe();
     this.queueNumbers$.unsubscribe();
+    console.log("comp killed");
   }
 
  /**
@@ -92,10 +91,11 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
   *
   * @returns {*}
   */
-  public setName(): void {
+  public async setName(): Promise<void> {
+
     if(this.nameForm.valid && this.onlineCheck){
       const name = this.nameForm.controls['name'].value!;
-      const clientPlayer = new Player(name, this.sid, false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modal));
+      const clientPlayer = new Player(name, this.playerService.getClientPlayerSidString(), false, new ScoreBoard(this.diceService, this.translateService, this.modal, this.socketService));
       const maxPlayers = Number(this.nameForm.controls['maxPlayers'].value)
       
       this.playerService.setChosenMaxPlayers(maxPlayers);
