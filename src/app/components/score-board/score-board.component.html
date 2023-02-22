@@ -1,9 +1,9 @@
-<div class="col-12 col-lg-6 py-2 mx-auto">
+<div class="col-11 col-lg-6 py-2 mx-auto">
     <div class="d-flex flex-row justify-content-center">
         <div class="position-absolute top-50 start-50 translate-middle display-1 text-center fw-bold" [@yourTurn]="animationState">{{"SCOREBOARD.YOURTURN" | translate}}</div>
         
         <div class="d-flex flex-column table-headings-width">
-            <div class="table-header bg-white table-leftup-round">{{"SCOREBOARD.PLAYERS" | translate}}</div>
+            <div class="table-header table-header-player bg-white table-leftup-round">{{"SCOREBOARD.PLAYERS" | translate}}</div>
             <div class="table-scoreNames table-leftdown-round table-border bg-white" *ngFor="let scoreHeading of scoreBoardHeaders">
                 <div *ngIf="scoreHeading === scoreBoardHeaders[6] || scoreHeading === scoreBoardHeaders[7] || scoreHeading === scoreBoardHeaders[17]; else normalScore" class="table-special-scoreNames">
                     {{scoreHeading}}

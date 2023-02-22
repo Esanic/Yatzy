@@ -3,21 +3,28 @@
     border: 1px solid lightgray;
     border-bottom: 2px solid rgb(240, 140, 0);
     height: 1.5rem;
-    padding: 0 0.5vh;
+    padding: 0 0.15vh;
     font-size: 0.85rem;
+    font-family: 'McLaren', cursive;
+}
+
+.table-header-player {
+    border-right: none;
 }
 
 .table-border {
     border: 1px solid lightgray;
     border-top: none;
-    padding: 0.25vh 0.5vh;
+    padding: 0.25vh 0.15vh;
     font-size: 0.85rem;
+    font-family: 'McLaren', cursive;
 
 }
 
 .table-scoreNames {
     font-weight: 600;
     font-size: 0.85rem;
+    border-right: none;
 }
 
 .table-special-scoreNames {
@@ -63,11 +70,12 @@
     background: rgb(240, 140, 0);
     padding: 0;
     /* font-size: calc(0.45rem + 0.35vh); */
-    font-size: 0.8rem;
+    font-size: calc(var(--custom-size) - 1px);
     color: white;
     border-radius: 100%;
     width: var(--custom-size);
     height: var(--custom-size);
+    min-width: var(--custom-size);
     margin: auto 0;
     vertical-align: 0;
 }

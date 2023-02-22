@@ -8,6 +8,10 @@ body {
     background-color: rgb(250,250,250)
 }
 
+.bg-theme {
+    background-color: rgb(240,140,0);
+}
+
 .bi-plus::before {
     vertical-align: 0;
 }

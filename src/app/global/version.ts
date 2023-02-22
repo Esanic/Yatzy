@@ -1,4 +1,4 @@
-export const version: string = "v1.2.6.10";
+export const version: string = "v1.3.7.10";
 
 // vX.Y.Z.V
 // X = Major
@@ -6,17 +6,21 @@ export const version: string = "v1.2.6.10";
 // Z = Feature
 // V = Bugfix
 
+// 1.3.7.10
+// - Improved the styling overall
+// - Added some translation
+
 // 1.2.6.10
 // - Hosting from Azure instead
 
 // 1.1.6.10
-// - Redesigned the dropdown for languages.
+// - Redesigned the dropdown for languages
 
 // 1.1.5.10
-// - Fixed turn-handling bug.
+// - Fixed turn-handling bug
 
 // 1.1.5.9
-// - Fixed bugs regarding disconnecting players.
+// - Fixed bugs regarding disconnecting players
 
 // 1.1.5.8
 // - Fixed some css for smaller devices.

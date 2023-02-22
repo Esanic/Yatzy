@@ -2,14 +2,15 @@
   "ADDPLAYER": {
     "LETSPLAY": "Kasta loss tärningarna!",
     "NAME": "Namn",
-    "MAXPLAYERS": "Max antal spelare",
+    "MAXPLAYERS": "Antal spelare",
     "TWOPLAYER": "2 spelare",
     "THREEPLAYER": "3 spelare",
     "FOURPLAYER": "4 spelare",
     "JOINGAME": "Börja spela",
     "SERVERON": "Server igång",
     "SERVEROFF": "Server nere",
-    "SINGLE": "Singel"
+    "SINGLE": "Singel",
+    "INQUEUE": "i kö"
   },
   "DICE": {
     "ACES": "Ettor",
@@ -47,5 +48,9 @@
   "LANGUAGES": {
     "SWEDISH": "Svenska",
     "ENGLISH": "Engelska"
+  },
+  "MADEBY": "av Christopher Reineborn",
+  "GAME": {
+    "WAITINGFORPLAYERS": "Väntar på andra spelare..."
   }
 }

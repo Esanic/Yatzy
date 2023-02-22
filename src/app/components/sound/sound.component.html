@@ -1,2 +1,6 @@
-<button *ngIf="this.sound === true" type="button" class="bi bi-volume-up-fill icon" (click)="muteSound()"></button>
-<button *ngIf="this.sound === false" type="button" class="bi bi-volume-mute-fill icon" (click)="enableSound()"></button>
+<div class="icon-container">
+    <div class="text-end mt-2">
+        <button *ngIf="this.sound === true" type="button" class="bi bi-volume-up-fill icon text-center" (click)="muteSound()"></button>
+        <button *ngIf="this.sound === false" type="button" class="bi bi-volume-mute-fill icon text-center" (click)="enableSound()"></button>
+    </div>
+</div>

@@ -1,15 +1,30 @@
-<nav class="navbar navbar-expand-lg navindex" style="background-color:rgb(240, 140, 0)">
-    <div class="d-flex flex-column">
-      <div class="navbar-brand brand px-3">Yatzy App<span class="version">{{version}}</span></div>
-      <div class="px-3 author fst-italic">by Christopher Reineborn </div>
+<nav class="navbar navbar-expand-lg navindex bg-theme">
+  <div class="d-flex mx-auto col-12 col-lg-6">
+    <app-sound></app-sound>
+    <div class="mx-auto">
+      <div class="brand mx-auto">Yatzy app</div>
+      <span class="version ps-1">{{version}}</span>
     </div>
-    <!-- <a class="navbar-brand px-3" href="#">Yatzy App<br><p></p></a>
-    <div class="pe-2">by Christopher Reineborn</div> -->
-    <app-sound class="ms-auto"></app-sound>
     <app-language></app-language>
+  </div>
+  
+  <!-- <div class="ms-auto d-flex">
+    <app-sound></app-sound>
+    <app-language></app-language>
+  </div> -->
 
-    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+  <!-- <div class="author fst-italic">{{"MADEBY" | translate}}</div> -->
+
+
+
+  <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button> -->
 </nav>
 <router-outlet>
+<!-- <footer class="bg-theme">
+  <div class="d-flex flex-column">
+    <div>{{"MADEBY" | translate}}</div>
+  </div>
+</footer> -->

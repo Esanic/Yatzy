@@ -1,6 +1,6 @@
 <div class="d-flex flex-row">
-    <div class="col-12 col-lg-6 d-flex flex-row justify-content-between mx-auto p-2 bg-white rounded-bottom bg-border">
-        <div *ngFor="let die of this.dice; index as i" class="col-2">
+    <div class="col-11 col-lg-6 d-flex flex-row justify-content-between mx-auto p-2 bg-white rounded-bottom bg-border">
+        <div *ngFor="let die of this.dice; index as i" class="col-2 text-center">
             <button type="button" *ngIf="die.side === 0" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-1 dice-size" (click)="selectDie(i)"></button>
             <button type="button" *ngIf="die.side === 1 && die.selected === false" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-1 dice-size" (click)="selectDie(i)" [@rotate]="animationState "></button>
             <button type="button" *ngIf="die.side === 1 && die.selected === true" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-1-fill dice-size" (click)="selectDie(i)"></button>
@@ -20,9 +20,9 @@
             <button type="button" *ngIf="die.side === 6 && die.selected === false" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-6 dice-size" (click)="selectDie(i)" [@rotate]="animationState"></button>
             <button type="button" *ngIf="die.side === 6 && die.selected === true" [disabled]="this.isDiceAvailable" class="btn-dice bi bi-dice-6-fill dice-size" (click)="selectDie(i)"></button>
         </div>
-        <div class="my-auto col-2">
-            <button type="button" class=" btn-play" [disabled]="this.disablePlayButton" (click)="hitDices()">
-                <div class="play-btn-icon bi bi-play-fill"></div>
+        <div class="my-auto text-center col-2">
+            <button type="button" class="mx-auto btn-play" [disabled]="this.disablePlayButton" (click)="hitDices()">
+                <div class="play-btn-icon bi bi-play-fill text-center"></div>
             </button>
         </div>
     </div>

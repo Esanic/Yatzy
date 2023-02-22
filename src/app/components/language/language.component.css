@@ -19,7 +19,8 @@
 }
 
 .dropdown-lang {
-    margin: 1.125rem 0 0 0 !important;
+    margin: 6.5px 0 0 0 !important;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    z-index: 0;
 }
