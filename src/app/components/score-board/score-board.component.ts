@@ -10,6 +10,7 @@ import { ScoreBoard } from 'src/app/models/score-board';
 import { ClientService } from 'src/app/services/client.service';
 import { DiceService } from 'src/app/services/dice.service';
 import { PlayerService } from 'src/app/services/player.service';
+import { ScoreService } from 'src/app/services/score.service';
 import { SocketService } from 'src/app/services/socket.service';
 
 
@@ -32,7 +33,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   public players: Player[] = [];
   public clientPlayer: Partial<Player> = {};
   public lastPlayer: Player = this.players.slice(-1)[0];
-  private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.translateService, this.modalService, this.socketService));
+  private currentPlayer: Player = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService, this.socketService, this.playerService));
   private chosenMaxPlayers: number = 0;
   private connectedPlayersCounter: number = 0;
 
@@ -46,12 +47,24 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   private getPlayers$: Subscription = new Subscription;
   private getClientPlayer$: Subscription = new Subscription;
   private getCurrentPlayerResult$: Subscription = new Subscription;
-  private getEndOfGame$: Subscription = new Subscription;
+  private getEndOfGameMulti$: Subscription = new Subscription;
+  private getEndOfGameSingle$: Subscription = new Subscription;
   private getChosenMaxPlayers$: Subscription = new Subscription;
   private disconnectedPlayer$: Subscription = new Subscription;
   private langChange$: Subscription = new Subscription;
   private soundChange$: Subscription = new Subscription;
-  private subscriptions: Subscription[] = [this.getClientPlayer$, this.getChosenMaxPlayers$, this.langChange$, this.getDice$, this.getPlayers$, this.getCurrentPlayerResult$, this.getEndOfGame$, this.disconnectedPlayer$, this.soundChange$]
+  private subscriptions: Subscription[] = [
+    this.getEndOfGameSingle$, 
+    this.getClientPlayer$, 
+    this.getChosenMaxPlayers$, 
+    this.langChange$, 
+    this.getDice$, 
+    this.getPlayers$, 
+    this.getCurrentPlayerResult$, 
+    this.getEndOfGameMulti$, 
+    this.disconnectedPlayer$, 
+    this.soundChange$
+  ]
 
   @ViewChild('results', {read: TemplateRef}) results!: TemplateRef<any>;
 
@@ -59,6 +72,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     private socketService: SocketService, 
     private diceService: DiceService, 
     private playerService: PlayerService, 
+    private scoreService: ScoreService,
     private modalService: NgbModal,
     private translateService: TranslateService,
     private clientService: ClientService,
@@ -114,7 +128,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
       if(maxPlayers > 1){
         await firstValueFrom(this.socketService.getPlayers()).then((players: any) => {
           players.map((player: any) => {
-            this.players.push(new Player(player.name, player.sid, false, new ScoreBoard(this.diceService, this.translateService, this.modalService, this.socketService)));
+            this.players.push(new Player(player.name, player.sid, false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService, this.socketService, this.playerService)));
           });
         })
       }
@@ -127,13 +141,15 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
       this.setScore(previousPlayerResult.scoreRowName, previousPlayerResult.dice);
     })
 
-    //End game subscription
-    this.getEndOfGame$ = this.socketService.getEndOfGame().subscribe(bool => {
-      if(bool){
-        this.players.sort((a:Player, b:Player) => b.score.total.score - a.score.total.score)
-        this.modalService.open(this.results, {centered: true, animation: true, keyboard: true})
-      }
-    })
+    //End game subscription from backend in multiplayer games
+    this.getEndOfGameMulti$ = this.socketService.getEndOfGame().subscribe((bool: boolean) => {
+        this.endOfGame(bool);
+    });
+
+    //End game subscription from backend in single games
+    this.getEndOfGameSingle$ = this.scoreService.getEndOfGame().subscribe(bool => {
+      this.endOfGame(bool);
+    });
 
     //Subscribes to disconnected players from backend
     this.disconnectedPlayer$ = this.socketService.getDisconnectedPlayer().subscribe(socketID => {
@@ -182,7 +198,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    */
   public async setScore(scoreRowName: string, dice?: Die[]): Promise<void> {
     if(!dice){
-      console.log(this.dice);
       await this.currentPlayer.score.setScore(scoreRowName, this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(async () => {
         await this.preparationForNextPlayer();
         this.setNextPlayer();
@@ -231,10 +246,10 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.modalService.dismissAll()
     this.diceService.setNewTurn(true);
     this.playerService.setChosenMaxPlayers(0);
-    this.playerService.setClientPlayer(new Player("", "", false, new ScoreBoard(this.diceService, this.translateService, this.modalService, this.socketService)))
+    this.playerService.setClientPlayer(new Player("", "", false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService, this.socketService, this.playerService)))
     this.players = [];
     this.connectedPlayersCounter = 0;
-    this.currentPlayer = new Player('', '', false, new ScoreBoard(this.diceService, this.translateService, this.modalService, this.socketService));
+    this.currentPlayer = new Player('', '', false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService, this.socketService, this.playerService));
     this._router.navigate([''], {skipLocationChange: true});
   }
 
@@ -261,6 +276,13 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.lastPlayer.score.checkEndOfGame();
     this.connectedPlayersCounter < this.players.length-1 ? this.connectedPlayersCounter++ : this.connectedPlayersCounter = 0;
     this.possibleScores = [];
+  }
+
+  private endOfGame(bool: boolean): void {
+    if(bool){
+      this.players.sort((a:Player, b:Player) => b.score.total.score - a.score.total.score)
+      this.modalService.open(this.results, {centered: true, animation: true, keyboard: true})
+    }
   }
 }
  

@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Player } from '../models/player';
 import { ScoreBoard } from '../models/score-board';
 import { DiceService } from './dice.service';
+import { ScoreService } from './score.service';
 import { SocketService } from './socket.service';
 
 @Injectable({
@@ -16,9 +17,15 @@ export class PlayerService {
   private clientPlayerSid = new Subject<string>();
   private clientPlayerSidString: string = "";
   private chosenMaxPlayers = new BehaviorSubject<number>(0);
-  private clientPlayer = new BehaviorSubject<Player>({name: "", socketId: "", currentPlayer: true, score: new ScoreBoard(this.diceService, this.translateService, this.modal, this.socketService)})
+  private clientPlayer = new BehaviorSubject<Player>({name: "", socketId: "", currentPlayer: true, score: new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService, this.socketService)})
 
-  constructor(private diceService: DiceService, private socketService: SocketService, private translateService: TranslateService, private modal: NgbModal) { }
+  constructor(
+    private diceService: DiceService, 
+    private socketService: SocketService, 
+    private translateService: TranslateService, 
+    private modalService: NgbModal,
+    private scoreService: ScoreService
+    ) { }
 
   public setClientPlayerSid(sid: string): void {
     this.clientPlayerSidString = sid;
@@ -34,7 +41,7 @@ export class PlayerService {
   }
 
   /**
-   * Setting the client player
+   * Setting the client player.
    * @date 2/15/2023 - 2:18:07 PM
    * @author Christopher Reineborn
    *
@@ -47,7 +54,7 @@ export class PlayerService {
   }
 
   /**
-   * Return the client player
+   * Distributes the client player to subscribers.
    * @date 2/15/2023 - 2:18:26 PM
    * @author Christopher Reineborn
    *

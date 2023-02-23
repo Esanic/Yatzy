@@ -44,7 +44,6 @@ export class DiceService {
     return this.dice.asObservable();
   }
 
-  
   /**
    * Setting the reset state to be distributed to subscribers
    * @date 2/15/2023 - 2:14:02 PM

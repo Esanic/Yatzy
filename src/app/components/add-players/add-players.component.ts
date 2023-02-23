@@ -8,6 +8,7 @@ import { Player } from 'src/app/models/player';
 import { ScoreBoard } from 'src/app/models/score-board';
 import { DiceService } from 'src/app/services/dice.service';
 import { PlayerService } from 'src/app/services/player.service';
+import { ScoreService } from 'src/app/services/score.service';
 import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
@@ -33,13 +34,15 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
   private clientId$: Subscription = new Subscription;
 
   constructor(
-    private router: Router, 
     private diceService: DiceService, 
     private socketService: SocketService, 
-    private formBuilder: FormBuilder, 
     private playerService: PlayerService,
+    private scoreService: ScoreService,
     private translateService: TranslateService,
-    private modal: NgbModal
+    private router: Router, 
+    private formBuilder: FormBuilder, 
+    private modalService: NgbModal,
+
   ) {}
 
   /**
@@ -95,7 +98,7 @@ export class AddPlayersComponent implements OnInit, OnDestroy {
 
     if(this.nameForm.valid && this.onlineCheck){
       const name = this.nameForm.controls['name'].value!;
-      const clientPlayer = new Player(name, this.playerService.getClientPlayerSidString(), false, new ScoreBoard(this.diceService, this.translateService, this.modal, this.socketService));
+      const clientPlayer = new Player(name, this.playerService.getClientPlayerSidString(), false, new ScoreBoard(this.diceService, this.scoreService, this.translateService, this.modalService, this.socketService, this.playerService));
       const maxPlayers = Number(this.nameForm.controls['maxPlayers'].value)
       
       this.playerService.setChosenMaxPlayers(maxPlayers);

@@ -261,7 +261,7 @@ export class SocketService {
   }
 
   getEndOfGame(){
-    return this.socket.fromEvent('endOfGame');
+    return this.socket.fromEvent<boolean>('endOfGame');
   }
 }
 

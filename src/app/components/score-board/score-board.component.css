@@ -15,7 +15,7 @@
 .table-border {
     border: 1px solid lightgray;
     border-top: none;
-    padding: 0.25vh 0.15vh;
+    padding: 0.25vh 0.2vh;
     font-size: 0.85rem;
     font-family: 'McLaren', cursive;
 
@@ -81,11 +81,12 @@
 }
 
 .possible-score {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color:green;
     font-weight: 700;
     margin: auto 0;
-    padding-top: 1px;
+    position: absolute;
+    padding: 0.4vh 0 0 1.3vh;
 }
 
 /* .scoreboard-btn {

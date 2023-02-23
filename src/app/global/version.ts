@@ -1,10 +1,20 @@
-export const version: string = "v1.3.7.15";
+export const version: string = "v1.11.16";
 
-// vX.Y.Z.V
+// vX.Y.Z
 // X = Major
 // Y = Minor 
-// Z = Feature
-// V = Bugfix
+// Z = Bugfix
+
+//ToDo
+// - Add "Go back" button at waiting screen
+// - Add highscore list
+// - Add authentication
+
+
+
+// 1.11.16
+// - Combined minor and feature versioning
+// - Fixed bug where single player result window wouldn't trigger (because of deletion of it, woops...)
 
 // 1.3.7.15
 // - Potential fix for oval shaped play button for iPhones
