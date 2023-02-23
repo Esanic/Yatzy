@@ -1,10 +1,13 @@
-export const version: string = "v1.3.7.14";
+export const version: string = "v1.3.7.15";
 
 // vX.Y.Z.V
 // X = Major
 // Y = Minor 
 // Z = Feature
 // V = Bugfix
+
+// 1.3.7.15
+// - Potential fix for oval shaped play button for iPhones
 
 // 1.3.7.14
 // - Fixed gameDone emit to not be distributed locally but sent through socket. This to avoid double logic for gameDone.
