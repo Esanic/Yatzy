@@ -204,7 +204,6 @@ export class ScoreBoard {
 
       resolve(modal);
     })
-    
   }
 
   /**

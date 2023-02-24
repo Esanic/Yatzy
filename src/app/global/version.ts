@@ -1,4 +1,4 @@
-export const version: string = "v1.11.16";
+export const version: string = "v1.11.17";
 
 // vX.Y.Z
 // X = Major
@@ -10,7 +10,8 @@ export const version: string = "v1.11.16";
 // - Add highscore list
 // - Add authentication
 
-
+// 1.11.17
+// - Fixed bug that didn't send the dice to other sockets.
 
 // 1.11.16
 // - Combined minor and feature versioning

@@ -138,6 +138,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
 
     //Subscribes to current player result from backend
     this.getCurrentPlayerResult$ = this.socketService.getCurrentPlayerResult().subscribe((previousPlayerResult: any) => {
+      console.log(previousPlayerResult);
       this.setScore(previousPlayerResult.scoreRowName, previousPlayerResult.dice);
     })
 
@@ -202,8 +203,8 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
         await this.preparationForNextPlayer();
         this.setNextPlayer();
       });
+      
       this.socketService.nextPlayer(scoreRowName, this.dice);
-
     }
     else {
       await this.currentPlayer.score.setScore(scoreRowName, dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(async () => {
@@ -211,6 +212,8 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
         this.setNextPlayer();
       });
     }
+
+    this.dice = [...this.diceService.diceArray];
   }
 
   /**
@@ -230,7 +233,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.currentPlayer.currentPlayer = true;
     this.diceHit = false;
     this.playerService.setCurrentPlayer(this.currentPlayer);
-    this.dice = [...this.diceService.diceArray];
+
 
     this.currentPlayer.socketId === this.clientPlayer.socketId && this.chosenMaxPlayers > 1 ? this.animationYourTurn() : null
   }
