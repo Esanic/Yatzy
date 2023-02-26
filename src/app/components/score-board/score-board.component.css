@@ -99,7 +99,7 @@
     width:100%;
 } */
 
-.scoreboard-btn:disabled{
+.scoreboard-btn:disabled {
     opacity:0.5;
 }
 
@@ -107,4 +107,8 @@
     min-width: 4rem;
     width:20%;
     max-width: 100%;
+}
+
+.crossedScore {
+    margin-left: -2px;
 }

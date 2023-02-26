@@ -1,0 +1,24 @@
+<div *ngIf="this.players.length >=2">
+    <div class="modal-header">
+        <h4 class="modal-title">{{'MODAL.RESULT' | translate}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close(true)"></button>
+    </div>
+    <div class="modal-body">
+        <p class="text-center" *ngFor="let Player of this.players; index as i">{{i+1}}. {{Player.name}} - {{Player.score.total.score}}</p>
+    </div>
+    <div class="modal-footer">
+        <button  type="button" class="btn btn-ligt" (click)="activeModal.close(true)">{{"MODAL.CLOSE" | translate}}</button>
+    </div>
+</div>
+<div *ngIf="this.players.length === 1">
+    <div class="modal-header">
+        <h4 class="modal-title">{{'MODAL.RESULT' | translate}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close(true)"></button>
+    </div>
+    <div class="modal-body">
+        <p class="text-center">{{"MODAL.YOUGOT" | translate: {value: this.players[0].score.total.score} }} </p>
+    </div>
+    <div class="modal-footer">
+        <button  type="button" class="btn btn-ligt" (click)="activeModal.close(true)">{{"MODAL.CLOSE" | translate}}</button>
+    </div>
+</div>

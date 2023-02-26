@@ -1,4 +1,4 @@
-export const version: string = "v1.11.17";
+export const version: string = "v1.13.18";
 
 // vX.Y.Z
 // X = Major
@@ -9,6 +9,11 @@ export const version: string = "v1.11.17";
 // - Add "Go back" button at waiting screen
 // - Add highscore list
 // - Add authentication
+
+// 1.13.18
+// - Moved the results modal to a seperate component and restructred the logic to fit that.
+// - Fixed a X instead of 0 when someone crosses a scorerow
+// - Fixed that the text "YOUR TURN" warped on smaller devices.
 
 // 1.11.17
 // - Fixed bug that didn't send the dice to other sockets.

@@ -41,8 +41,6 @@ export class ScoreBoard {
   private clientPlayerSid: string = "";
   private currentPlayerSid: string = "";
 
-  private subLangChange$: Subscription = new Subscription();
-
   constructor( 
     private diceService: DiceService, 
     private scoreService: ScoreService,
@@ -51,7 +49,7 @@ export class ScoreBoard {
     private socketService: SocketService,
     private playerService?: PlayerService,
   ){
-    this.subLangChange$ = this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
       this.translateService.stream('DICE').subscribe(translation => {
         const scoreRowNames: string[] = Object.keys(translation);
         for(let i = 0; i < this.scoreBoard.length; i++){
@@ -370,7 +368,7 @@ export class ScoreBoard {
     return new Promise<boolean>(async resolve => {
       if(scoreRow.score === 0){
         if(this.clientPlayerSid === this.currentPlayerSid){
-          const modalRef = this.modal.open(SetScoreConfirmationComponent, {centered: true});
+          const modalRef = this.modal.open(SetScoreConfirmationComponent, {centered: true, animation: true, backdrop: 'static'});
           modalRef.componentInstance.scoreRow = scoreRow.name;
           modalRef.result.then(
             (result) => {

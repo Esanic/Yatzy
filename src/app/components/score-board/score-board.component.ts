@@ -12,6 +12,7 @@ import { DiceService } from 'src/app/services/dice.service';
 import { PlayerService } from 'src/app/services/player.service';
 import { ScoreService } from 'src/app/services/score.service';
 import { SocketService } from 'src/app/services/socket.service';
+import { ResultsComponent } from '../modals/results/results.component';
 
 
 @Component({
@@ -66,15 +67,13 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.soundChange$
   ]
 
-  @ViewChild('results', {read: TemplateRef}) results!: TemplateRef<any>;
-
   constructor(
     private socketService: SocketService, 
     private diceService: DiceService, 
     private playerService: PlayerService, 
     private scoreService: ScoreService,
     private modalService: NgbModal,
-    private translateService: TranslateService,
+    public translateService: TranslateService,
     private clientService: ClientService,
     private _router: Router
   ) { }
@@ -138,7 +137,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
 
     //Subscribes to current player result from backend
     this.getCurrentPlayerResult$ = this.socketService.getCurrentPlayerResult().subscribe((previousPlayerResult: any) => {
-      console.log(previousPlayerResult);
       this.setScore(previousPlayerResult.scoreRowName, previousPlayerResult.dice);
     })
 
@@ -234,7 +232,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.diceHit = false;
     this.playerService.setCurrentPlayer(this.currentPlayer);
 
-
     this.currentPlayer.socketId === this.clientPlayer.socketId && this.chosenMaxPlayers > 1 ? this.animationYourTurn() : null
   }
   
@@ -256,7 +253,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this._router.navigate([''], {skipLocationChange: true});
   }
 
-  
   /**
    * Trigger the yourTurn animation and plays the associated audio if sound is not muted.
    * @date 2/15/2023 - 10:19:33 AM
@@ -284,7 +280,12 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   private endOfGame(bool: boolean): void {
     if(bool){
       this.players.sort((a:Player, b:Player) => b.score.total.score - a.score.total.score)
-      this.modalService.open(this.results, {centered: true, animation: true, keyboard: true})
+      
+      const modal = this.modalService.open(ResultsComponent, {centered: true, animation: true, backdrop: 'static'});
+      modal.componentInstance.players = this.players;
+      modal.result.then(() => {
+        this.closeModalAndReset();
+      })
     }
   }
 }

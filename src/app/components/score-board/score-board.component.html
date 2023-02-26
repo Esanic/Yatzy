@@ -1,6 +1,6 @@
 <div class="col-11 col-lg-6 py-2 mx-auto">
     <div class="d-flex flex-row justify-content-center">
-        <div class="position-absolute top-50 start-50 translate-middle display-1 text-center fw-bold" [@yourTurn]="animationState">{{"SCOREBOARD.YOURTURN" | translate}}</div>
+        <div class="position-absolute top-50 start-50 translate-middle display-1 text-center fw-bold text-nowrap" [@yourTurn]="animationState">{{"SCOREBOARD.YOURTURN" | translate}}</div>
         
         <div class="d-flex flex-column table-headings-width">
             <div class="table-header table-header-player bg-white table-leftup-round">{{"SCOREBOARD.PLAYERS" | translate}}</div>
@@ -25,7 +25,12 @@
             <div *ngIf="Player.currentPlayer === true && Player.socketId === this.clientPlayer.socketId">
                 <div *ngIf="Player.socketId === this.lastPlayer.socketId; else notLastOccurenceTrueMatch">
                     <div class="table-border table-rightdown-round d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
-                        {{scoreRow.score}}
+                        <div *ngIf="scoreRow.selectable === false && scoreRow.score === 0 && scoreRow.name !== this.translateService.instant('DICE.BONUS')  && scoreRow.name !== this.translateService.instant('DICE.TOTAL') && scoreRow.name !== this.translateService.instant('DICE.SUBTOTAL'); else normalScoreTrueMatch">
+                            <i class="bi bi-x crossedScore"></i>
+                        </div>
+                        <ng-template #normalScoreTrueMatch>
+                            {{scoreRow.score}}
+                        </ng-template>
                         <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">
                             +{{this.possibleScores[i]}}
                         </span>
@@ -35,7 +40,12 @@
                 
                 <ng-template #notLastOccurenceTrueMatch>
                     <div class="table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
-                        {{scoreRow.score}}
+                        <div *ngIf="scoreRow.selectable === false && scoreRow.score === 0 && scoreRow.name !== this.translateService.instant('DICE.BONUS')  && scoreRow.name !== this.translateService.instant('DICE.TOTAL') && scoreRow.name !== this.translateService.instant('DICE.SUBTOTAL'); else normalScoreTrueMatchNotLast">
+                            <i class="bi bi-x crossedScore"></i>
+                        </div>
+                        <ng-template #normalScoreTrueMatchNotLast>
+                            {{scoreRow.score}}
+                        </ng-template>
                         <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">+{{this.possibleScores[i]}}</span>
                         <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" (click)="this.setScore(scoreRow.name)"></button>
                     </div>
@@ -46,14 +56,26 @@
             <div *ngIf="Player.currentPlayer === true && Player.socketId !== this.clientPlayer.socketId">
                 <div *ngIf="Player.socketId === this.lastPlayer.socketId; else notLastOccurenceTrueNoMatch">
                     <div class="table-border table-rightdown-round d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
-                        {{scoreRow.score}}
-                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">+{{this.possibleScores[i]}}</span>
+                        <div *ngIf="scoreRow.selectable === false && scoreRow.score === 0 && scoreRow.name !== this.translateService.instant('DICE.BONUS')  && scoreRow.name !== this.translateService.instant('DICE.TOTAL') && scoreRow.name !== this.translateService.instant('DICE.SUBTOTAL'); else normalScoreTrueNoMatch">
+                            <i class="bi bi-x crossedScore"></i>
+                        </div>
+                        <ng-template #normalScoreTrueNoMatch>
+                            {{scoreRow.score}}
+                        </ng-template>
+                        <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">
+                            +{{this.possibleScores[i]}}
+                        </span>
                     </div>
                 </div>
                 
                 <ng-template #notLastOccurenceTrueNoMatch>
                     <div class="table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard; index as i">
-                        {{scoreRow.score}}
+                        <div *ngIf="scoreRow.selectable === false && scoreRow.score === 0 && scoreRow.name !== this.translateService.instant('DICE.BONUS')  && scoreRow.name !== this.translateService.instant('DICE.TOTAL') && scoreRow.name !== this.translateService.instant('DICE.SUBTOTAL'); else normalScoreTrueNoMatchNotLast">
+                            <i class="bi bi-x crossedScore"></i>
+                        </div>
+                        <ng-template #normalScoreTrueNoMatchNotLast>
+                            {{scoreRow.score}}
+                        </ng-template>
                         <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">
                             +{{this.possibleScores[i]}}
                         </span>
@@ -65,14 +87,24 @@
             <div *ngIf="Player.currentPlayer === false && Player.socketId === this.clientPlayer.socketId">
                 <div *ngIf="Player.socketId === this.lastPlayer.socketId; else notLastOccurenceFalseMatch">
                     <div class="scoreboard-not-current-player table-rightdown-round table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
-                        {{scoreRow.score}}
+                        <div *ngIf="scoreRow.selectable === false && scoreRow.score === 0 && scoreRow.name !== this.translateService.instant('DICE.BONUS')  && scoreRow.name !== this.translateService.instant('DICE.TOTAL') && scoreRow.name !== this.translateService.instant('DICE.SUBTOTAL'); else normalScoreFalseMatch">
+                            <i class="bi bi-x crossedScore"></i>
+                        </div>
+                        <ng-template #normalScoreFalseMatch>
+                            {{scoreRow.score}}
+                        </ng-template>
                         <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.name)"></button>
                     </div>
                 </div>
                 
                 <ng-template #notLastOccurenceFalseMatch>
                     <div class="scoreboard-not-current-player table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
-                        {{scoreRow.score}}
+                        <div *ngIf="scoreRow.selectable === false && scoreRow.score === 0 && scoreRow.name !== this.translateService.instant('DICE.BONUS')  && scoreRow.name !== this.translateService.instant('DICE.TOTAL') && scoreRow.name !== this.translateService.instant('DICE.SUBTOTAL'); else normalScoreFalseMatchNotLast">
+                            <i class="bi bi-x crossedScore"></i>
+                        </div>
+                        <ng-template #normalScoreFalseMatchNotLast>
+                            {{scoreRow.score}}
+                        </ng-template>
                         <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.name)"></button>
                     </div>
                 </ng-template>
@@ -82,44 +114,27 @@
             <div *ngIf="Player.currentPlayer === false && Player.socketId !== this.clientPlayer.socketId">
                 <div *ngIf="Player.socketId === this.lastPlayer.socketId; else notLastOccurenceFalseNoMatch">
                     <div class="scoreboard-not-current-player table-border table-rightdown-round d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
-                        {{scoreRow.score}}
+                        <div *ngIf="scoreRow.selectable === false && scoreRow.score === 0 && scoreRow.name !== this.translateService.instant('DICE.BONUS')  && scoreRow.name !== this.translateService.instant('DICE.TOTAL') && scoreRow.name !== this.translateService.instant('DICE.SUBTOTAL'); else normalScoreFalseNoMatch">
+                            <i class="bi bi-x crossedScore"></i>
+                        </div>
+                        <ng-template #normalScoreFalseNoMatch>
+                            {{scoreRow.score}}
+                        </ng-template>
                     </div>
                 </div>
 
                 <ng-template #notLastOccurenceFalseNoMatch>
                     <div class="scoreboard-not-current-player table-border d-flex bg-white" *ngFor="let scoreRow of Player.score.scoreBoard">
-                        {{scoreRow.score}}
+                        <div *ngIf="scoreRow.selectable === false && scoreRow.score === 0 && scoreRow.name !== this.translateService.instant('DICE.BONUS')  && scoreRow.name !== this.translateService.instant('DICE.TOTAL') && scoreRow.name !== this.translateService.instant('DICE.SUBTOTAL'); else normalScoreFalseNoMatchNotLast">
+                            <i class="bi bi-x crossedScore"></i>
+                        </div>
+                        <ng-template #normalScoreFalseNoMatchNotLast>
+                            {{scoreRow.score}}
+                        </ng-template>
                     </div>
                 </ng-template>
             </div>
         </div>
     </div>
 </div>
-
-<ng-template #results let-modal>
-    <div *ngIf="this.players.length >=2">
-        <div class="modal-header">
-            <h4 class="modal-title">{{'MODAL.RESULT' | translate}}</h4>
-            <button type="button" class="btn-close" aria-label="Close" (click)="closeModalAndReset()"></button>
-        </div>
-        <div class="modal-body">
-            <p class="text-center" *ngFor="let Player of this.players; index as i">{{i+1}}. {{Player.name}} - {{Player.score.total.score}}</p>
-        </div>
-        <div class="modal-footer">
-            <button  type="button" class="btn btn-ligt" (click)="closeModalAndReset()">{{"MODAL.CLOSE" | translate}}</button>
-        </div>
-    </div>
-    <div *ngIf="this.players.length === 1">
-        <div class="modal-header">
-            <h4 class="modal-title">{{'MODAL.RESULT' | translate}}</h4>
-            <button type="button" class="btn-close" aria-label="Close" (click)="closeModalAndReset()"></button>
-        </div>
-        <div class="modal-body">
-            <p class="text-center">{{"MODAL.YOUGOT" | translate: {value: this.players[0].score.total.score} }} </p>
-        </div>
-        <div class="modal-footer">
-            <button  type="button" class="btn btn-ligt" (click)="closeModalAndReset()">{{"MODAL.CLOSE" | translate}}</button>
-        </div>
-    </div>
-</ng-template>
 
