@@ -1,5 +1,0 @@
-<IfModule mod_headers.c>
-<FilesMatch '\.(ttf|ttc|otf|eot|woff|woff2|css|js|png|jpg|jpeg|svg|pdf)$'>         
-    Header set Access-Control-Allow-Origin https://esanic.github.io/Yatzy/
-</FilesMatch>
-</IfModule>
