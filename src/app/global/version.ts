@@ -1,4 +1,4 @@
-export const version: string = "v1.13.18";
+export const version: string = "v1.13.19";
 
 // vX.Y.Z
 // X = Major
@@ -9,6 +9,10 @@ export const version: string = "v1.13.18";
 // - Add "Go back" button at waiting screen
 // - Add highscore list
 // - Add authentication
+
+// 1.13.19
+// - Fixed that scores are not dependent on names and uses id to be placed instead
+// - Fixed that score are distributed before end of game check
 
 // 1.13.18
 // - Moved the results modal to a seperate component and restructred the logic to fit that.
