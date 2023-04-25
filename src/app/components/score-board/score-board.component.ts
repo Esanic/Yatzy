@@ -137,7 +137,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
 
     //Subscribes to current player result from backend
     this.getCurrentPlayerResult$ = this.socketService.getCurrentPlayerResult().subscribe((previousPlayerResult: any) => {
-      this.setScore(previousPlayerResult.scoreRowName, previousPlayerResult.dice);
+      this.setScore(previousPlayerResult.scoreRowId, previousPlayerResult.dice);
     })
 
     //End game subscription from backend in multiplayer games
@@ -195,17 +195,18 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
    * @param {string} scoreRowName - The scorerow to set the score to.
    * @param {?Die[]} [dice] - Optional and used if retrieved from the backend. Else @param this.dice is used.
    */
-  public async setScore(scoreRowName: string, dice?: Die[]): Promise<void> {
+  public async setScore(scoreRowId: number, dice?: Die[], ): Promise<void> {
     if(!dice){
-      await this.currentPlayer.score.setScore(scoreRowName, this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(async () => {
+      await this.currentPlayer.score.setScore(this.dice, this.currentPlayer.socketId, this.clientPlayer.socketId!, scoreRowId).then(async () => {
+        this.socketService.nextPlayer(scoreRowId, this.dice);
         await this.preparationForNextPlayer();
         this.setNextPlayer();
       });
       
-      this.socketService.nextPlayer(scoreRowName, this.dice);
+      
     }
     else {
-      await this.currentPlayer.score.setScore(scoreRowName, dice, this.currentPlayer.socketId, this.clientPlayer.socketId!).then(async () => {
+      await this.currentPlayer.score.setScore(dice, this.currentPlayer.socketId, this.clientPlayer.socketId!, scoreRowId).then(async () => {
         await this.preparationForNextPlayer();
         this.setNextPlayer();
       });

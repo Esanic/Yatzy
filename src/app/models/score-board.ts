@@ -11,24 +11,24 @@ import { ScoreRow } from "./score-row"
 
 export class ScoreBoard {
   //Scorerows
-  public aces = new ScoreRow(this.translateService.instant('DICE.ACES'), 0, true)
-  public twos = new ScoreRow(this.translateService.instant('DICE.TWOS'), 0, true)
-  public threes = new ScoreRow(this.translateService.instant('DICE.THREES'), 0, true)
-  public fours = new ScoreRow(this.translateService.instant('DICE.FOURS'), 0, true)
-  public fives = new ScoreRow(this.translateService.instant('DICE.FIVES'), 0, true)
-  public sixes = new ScoreRow(this.translateService.instant('DICE.SIXES'), 0, true)
-  public subTotal = new ScoreRow(this.translateService.instant('DICE.SUBTOTAL'), 0, false)
-  public bonus = new ScoreRow(this.translateService.instant('DICE.BONUS'), 0, false, false)
-  public onePair = new ScoreRow(this.translateService.instant('DICE.ONEPAIR'), 0, true)
-  public twoPair = new ScoreRow(this.translateService.instant('DICE.TWOPAIR'), 0, true)
-  public threeOfAKind = new ScoreRow(this.translateService.instant('DICE.THREEOFAKIND'), 0, true)
-  public fourOfAKind = new ScoreRow(this.translateService.instant('DICE.FOUROFAKIND'), 0, true)
-  public smallStraight = new ScoreRow(this.translateService.instant('DICE.SMALLSTRAIGHT'), 0, true)
-  public largeStraight = new ScoreRow(this.translateService.instant('DICE.LARGESTRAIGHT'), 0, true)
-  public house = new ScoreRow(this.translateService.instant('DICE.HOUSE'), 0, true)
-  public chance = new ScoreRow(this.translateService.instant('DICE.CHANCE'), 0, true)
-  public yatzy = new ScoreRow(this.translateService.instant('DICE.YATZY'), 0, true)
-  public total = new ScoreRow(this.translateService.instant('DICE.TOTAL'), 0, false)
+  public aces = new ScoreRow(1, this.translateService.instant('DICE.ACES'), 0, true)
+  public twos = new ScoreRow(2, this.translateService.instant('DICE.TWOS'), 0, true)
+  public threes = new ScoreRow(3, this.translateService.instant('DICE.THREES'), 0, true)
+  public fours = new ScoreRow(4, this.translateService.instant('DICE.FOURS'), 0, true)
+  public fives = new ScoreRow(5, this.translateService.instant('DICE.FIVES'), 0, true)
+  public sixes = new ScoreRow(6, this.translateService.instant('DICE.SIXES'), 0, true)
+  public subTotal = new ScoreRow(7, this.translateService.instant('DICE.SUBTOTAL'), 0, false)
+  public bonus = new ScoreRow(8, this.translateService.instant('DICE.BONUS'), 0, false, false)
+  public onePair = new ScoreRow(9, this.translateService.instant('DICE.ONEPAIR'), 0, true)
+  public twoPair = new ScoreRow(10, this.translateService.instant('DICE.TWOPAIR'), 0, true)
+  public threeOfAKind = new ScoreRow(11, this.translateService.instant('DICE.THREEOFAKIND'), 0, true)
+  public fourOfAKind = new ScoreRow(12, this.translateService.instant('DICE.FOUROFAKIND'), 0, true)
+  public smallStraight = new ScoreRow(13, this.translateService.instant('DICE.SMALLSTRAIGHT'), 0, true)
+  public largeStraight = new ScoreRow(14, this.translateService.instant('DICE.LARGESTRAIGHT'), 0, true)
+  public house = new ScoreRow(15, this.translateService.instant('DICE.HOUSE'), 0, true)
+  public chance = new ScoreRow(16, this.translateService.instant('DICE.CHANCE'), 0, true)
+  public yatzy = new ScoreRow(17, this.translateService.instant('DICE.YATZY'), 0, true)
+  public total = new ScoreRow(18, this.translateService.instant('DICE.TOTAL'), 0, false)
   public scoreBoard: ScoreRow[] = [this.aces, this.twos, this.threes, this.fours, this.fives, this.sixes, this.subTotal, this.bonus, this.onePair, this.twoPair, this.threeOfAKind, this.fourOfAKind, this.smallStraight, this.largeStraight, this.house, this.chance, this.yatzy, this.total]
 
   //Dice
@@ -72,7 +72,7 @@ export class ScoreBoard {
    * @param {string} clientPlayerSid - client player's socket ID.
    * @returns {Promise<boolean>} - Returns true/false based upon if the user wanted to place 0 points into something - - has no use other than delivering a promise.
    */
-  public async setScore(scoreRowName: string, dice: Die[], currentPlayerSid: string, clientPlayerSid: string): Promise<boolean> {
+  public async setScore(dice: Die[], currentPlayerSid: string, clientPlayerSid: string, scoreRowId?: number): Promise<boolean> {
     let modal: boolean;
     this.dice = dice;
     
@@ -80,28 +80,28 @@ export class ScoreBoard {
     this.clientPlayerSid = clientPlayerSid;
     
     return new Promise<boolean>(async resolve => {
-      switch(scoreRowName){
-        case this.aces.name:
+      switch(scoreRowId){
+        case 1:
           modal = await this.acesThroughSixesScore(1, this.aces);
           break;
           
-        case this.twos.name:
+        case 2:
           modal = await this.acesThroughSixesScore(2, this.twos);
           break;
   
-        case this.threes.name:
+        case 3:
           modal = await this.acesThroughSixesScore(3, this.threes);
           break;
   
-        case this.fours.name:
+        case 4:
           modal = await this.acesThroughSixesScore(4, this.fours);
           break;
   
-        case this.fives.name:
+        case 5:
           modal = await this.acesThroughSixesScore(5, this.fives);
           break;
           
-        case this.sixes.name:
+        case 6:
           modal = await this.acesThroughSixesScore(6, this.sixes);
           break;
   
@@ -109,7 +109,7 @@ export class ScoreBoard {
         // and then uses the map method to loop through each element and controls if the elements value (dice side/value) is bigger than onePairSide.
         // This way we can assure that the highest value pair will be the one chosen.
         // Then sets the score to the scorerow by multiplying it by 2.
-        case this.onePair.name:
+        case 9:
           let onePairSide = 0;
           this.mapOccurences(2).map(obj => obj[0] > onePairSide ? onePairSide = obj[0] : null);
           this.onePair.score = onePairSide * 2;
@@ -119,7 +119,7 @@ export class ScoreBoard {
         // Uses the mapOccurencies method to group any die that occurs twice or more and stores the result in an array.
         // Then uses the ternary operator to see if the array contains 2 elements or more.
         // If true; sets the score to the scorerow by multiplying both element's values by 2 and then add them together.
-        case this.twoPair.name:
+        case 10:
           let twoPairArr = this.mapOccurences(2);
           twoPairArr.length >= 2 ? this.twoPair.score = (twoPairArr[0][0] * 2)+(twoPairArr[1][0] *2) : null;  
           modal = await this.addTotalScoreAndMakeUnselectable(this.twoPair);
@@ -129,7 +129,7 @@ export class ScoreBoard {
         // Then uses the ternary operator to make sure that the first element of the array is not undefined.
         // If true; sets the score of the scorerow by multiplying the first elements value by 3.
         // If false; sets the score of the scorerow to 0.
-        case this.threeOfAKind.name:
+        case 11:
           let threeOfAKindArr = this.mapOccurences(3);
           threeOfAKindArr[0] !== undefined ? this.threeOfAKind.score = threeOfAKindArr[0][0] * 3 : this.threeOfAKind.score = 0;
           modal = await this.addTotalScoreAndMakeUnselectable(this.threeOfAKind);
@@ -139,7 +139,7 @@ export class ScoreBoard {
         // Then uses the ternary operator to make sure that the first element of the array is not undefined.
         // If true; sets the score of the scorerow by multiplying the first elements value by 4.
         // If false; sets the score of the scorerow to 0.
-        case this.fourOfAKind.name:
+        case 12:
           let fourOfAKindArr = this.mapOccurences(4);
           fourOfAKindArr[0] !== undefined ? this.fourOfAKind.score = fourOfAKindArr[0][0] * 4 : this.fourOfAKind.score = 0;
           modal = await this.addTotalScoreAndMakeUnselectable(this.fourOfAKind);
@@ -148,7 +148,7 @@ export class ScoreBoard {
         // Creates an array of all the dice sides/values.
         // Then uses the ternary operator to check if the array includes 1 through 5.
         // If true; sets the sore of the scorerow to 15.
-        case this.smallStraight.name:
+        case 13:
           let smallStraightArr = this.dice.map(die => die.side)
           smallStraightArr.includes(1) && smallStraightArr.includes(2) && smallStraightArr.includes(3) && smallStraightArr.includes(4) && smallStraightArr.includes(5) ? this.smallStraight.score = 15 : null;
           modal = await this.addTotalScoreAndMakeUnselectable(this.smallStraight);
@@ -157,7 +157,7 @@ export class ScoreBoard {
         // Creates an array of all the dice sides/values.
         // Then uses the ternary operator to check if the array includes 2 through 6.
         // If true; sets the score of the scorerow to 20.
-        case this.largeStraight.name:
+        case 14:
           let largeStraightArr = this.dice.map(die => die.side)
           largeStraightArr.includes(2) && largeStraightArr.includes(3) && largeStraightArr.includes(4) && largeStraightArr.includes(5) && largeStraightArr.includes(6) ? this.largeStraight.score = 20 : null;
           modal = await this.addTotalScoreAndMakeUnselectable(this.largeStraight);
@@ -167,14 +167,14 @@ export class ScoreBoard {
         // Then uses the ternary operator to see if the array contains 2 elements or more.
         // If true; Uses one more ternary operator that with the help of map method loops through each element to determine if they occur three times.
         // If true; sets the score of the scorerow by multiplying both elements occurences by it's value and then add them together.
-        case this.house.name:
+        case 15:
           let houseArr = this.mapOccurences(2);
           houseArr.length >= 2 ? houseArr.map(obj => obj[1] === 3 ? this.house.score = (houseArr[0][0]*houseArr[0][1]) + (houseArr[1][0]*houseArr[1][1]) : null) : null;
           modal = await this.addTotalScoreAndMakeUnselectable(this.house);
           break;
   
         // Uses the map method to add each die's value to the scorerows score.
-        case this.chance.name:
+        case 16:
           this.dice.map(die => this.chance.score += die.side);
           modal = await this.addTotalScoreAndMakeUnselectable(this.chance);
           break;
@@ -183,7 +183,7 @@ export class ScoreBoard {
         // Then uses the ternary operator to make sure that the first element of the array is not undefined.
         // Also makes sure that the first element has 5 occurences and that none of the dice sides/values are 0 (to prevent gaining points from dice not being rolled)
         // If all those are true; sets the score of the scorerow to 50.
-        case this.yatzy.name:
+        case 17:
           let yatzyArr = this.mapOccurences(5);
           yatzyArr[0] != undefined && yatzyArr[0][1] === 5 && this.dice.some(die => die.side !== 0) ? this.yatzy.score = 50 : null;
           modal = await this.addTotalScoreAndMakeUnselectable(this.yatzy);

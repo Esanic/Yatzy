@@ -34,7 +34,7 @@
                         <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">
                             +{{this.possibleScores[i]}}
                         </span>
-                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" (click)="this.setScore(scoreRow.name)"></button>
+                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" (click)="this.setScore(scoreRow.id)"></button>
                     </div>
                 </div>
                 
@@ -47,7 +47,7 @@
                             {{scoreRow.score}}
                         </ng-template>
                         <span *ngIf="scoreRow.selectable === true && this.diceHit === true && this.possibleScores[i] > 0" class="possible-score">+{{this.possibleScores[i]}}</span>
-                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" (click)="this.setScore(scoreRow.name)"></button>
+                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" (click)="this.setScore(scoreRow.id)"></button>
                     </div>
                 </ng-template>
             </div>
@@ -93,7 +93,7 @@
                         <ng-template #normalScoreFalseMatch>
                             {{scoreRow.score}}
                         </ng-template>
-                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.name)"></button>
+                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.id)"></button>
                     </div>
                 </div>
                 
@@ -105,7 +105,7 @@
                         <ng-template #normalScoreFalseMatchNotLast>
                             {{scoreRow.score}}
                         </ng-template>
-                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.name)"></button>
+                        <button *ngIf="scoreRow.selectable === true" type="button" class="scoreboard-btn bi bi-plus ms-auto" [disabled]="!Player.currentPlayer" (click)="this.setScore(scoreRow.id)"></button>
                     </div>
                 </ng-template>
             </div>

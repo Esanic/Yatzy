@@ -78,8 +78,8 @@ export class SocketService {
    * @param {string} scoreRowName - name of the scorerow to place score on
    * @param {Die[]} dice - the dice to base the score upon
    */
-  nextPlayer(scoreRowName: string, dice: Die[]){
-    this.socket.emit('nextPlayer', scoreRowName, dice, this.roomName);
+  nextPlayer(scoreRowId: number, dice: Die[]){
+    this.socket.emit('nextPlayer', scoreRowId, dice, this.roomName);
   }
 
   /**
